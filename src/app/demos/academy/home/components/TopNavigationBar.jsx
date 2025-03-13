@@ -1,5 +1,5 @@
-import clsx from 'clsx'
-import { Link } from 'react-router-dom'
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 import {
   Card,
   CardBody,
@@ -13,14 +13,15 @@ import {
   DropdownMenu,
   DropdownToggle,
   NavItem,
-} from 'react-bootstrap'
-import { BsBell, BsGridFill, BsHeart } from 'react-icons/bs'
-import { FaChevronDown, FaSearch } from 'react-icons/fa'
-import LogoBox from '@/components/LogoBox'
-import ProfileDropdown from '@/components/TopNavbar/components/ProfileDropdown'
-import useScrollEvent from '@/hooks/useScrollEvent'
-import useToggle from '@/hooks/useToggle'
-import avatar3 from '@/assets/images/avatar/03.jpg'
+} from 'react-bootstrap';
+import { BsBell, BsGridFill, BsHeart } from 'react-icons/bs';
+import { FaChevronDown, FaSearch } from 'react-icons/fa';
+import LogoBox from '@/components/LogoBox';
+import ProfileDropdown from '@/components/TopNavbar/components/ProfileDropdown';
+import useScrollEvent from '@/hooks/useScrollEvent';
+import useToggle from '@/hooks/useToggle';
+import avatar3 from '@/assets/images/avatar/03.jpg';
+
 const NotificationDropdown = () => {
   return (
     <Dropdown className="nav-item ms-2 ms-sm-3">
@@ -70,12 +71,13 @@ const NotificationDropdown = () => {
         </Card>
       </DropdownMenu>
     </Dropdown>
-  )
-}
+  );
+};
+
 const TopNavigationBar = () => {
-  const { scrollY } = useScrollEvent()
-  const { isTrue: isOpen, toggle } = useToggle()
-  const { isTrue: isOpenCategory, toggle: toggleCategory } = useToggle()
+  const { scrollY } = useScrollEvent();
+  const { isTrue: isOpen, toggle } = useToggle();
+  const { isTrue: isOpenCategory, toggle: toggleCategory } = useToggle();
   return (
     <>
       <header
@@ -121,19 +123,19 @@ const TopNavigationBar = () => {
                 </Col>
                 <ul className="navbar-nav navbar-nav-scroll ms-auto">
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/">
                       Home
-                    </a>
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/pages/about/about-us">
                       About
-                    </a>
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/pages/about/contact-us">
                       Contact
-                    </a>
+                    </Link>
                   </NavItem>
                 </ul>
               </div>
@@ -162,29 +164,29 @@ const TopNavigationBar = () => {
               <div>
                 <ul className="navbar-nav navbar-nav-scroll mx-auto">
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/courses">
                       Courses
-                    </a>
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/free-test">
                       Free Test
-                    </a>
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/live-class">
                       Live Class
-                    </a>
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/batches">
                       Batches
-                    </a>
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/gallery">
                       Gallery
-                    </a>
+                    </Link>
                   </NavItem>
                 </ul>
               </div>
@@ -193,6 +195,7 @@ const TopNavigationBar = () => {
         </nav>
       </header>
     </>
-  )
-}
-export default TopNavigationBar
+  );
+};
+
+export default TopNavigationBar;

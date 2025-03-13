@@ -29,7 +29,7 @@ const Hero = () => {
               </svg>
             </figure>
             <h1 className="position-relative fs-2">
-              Eduport education theme, built specifically for the education centers which is dedicated to teaching and involve learners.
+            Get to Know Us
             </h1>
           </Col>
         </Row>
