@@ -1,27 +1,24 @@
 import PageMetaData from '@/components/PageMetaData';
-import ActionBox from './components/ActionBox';
-import ClientSlider from './components/ClientSlider';
 import CourseSlider from './components/CourseSlider';
 import Footer from './components/Footer';
-import Hero from './components/Hero';
-import Instructors from './components/Instructors';
 import PopularCourses from './components/PopularCourses';
 import TopNavigationBar from './components/TopNavigationBar';
 import TrendingCourses from './components/TrendingCourses';
-import WelcomeCard from './components/WelcomeCard';
+import HeroSlider from './components/HeroSlider';
+import OfferCourses from './components/OfferCourses';
+import FeaturedCourses from './components/FeaturedCourses';
+
 const AcademicHome = () => {
   return <>
       <PageMetaData title="Academy" />
       <TopNavigationBar />
       <main>
-        <Hero />
+        <HeroSlider />
+        <OfferCourses />
         <CourseSlider />
-        <WelcomeCard />
         <TrendingCourses />
+        <FeaturedCourses/>
         <PopularCourses />
-        <Instructors />
-        <ActionBox />
-        <ClientSlider />
       </main>
       <Footer />
     </>;
