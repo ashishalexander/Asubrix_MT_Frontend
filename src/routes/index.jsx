@@ -28,6 +28,8 @@ const VideoPlayer = lazy(() => import('@/app/pages/course/video-player/page'));
 const InstructorList = lazy(() => import('@/app/pages/instructors/page'));
 const InstructorSingle = lazy(() => import('@/app/pages/instructors/[instructorId]/page'));
 const InstructorBecome = lazy(() => import('@/app/pages/become-instructor/page'));
+const PrivacyPolicy = lazy(() => import('@/app/pages/privacy-policy/page'));
+const TermsAndConditions = lazy(() => import('@/app/pages/terms-conditions/page'));
 const AbroadSingle = lazy(() => import('@/app/pages/abroad-single/page'));
 const WorkshopDetail = lazy(() => import('@/app/pages/workshop-detail/page'));
 const EventDetail = lazy(() => import('@/app/pages/event-detail/page'));
@@ -224,6 +226,14 @@ const pagesRoutes = [{
   path: '/pages/instructors',
   name: 'Instructor List',
   element: <InstructorList />
+},{
+  path: '/pages/privacy-policy',
+  name: 'Privacy Policy',
+  element: <PrivacyPolicy/>
+},{
+  path: '/pages/terms-conditions',
+  name: 'Terms And Conditions',
+  element: <TermsAndConditions/>
 }, {
   path: '/pages/instructors/:instructorId',
   name: 'Instructor Single',

@@ -133,12 +133,12 @@ const Footer = ({
                     </Dropdown>
                   </li>
                   <li className="list-inline-item">
-                    <a className="nav-link" href="#">
-                      Terms of use
+                    <a className="nav-link" href="/pages/terms-conditions">
+                      Terms and Conditions
                     </a>
                   </li>
                   <li className="list-inline-item">
-                    <a className="nav-link pe-0" href="#">
+                    <a className="nav-link pe-0" href="/pages/privacy-policy">
                       Privacy policy
                     </a>
                   </li>

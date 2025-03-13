@@ -1,6 +1,6 @@
 import PageMetaData from '@/components/PageMetaData';
 import CourseSlider from './components/CourseSlider';
-import Footer from './components/Footer';
+import Footer from '@/components/Footer';
 import PopularCourses from './components/PopularCourses';
 import TopNavigationBar from './components/TopNavigationBar';
 import TrendingCourses from './components/TrendingCourses';
