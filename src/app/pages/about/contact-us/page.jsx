@@ -2,7 +2,7 @@ import Footer from '@/components/Footer'
 import PageMetaData from '@/components/PageMetaData'
 import ContactCards from './components/ContactCards'
 import ContactFormAndMap from './components/ContactFormAndMap'
-import TopNavigationBar from './components/TopNavigationBar'
+import TopNavigationBar from '@/components/TopNavigationBar'
 const ContactUs = () => {
   return (
     <>

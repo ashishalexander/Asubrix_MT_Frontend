@@ -6,8 +6,8 @@ const LogoBox = ({
   width
 }) => {
   return <Link className="navbar-brand" to="/">
-      <img height={height} width={width} className="light-mode-item navbar-brand-item w-auto" src={logo} alt="logo" />
-      <img height={height} width={width} className="dark-mode-item navbar-brand-item w-auto" src={logoLight} alt="logo" />
+      <img height={height} width={width} className="light-mode-item navbar-brand-item w-auto" src={"https://diy-assets.classplus.co/_next/image?url=https://ali-cdn-diy-public.classplus.co/prod/LogoHead_1707502308358.jpeg&w=1920&q=75"} alt="logo" />
+      <img height={height} width={width} className="dark-mode-item navbar-brand-item w-auto" src={"https://diy-assets.classplus.co/_next/image?url=https://ali-cdn-diy-public.classplus.co/prod/LogoHead_1707502308358.jpeg&w=1920&q=75"} alt="logo" />
     </Link>;
 };
 export default LogoBox;

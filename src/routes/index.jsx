@@ -30,6 +30,9 @@ const InstructorSingle = lazy(() => import('@/app/pages/instructors/[instructorI
 const InstructorBecome = lazy(() => import('@/app/pages/become-instructor/page'));
 const PrivacyPolicy = lazy(() => import('@/app/pages/privacy-policy/page'));
 const TermsAndConditions = lazy(() => import('@/app/pages/terms-conditions/page'));
+const Gallery = lazy(() => import('@/app/pages/gallery/page'));
+const FreeTest = lazy(() => import('@/app/pages/free-test/page'));
+const TestDetails = lazy(() => import('@/app/pages/free-test/free-test-details/page'));
 const AbroadSingle = lazy(() => import('@/app/pages/abroad-single/page'));
 const WorkshopDetail = lazy(() => import('@/app/pages/workshop-detail/page'));
 const EventDetail = lazy(() => import('@/app/pages/event-detail/page'));
@@ -226,14 +229,27 @@ const pagesRoutes = [{
   path: '/pages/instructors',
   name: 'Instructor List',
   element: <InstructorList />
-},{
+}, {
   path: '/pages/privacy-policy',
   name: 'Privacy Policy',
   element: <PrivacyPolicy/>
-},{
+}, {
   path: '/pages/terms-conditions',
   name: 'Terms And Conditions',
   element: <TermsAndConditions/>
+}, {
+  path: '/pages/gallery',
+  name: 'Gallery',
+  element: <Gallery/>
+}, {
+  path: '/pages/free-test',
+  name: 'Free Test',
+  element: <FreeTest/>
+}, {
+  path: '/pages/free-test/free-test-details',
+  name: 'Free Test Details',
+  element: <TestDetails/>
+  
 }, {
   path: '/pages/instructors/:instructorId',
   name: 'Instructor Single',

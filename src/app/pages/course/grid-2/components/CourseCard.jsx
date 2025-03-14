@@ -29,7 +29,7 @@ const CourseCard = ({
           </span>
         </div>
         <CardTitle>
-          <a href="#">{title}</a>
+          <a href="/pages/course/detail-adv">{title}</a>
         </CardTitle>
         <ul className="list-inline mb-0">
           {Array(Math.floor(rating.star)).fill(0).map((_star, idx) => <li key={idx} className="list-inline-item me-1 small">

@@ -1,5 +1,5 @@
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import clsx from 'clsx'
+import { Link } from 'react-router-dom'
 import {
   Card,
   CardBody,
@@ -13,14 +13,14 @@ import {
   DropdownMenu,
   DropdownToggle,
   NavItem,
-} from 'react-bootstrap';
-import { BsBell, BsGridFill, BsHeart } from 'react-icons/bs';
-import { FaChevronDown, FaSearch } from 'react-icons/fa';
-import LogoBox from '@/components/LogoBox';
-import ProfileDropdown from '@/components/TopNavbar/components/ProfileDropdown';
-import useScrollEvent from '@/hooks/useScrollEvent';
-import useToggle from '@/hooks/useToggle';
-import avatar3 from '@/assets/images/avatar/03.jpg';
+} from 'react-bootstrap'
+import { BsBell, BsGridFill, BsHeart } from 'react-icons/bs'
+import { FaChevronDown, FaSearch } from 'react-icons/fa'
+import LogoBox from '@/components/LogoBox'
+import ProfileDropdown from '@/components/TopNavbar/components/ProfileDropdown'
+import useScrollEvent from '@/hooks/useScrollEvent'
+import useToggle from '@/hooks/useToggle'
+import avatar3 from '@/assets/images/avatar/03.jpg'
 
 const NotificationDropdown = () => {
   return (
@@ -71,13 +71,13 @@ const NotificationDropdown = () => {
         </Card>
       </DropdownMenu>
     </Dropdown>
-  );
-};
+  )
+}
 
 const TopNavigationBar = () => {
-  const { scrollY } = useScrollEvent();
-  const { isTrue: isOpen, toggle } = useToggle();
-  const { isTrue: isOpenCategory, toggle: toggleCategory } = useToggle();
+  const { scrollY } = useScrollEvent()
+  const { isTrue: isOpen, toggle } = useToggle()
+  const { isTrue: isOpenCategory, toggle: toggleCategory } = useToggle()
   return (
     <>
       <header
@@ -121,9 +121,9 @@ const TopNavigationBar = () => {
                     </div>
                   </div>
                 </Col>
-                <ul className="navbar-nav navbar-nav-scroll ms-auto">
+                {/* <ul className="navbar-nav navbar-nav-scroll ms-auto">
                   <NavItem>
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/home">
                       Home
                     </Link>
                   </NavItem>
@@ -137,7 +137,7 @@ const TopNavigationBar = () => {
                       Contact
                     </Link>
                   </NavItem>
-                </ul>
+                </ul> */}
               </div>
             </Collapse>
             <ul className="nav flex-row align-items-center list-unstyled ms-xl-auto">
@@ -164,7 +164,12 @@ const TopNavigationBar = () => {
               <div>
                 <ul className="navbar-nav navbar-nav-scroll mx-auto">
                   <NavItem>
-                    <Link className="nav-link" to="/courses">
+                    <Link className="nav-link" to="/home">
+                      Home
+                    </Link>
+                  </NavItem>
+                  <NavItem>
+                    <Link className="nav-link" to="/course">
                       Courses
                     </Link>
                   </NavItem>
@@ -184,8 +189,18 @@ const TopNavigationBar = () => {
                     </Link>
                   </NavItem>
                   <NavItem>
-                    <Link className="nav-link" to="/gallery">
+                    <Link className="nav-link" to="/pages/gallery">
                       Gallery
+                    </Link>
+                  </NavItem>
+                  <NavItem>
+                    <Link className="nav-link" to="/about">
+                      About
+                    </Link>
+                  </NavItem>
+                  <NavItem>
+                    <Link className="nav-link" to="/contact">
+                      Contact
                     </Link>
                   </NavItem>
                 </ul>
@@ -195,7 +210,7 @@ const TopNavigationBar = () => {
         </nav>
       </header>
     </>
-  );
-};
+  )
+}
 
-export default TopNavigationBar;
+export default TopNavigationBar

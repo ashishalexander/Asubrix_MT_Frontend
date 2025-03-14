@@ -1,20 +1,19 @@
-import { Link } from 'react-router-dom';
-import { Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'react-bootstrap';
-import { FaChevronUp, FaFacebookF, FaGlobe, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
-import { currentYear, developedBy, developedByLink } from '@/context/constants';
-import clsx from 'clsx';
-import logo from '@/assets/images/logo.svg';
-import logoLight from '@/assets/images/logo-light.svg';
-import googlePlay from '@/assets/images/client/google-play.svg';
-import playStore from '@/assets/images/client/app-store.svg';
-import ukFlag from '@/assets/images/flags/uk.svg';
-import grFlag from '@/assets/images/flags/gr.svg';
-import spFlag from '@/assets/images/flags/sp.svg';
-import { footerLinks } from '@/assets/data/footer-items';
-const Footer = ({
-  className
-}) => {
-  return <footer className={clsx('pt-5', className)}>
+import { Link } from 'react-router-dom'
+import { Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'react-bootstrap'
+import { FaChevronUp, FaFacebookF, FaGlobe, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa'
+import { currentYear, developedBy, developedByLink } from '@/context/constants'
+import clsx from 'clsx'
+import logo from '@/assets/images/logo.svg'
+import logoLight from '@/assets/images/logo-light.svg'
+import googlePlay from '@/assets/images/client/google-play.svg'
+import playStore from '@/assets/images/client/app-store.svg'
+import ukFlag from '@/assets/images/flags/uk.svg'
+import grFlag from '@/assets/images/flags/gr.svg'
+import spFlag from '@/assets/images/flags/sp.svg'
+import { footerLinks } from '@/assets/data/footer-items'
+const Footer = ({ className }) => {
+  return (
+    <footer className={clsx('pt-5', className)}>
       <Container>
         <Row className="g-4">
           <Col lg={3}>
@@ -27,25 +26,21 @@ const Footer = ({
             </p>
             <ul className="list-inline mb-0 mt-3">
               <li className="list-inline-item">
-
                 <a className="btn btn-white btn-sm shadow px-2 text-facebook" href="#">
                   <FaFacebookF className="fa-fw" />
                 </a>
               </li>
               <li className="list-inline-item">
-
                 <a className="btn btn-white btn-sm shadow px-2 text-instagram" href="#">
                   <FaInstagram className="fa-fw" />
                 </a>
               </li>
               <li className="list-inline-item">
-
                 <a className="btn btn-white btn-sm shadow px-2 text-twitter" href="#">
                   <FaTwitter className="fa-fw" />
                 </a>
               </li>
               <li className="list-inline-item">
-
                 <a className="btn btn-white btn-sm shadow px-2 text-linkedin" href="#">
                   <FaLinkedinIn className="fa-fw" />
                 </a>
@@ -54,16 +49,20 @@ const Footer = ({
           </Col>
           <Col lg={6}>
             <Row className="g-4">
-              {footerLinks.map((link, idx) => <Col xs={6} md={4} key={idx}>
+              {footerLinks.map((link, idx) => (
+                <Col xs={6} md={4} key={idx}>
                   <h5 className="mb-2 mb-md-4">{link.title}</h5>
                   <ul className="nav flex-column">
-                    {link.items.map((item, idx) => <li className="nav-item" key={idx}>
+                    {link.items.map((item, idx) => (
+                      <li className="nav-item" key={idx}>
                         <Link className="nav-link" to={item.link ?? ''}>
                           {item.name}
                         </Link>
-                      </li>)}
+                      </li>
+                    ))}
                   </ul>
-                </Col>)}
+                </Col>
+              ))}
             </Row>
           </Col>
           <Col lg={3}>
@@ -78,13 +77,11 @@ const Footer = ({
             <Row className="g-2 mt-2">
               <Col xs={6} sm={4} md={3} lg={6}>
                 <span role="button">
-
                   <img height={45} width={145} className="w-auto" src={googlePlay} alt="google-play" />
                 </span>
               </Col>
               <Col xs={6} sm={4} md={3} lg={6}>
                 <span role="button">
-
                   <img height={45} width={145} className="w-auto" src={playStore} alt="app-store" />
                 </span>
               </Col>
@@ -96,7 +93,6 @@ const Footer = ({
           <Container className="px-0">
             <div className="d-lg-flex justify-content-between align-items-center py-3 text-center text-md-left">
               <div className="text-body text-primary-hover">
-
                 Copyrights ©{currentYear} Eduport. Build by
                 <Link to={developedByLink} target="_blank" className="text-body">
                   {developedBy}
@@ -106,7 +102,13 @@ const Footer = ({
                 <ul className="nav list-inline justify-content-center mb-0">
                   <li className="list-inline-item">
                     <Dropdown className="dropup mt-0 text-center text-sm-end">
-                      <DropdownToggle as="a" className="nav-link arrow-none" role="button" id="languageSwitcher" data-bs-toggle="dropdown" aria-expanded="false">
+                      <DropdownToggle
+                        as="a"
+                        className="nav-link arrow-none"
+                        role="button"
+                        id="languageSwitcher"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <FaGlobe className="me-2" />
                         Language <FaChevronUp size={12} />
                       </DropdownToggle>
@@ -148,6 +150,7 @@ const Footer = ({
           </Container>
         </div>
       </Container>
-    </footer>;
-};
-export default Footer;
+    </footer>
+  )
+}
+export default Footer
