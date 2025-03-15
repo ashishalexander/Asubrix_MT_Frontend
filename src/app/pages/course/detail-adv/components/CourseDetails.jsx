@@ -6,11 +6,12 @@ import { TfiWrite } from "react-icons/tfi";
 import { RiEmojiStickerLine } from "react-icons/ri";
 
 import PriceCard from './PriceCard';
-import CourseSlider from './CourseSlider';
+// import CourseSlider from './CourseSlider';
 import Nav from 'react-bootstrap/Nav';
 import { useState } from 'react';
 import Curriculum from './Curriculum';
 import Materials from './Materials';
+import ResourceCarousel from './ResourseCarousel';
 
 const CourseDetails = () => {
   const [activeTab, setActiveTab] = useState('description');
@@ -47,7 +48,8 @@ const CourseDetails = () => {
                 </ul>
               </Col>
               <Col xs={12} className="position-relative">
-                <CourseSlider />
+                {/* <CourseSlider /> */}
+                <ResourceCarousel/>
               </Col>
             </Row>
           </Col>

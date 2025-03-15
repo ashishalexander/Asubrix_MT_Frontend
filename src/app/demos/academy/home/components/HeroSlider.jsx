@@ -5,7 +5,8 @@ import { renderToString } from 'react-dom/server';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import backgroundImg1 from '@/assets/images/bg/01.jpg';
 import backgroundImg2 from '@/assets/images/bg/02.jpg';
-import universityLogo from '@/assets/images/client/uni-logo-01.svg';
+import backgroundBannerImg from '@/assets/images/bg/home-banner.webp';
+import backgroundBannerImg2 from '@/assets/images/bg/home-banner2.webp';
 
 const HeroSlider = () => {
   const courseSliderSettings = {
@@ -31,7 +32,7 @@ const HeroSlider = () => {
             <div className="tiny-slider arrow-round arrow-blur arrow-hover rounded-0 overflow-hidden">
               <TinySlider settings={courseSliderSettings} className="tiny-slider-inner">
                 <Card className="overflow-hidden h-500px h-md-600px text-center rounded-0" style={{
-                  backgroundImage: `url(${backgroundImg1})`,
+                  backgroundImage: `url(${backgroundBannerImg})`,
                   backgroundPosition: 'center left',
                   backgroundSize: 'cover'
                 }}>
@@ -40,16 +41,16 @@ const HeroSlider = () => {
                     <div className="w-100 my-auto">
                       <Row className="justify-content-center">
                         <Col xs={11} lg={7}>
-                          <h1 className="text-white display-6">Discover Lifelong Learning</h1>
+                          {/* <h1 className="text-white display-6">Discover Lifelong Learning</h1>
                           <p className="text-white">
                             This Bootstrap 5 based theme is ideal for all types of sites that offer education such as Kindergarten, School, College,
                             University, Courses Hub, Training Center, or any Academy.
                           </p>
                           <Link to="/university/admission/form" className="btn btn-primary me-2 mb-0">
                             Admissions
-                          </Link>
-                          <a href="#" className="btn btn-outline-white mb-0">
-                            Learn More
+                          </Link> */}
+                          <a href="#" className="btn btn-white mb-0">
+                            Get Started
                           </a>
                         </Col>
                       </Row>
@@ -57,7 +58,7 @@ const HeroSlider = () => {
                   </div>
                 </Card>
                 <Card className="overflow-hidden h-500px h-md-600px text-center rounded-0" style={{
-                  backgroundImage: `url(${backgroundImg2})`,
+                  backgroundImage: `url(${backgroundBannerImg2})`,
                   backgroundPosition: 'center left',
                   backgroundSize: 'cover'
                 }}>
@@ -66,8 +67,8 @@ const HeroSlider = () => {
                     <div className="w-100 my-auto">
                       <Row className="justify-content-center">
                         <Col xs={11} lg={6}>
-                          <img className="rounded-1 h-70px" src={universityLogo} alt="university logo" />
-                          <h1 className="mb-0 text-white display-6">
+                          {/* <img className="rounded-1 h-70px" src={universityLogo} alt="university logo" /> */}
+                          {/* <h1 className="mb-0 text-white display-6">
                             Get new skills <br /> for the&nbsp;
                             <span className="position-relative">
                               digital world
@@ -76,7 +77,7 @@ const HeroSlider = () => {
                           <p className="text-white">
                             Get the right professional certificate program for you. See what course other students and experts in your domain are
                             learning on
-                          </p>
+                          </p> */}
                           <a href="#" className="btn btn-white mb-0">
                             Get Started
                           </a>

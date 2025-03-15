@@ -63,14 +63,15 @@ import mastercardImg from '@/assets/images/client/mastercard.svg';
 import paypalImg from '@/assets/images/client/paypal.svg';
 import { FaTv, FaUserGraduate, FaUserTie } from 'react-icons/fa';
 import { BsBook, BsFileEarmarkPdf, BsSoundwave, BsStopwatchFill } from 'react-icons/bs';
+
 export const coursesData = [{
   id: '1',
   image: courseImg8,
-  badge: {
-    text: 'All level',
+  badge:{
+    text: 'pdf',
     class: 'bg-purple text-purple'
   },
-  title: 'Sketch from A to Z: for app designer',
+  title: 'UPSC FOUNDATION BATCH',
   description: 'Proposal indulged no do sociable he throwing settling.',
   rating: {
     review: 2000,
@@ -100,7 +101,7 @@ export const coursesData = [{
     text: 'Beginner',
     class: 'bg-success text-success'
   },
-  title: 'Graphic Design Masterclass',
+  title: 'NCERT CRASH COURSE',
   description: 'Rooms oh fully taken by worse do Points afraid but may end Rooms Points afraid but may end Rooms',
   rating: {
     review: 6500,
@@ -130,7 +131,7 @@ export const coursesData = [{
     text: 'Beginner',
     class: 'bg-success text-success'
   },
-  title: 'Create a Design System in Figma',
+  title: 'RRB NTPC MOCK TEST SERIES',
   description: 'Rooms oh fully taken by worse do. Points afraid but may end afraid but may end.',
   rating: {
     review: 3500,

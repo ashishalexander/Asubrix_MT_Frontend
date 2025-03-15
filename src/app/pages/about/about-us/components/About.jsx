@@ -33,7 +33,6 @@ const About = () => {
               Pudhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations. Our academy
               has been on a transformative journey, sculpting the futures of aspirants by providing unparalleled guidance. Our mission extends beyond
               shaping futures; it aims to create opportunities for aspirants, especially those from rural areas, enabling them to flourish and excel
-              in their competitive exam endeavors.
             </p>
           </Col>
         </Row>
@@ -41,18 +40,23 @@ const About = () => {
         {/* Second Section */}
         <Row className="align-items-start mt-5">
           <Col lg={7} className="mt-4 mt-lg-0">
-            <h2 className="mb-3">What Makes Us Different</h2>
+            <h2 className="mb-3">Our Vision</h2>
             <p>
-              Pudhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations. Our academy
-              has been on a transformative journey, sculpting the futures of aspirants by providing unparalleled guidance. Our mission extends beyond
-              shaping futures; it aims to create opportunities for aspirants, especially those from rural areas, enabling them to flourish and excel
-              in their competitive exam endeavors.
+              Our vision is to be a beacon of excellence in education, empowering individuals with the knowledge and skills needed to achieve their
+              goals. We strive to create a learning environment that fosters innovation, critical thinking, and personal growth.
             </p>
+
+            <h2 className="mb-3 mt-4">Our Mission</h2>
             <p>
-              Pudhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations. Our academy
-              has been on a transformative journey, sculpting the futures of aspirants by providing unparalleled guidance. Our mission extends beyond
-              shaping futures; it aims to create opportunities for aspirants, especially those from rural areas, enabling them to flourish and excel
-              in their competitive exam endeavors.
+              Our mission is to provide high-quality education and guidance for competitive examinations, ensuring that students—especially those from
+              underserved communities—have the resources and mentorship needed to succeed. We are committed to shaping future leaders by instilling
+              confidence and academic excellence.
+            </p>
+
+            <h2 className="mb-3 mt-4">Our Values</h2>
+            <p>
+              We believe in integrity, dedication, and inclusivity. Our core values drive us to maintain high educational standards, promote equal
+              learning opportunities, and support students in their journey towards success.
             </p>
           </Col>
           <Col lg={5} className="position-relative">
