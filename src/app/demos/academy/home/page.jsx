@@ -18,7 +18,7 @@ const AcademicHome = () => {
       <main>
         <HeroSlider />
         <OfferCourses />
-        <CourseSlider />
+        {/* <CourseSlider /> */}
         {/* <TrendingCourses /> */}
         <FeaturedCourses />
         <PopularCourses />

@@ -1,5 +1,7 @@
 import { Card, Col, Container, Row, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import { FaFile } from "react-icons/fa";
+
 
 const testAttempts = [
   { id: 1, date: "13-03-2025" },
@@ -30,7 +32,8 @@ const TestDetails = () => {
               <Card className="shadow p-3">
                 <Row className="d-flex align-items-center justify-content-between">
                   <Col xs={2} className="d-flex justify-content-center">
-                    <img src="/folder-icon.png" alt="test" width={40} />
+                    {/* <img src="/folder-icon.png" alt="test" width={40} /> */}
+                    <FaFile size={40} color="#3256a8"/>
                   </Col>
                   <Col xs={6}>
                     <h5 className="mb-0">{attempt.date}</h5>

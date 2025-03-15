@@ -71,7 +71,7 @@ const TopNavigationBar = () => {
         <Container>
           {/* Logo */}
           <Navbar.Brand>
-            <LogoBox height={36} width={170} />
+            <LogoBox />
           </Navbar.Brand>
 
           {/* Navbar Toggler (Mobile) */}

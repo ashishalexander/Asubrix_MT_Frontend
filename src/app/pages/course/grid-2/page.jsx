@@ -1,4 +1,5 @@
 import Footer from '@/components/Footer';
+import Hero from './components/Hero';
 import PageMetaData from '@/components/PageMetaData';
 import ActionBox from './components/ActionBox';
 import Courses from './components/Courses';
@@ -9,7 +10,8 @@ const CourseGrid2 = () => {
       <PageMetaData title="Course Grid2" />
       <TopNavigationBar />
       <main>
-        <PageBanner />
+        <Hero/>
+        {/* <PageBanner /> */}
         <Courses />
         {/* <ActionBox /> */}
       </main>

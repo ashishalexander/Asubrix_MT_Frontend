@@ -3,6 +3,8 @@ import { Card, CardBody, CardTitle, Col, Container, Row, Button } from "react-bo
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Pagination from "./Pagination";
+import { FaFolderOpen } from "react-icons/fa";
+
 
 const freeTests = [
   { id: 1, name: "Daily Current Affairs Test", folders: 11 },
@@ -68,7 +70,8 @@ const FreeTestsList = () => {
                 <Card className="shadow p-3">
                   <Row className="align-items-center">
                     <Col xs={2}>
-                      <img src="/folder-icon.png" alt="folder" width={40} />
+                      {/* <img src="/folder-icon.png" alt="folder" width={40} /> */}
+                      <FaFolderOpen size={40} color="gold"/>
                     </Col>
                     <Col xs={8}>
                       <CardTitle className="mb-0">{test.name}</CardTitle>
