@@ -6,7 +6,7 @@ import bgImg3 from '@/assets/images/bg/03.jpg';
 const Hero = () => {
   return (
     <section
-      className="pt-0 position-relative overflow-hidden h-400px h-sm-300px h-lg-400px rounded-top-4 "
+      className="pt-0 position-relative overflow-hidden h-400px h-sm-300px h-lg-400px"
       style={{
         backgroundImage: `url(${bgImg3})`,
         backgroundPosition: 'center',
