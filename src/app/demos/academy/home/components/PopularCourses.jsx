@@ -252,7 +252,7 @@ const PopularCourse = ({ title, image }) => {
           </div>
         </div>
         <div className="mt-3">
-          <Button variant="danger">Buy course</Button>
+          <Button variant="danger" href='/pages/course/detail-adv'>Buy course</Button>
         </div>
       </Col>
       <Col lg={6}>

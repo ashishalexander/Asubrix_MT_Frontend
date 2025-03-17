@@ -35,7 +35,7 @@ const EditProfile = () => {
             <div className="d-flex align-items-center">
               <label className="position-relative me-4" htmlFor="uploadfile-1" title="Replace this pic">
                 <span className="avatar avatar-xl">
-                  <img id="uploadfile-1-preview" className="avatar-img rounded-circle border border-white border-3 shadow" src={avatar7} alt="" />
+                  <img id="uploadfile-1-preview" className="avatar-img rounded-circle border-white border-3 shadow" src={avatar7} alt="" />
                 </span>
                 <button type="button" className="uploadremove">
                   <BsX className="bi bi-x text-white" />
@@ -47,23 +47,31 @@ const EditProfile = () => {
               <input id="uploadfile-1" className="form-control d-none" type="file" />
             </div>
           </Col>
-          <Col xs={12}>
-            <label className="form-label">Full name</label>
+
+
+          <Col xs={6}>
+            <label className="form-label">First name</label>
             <div className="input-group">
               <input type="text" className="form-control" defaultValue="Lori" placeholder="First name" />
+            </div>
+          </Col>
+
+          <Col xs={6}>
+            <label className="form-label">Last name</label>
+            <div className="input-group">
               <input type="text" className="form-control" defaultValue="Stevens" placeholder="Last name" />
             </div>
           </Col>
+
           <Col md={6}>
             <label className="form-label">Username</label>
             <div className="input-group">
-              <span className="input-group-text">Eduport.com</span>
+              {/* <span className="input-group-text">Eduport.com</span> */}
               <input type="text" className="form-control" defaultValue="loristev" />
             </div>
           </Col>
           <TextFormInput name="email" label="Email id" control={control} containerClassName="col-md-6" />
           <TextFormInput name="phoneNo" label="Phone number" control={control} containerClassName="col-md-6" />
-          <TextFormInput name="location" label="Location" control={control} containerClassName="col-md-6" />
           <Col xs={12}>
             <label className="form-label">About me</label>
             <textarea className="form-control" rows={3} defaultValue={'I’ve found a way to get paid for my favorite hobby, and do so while following my dream of traveling the world.'} />

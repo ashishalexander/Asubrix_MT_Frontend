@@ -1,8 +1,9 @@
 import PageMetaData from '@/components/PageMetaData'
 import CourseSlider from './components/CourseSlider'
-import Footer from './components/Footer'
+import Footer from '@/components/Footer'
 import PopularCourses from './components/PopularCourses'
 import TopNavigationBar from '@/components/TopNavigationBar'
+// import TopNavigationBar from './components/TopNavigationBar'
 import TrendingCourses from './components/TrendingCourses'
 import HeroSlider from './components/HeroSlider'
 import OfferCourses from './components/OfferCourses'
@@ -27,7 +28,7 @@ const AcademicHome = () => {
         {/* <UpcomingEvents/> */}
         <Testimonials />
       </main>
-      <Footer />
+      <Footer className="custom-footer" />
     </>
   )
 }

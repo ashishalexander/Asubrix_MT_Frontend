@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom'
 import { Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'react-bootstrap'
-import { FaChevronUp, FaFacebookF, FaGlobe, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa'
+import { FaChevronUp, FaFacebookF, FaYoutube, FaInstagram, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
 import { currentYear, developedBy, developedByLink } from '@/context/constants'
 import clsx from 'clsx'
 import logo from '@/assets/images/logo.svg'
 import logoLight from '@/assets/images/logo-light.svg'
+// import pymainlogo from '@/assets/images/pymainlogo.webp';
+import pylogo from '@/assets/images/puthuyougam_logo.png';
 import googlePlay from '@/assets/images/client/google-play.svg'
 import playStore from '@/assets/images/client/app-store.svg'
-import ukFlag from '@/assets/images/flags/uk.svg'
-import grFlag from '@/assets/images/flags/gr.svg'
-import spFlag from '@/assets/images/flags/sp.svg'
 import { footerLinks } from '@/assets/data/footer-items'
 const Footer = ({ className }) => {
   return (
@@ -18,31 +17,47 @@ const Footer = ({ className }) => {
         <Row className="g-4">
           <Col lg={3}>
             <Link className="me-0" to="/">
-              <img className="light-mode-item h-40px" width={189} height={40} src={logo} alt="logo" />
-              <img className="dark-mode-item h-40px" width={189} height={40} src={logoLight} alt="logo" />
+              <img className="light-mode-item h-40px" width={189} height={40} src={pylogo} alt="logo" />
+              {/* <img className="dark-mode-item h-40px" width={189} height={40} src={pymainlogo} alt="logo" /> */}
             </Link>
             <p className="my-3">
               Eduport education theme, built specifically for the education centers which is dedicated to teaching and involve learners.
             </p>
             <ul className="list-inline mb-0 mt-3">
               <li className="list-inline-item">
-                <a className="btn btn-white btn-sm shadow px-2 text-facebook" href="#">
+                <a
+                  className="btn btn-white btn-sm shadow px-2 text-facebook"
+                  href="https://www.facebook.com/people/Pudhuyugamacademy/61553787314656/"
+                  target="_blank"
+                  rel="noopener noreferrer">
                   <FaFacebookF className="fa-fw" />
                 </a>
               </li>
               <li className="list-inline-item">
-                <a className="btn btn-white btn-sm shadow px-2 text-instagram" href="#">
+                <a
+                  className="btn btn-white btn-sm shadow px-2 text-instagram"
+                  href="https://www.instagram.com/pudhuyugamacademy/"
+                  target="_blank"
+                  rel="noopener noreferrer">
                   <FaInstagram className="fa-fw" />
                 </a>
               </li>
               <li className="list-inline-item">
-                <a className="btn btn-white btn-sm shadow px-2 text-twitter" href="#">
-                  <FaTwitter className="fa-fw" />
+                <a
+                  className="btn btn-white btn-sm shadow px-2 text-telegram"
+                  href="https://t.me/pudhuyugam"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <FaTelegramPlane className="fa-fw" />
                 </a>
               </li>
               <li className="list-inline-item">
-                <a className="btn btn-white btn-sm shadow px-2 text-linkedin" href="#">
-                  <FaLinkedinIn className="fa-fw" />
+                <a
+                  className="btn btn-white btn-sm shadow px-2 text-youtube"
+                  href="https://www.youtube.com/@PudhuyugamAcademy"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <FaYoutube className="fa-fw" />
                 </a>
               </li>
             </ul>
@@ -67,12 +82,9 @@ const Footer = ({ className }) => {
           </Col>
           <Col lg={3}>
             <h5 className="mb-2 mb-md-4">Contact</h5>
-            <p className="mb-2">
-              Toll free:<span className="h6 fw-light ms-2">+1234 568 963</span>
-              <span className="d-block small">(9:AM to 8:PM IST)</span>
-            </p>
+            <p className="mb-2">4, Hari Garderns, Ramanuja Nagar, Uppilipayam Post, Coimbatore - 641 015 Contact Number : 9488722512,  6381048227</p>
             <p className="mb-0">
-              Email:<span className="h6 fw-light ms-2">example@gmail.com</span>
+              Email:<span className="h6 fw-light ms-2">official@pudhuyugamacademy.in </span>
             </p>
             <Row className="g-2 mt-2">
               <Col xs={6} sm={4} md={3} lg={6}>
@@ -93,47 +105,14 @@ const Footer = ({ className }) => {
           <Container className="px-0">
             <div className="d-lg-flex justify-content-between align-items-center py-3 text-center text-md-left">
               <div className="text-body text-primary-hover">
-                Copyrights ©{currentYear} Eduport. Build by
-                <Link to={developedByLink} target="_blank" className="text-body">
-                  {developedBy}
+                Powered by{' '}
+                <Link to="https://asubrix.com/ " target="_blank" className="text-body">
+                  Asubrix International Pvt Ltd
                 </Link>
+                . © Pudhuyugam Academy {currentYear}. All rights reserved
               </div>
               <div className="justify-content-center mt-3 mt-lg-0">
                 <ul className="nav list-inline justify-content-center mb-0">
-                  <li className="list-inline-item">
-                    <Dropdown className="dropup mt-0 text-center text-sm-end">
-                      <DropdownToggle
-                        as="a"
-                        className="nav-link arrow-none"
-                        role="button"
-                        id="languageSwitcher"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <FaGlobe className="me-2" />
-                        Language <FaChevronUp size={12} />
-                      </DropdownToggle>
-                      <DropdownMenu as="ul" className="min-w-auto" aria-labelledby="languageSwitcher">
-                        <li>
-                          <DropdownItem className="me-4" href="#">
-                            <img alt="uk" height={12} width={18} className="fa-fw me-2" src={ukFlag} />
-                            English
-                          </DropdownItem>
-                        </li>
-                        <li>
-                          <DropdownItem className="me-4" href="#">
-                            <img alt="gr" height={12} width={18} className="fa-fw me-2" src={grFlag} />
-                            German
-                          </DropdownItem>
-                        </li>
-                        <li>
-                          <DropdownItem className="me-4" href="#">
-                            <img alt="sp" height={12} width={18} className="fa-fw me-2" src={spFlag} />
-                            French
-                          </DropdownItem>
-                        </li>
-                      </DropdownMenu>
-                    </Dropdown>
-                  </li>
                   <li className="list-inline-item">
                     <a className="nav-link" href="/pages/terms-conditions">
                       Terms and Conditions

@@ -1,21 +1,22 @@
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 export const footerLinks = [{
-  title: 'Company',
+  title: 'Quick links',
   items: [{
+    name: 'Home',
+    link: '/about'
+  }, {
     name: 'About us',
     link: '/about'
   }, {
-    name: 'Contact us',
-    link: '/contact'
+    name: 'Blogs'
   }, {
-    name: 'News and Blogs'
+    name: 'Gallery',
+    link: ''
   }, {
-    name: 'Library'
-  }, {
-    name: 'Career'
+    name: 'Course'
   }]
 }, {
-  title: 'Community',
+  title: 'Courses',
   items: [{
     name: 'Documentation'
   }, {
@@ -27,7 +28,7 @@ export const footerLinks = [{
     name: 'Sitemap'
   }]
 }, {
-  title: 'Teaching',
+  title: 'Support',
   items: [{
     name: 'Become a teacher'
   }, {

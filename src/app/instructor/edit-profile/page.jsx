@@ -5,13 +5,16 @@ import EmailChange from './components/EmailChange';
 import LinkedAccount from './components/LinkedAccount';
 import PasswordChange from './components/PasswordChange';
 import SocialMedia from './components/SocialMedia';
+import TopNavigationBar from '@/components/TopNavigationBar';
+
 const EditProfilePage = () => {
   return <>
       <PageMetaData title="Edit Profile" />
+
       <EditProfile />
       <Row className="g-4 mt-3">
-        <LinkedAccount />
-        <SocialMedia />
+        {/* <LinkedAccount />
+        <SocialMedia /> */}
         <EmailChange />
         <PasswordChange />
       </Row>

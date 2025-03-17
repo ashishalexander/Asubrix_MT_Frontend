@@ -103,7 +103,7 @@ const Hero = () => {
               </Card>
             </div>
             <div className=" position-relative">
-              <div className="bg-warning rounded-4 border border-white border-5 h-200px h-sm-300px shadow" />
+              <div className="bg-warning rounded-4 border-white border-5 h-200px h-sm-300px shadow" />
               <img src={element6} className="position-absolute bottom-0 start-50 translate-middle-x" alt="element" />
             </div>
           </Col>

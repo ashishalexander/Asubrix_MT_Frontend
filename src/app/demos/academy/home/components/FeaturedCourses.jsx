@@ -98,7 +98,7 @@ const FeaturedCourses = () => {
             <p className="mb-0">Find courses that are best for your profession</p>
           </Col>
           <Col xs={6} className="text-end">
-            <Link to="" className="btn">
+            <Link to="/pages/course/grid-2" className="btn">
               View all
             </Link>
           </Col>

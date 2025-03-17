@@ -61,19 +61,7 @@ const ProfileDropdown = ({
         <li>
           <DropdownItem href="/instructor/edit-profile">
             <BsPerson className="fa-fw me-2" />
-            Edit Profile
-          </DropdownItem>
-        </li>
-        <li>
-          <DropdownItem href="/admin/admin-settings">
-            <BsGear className="fa-fw me-2" />
-            Account Settings
-          </DropdownItem>
-        </li>
-        <li>
-          <DropdownItem href="/help/center">
-            <BsInfoCircle className="fa-fw me-2" />
-            Help
+            Dashboard
           </DropdownItem>
         </li>
         <li>
@@ -86,7 +74,7 @@ const ProfileDropdown = ({
 
           <DropdownDivider />
         </li>
-        <li>
+        {/* <li>
           <div className="bg-light dark-mode-switch theme-icon-active d-flex align-items-center p-1 rounded mt-2">
             {themeModes.map((mode, idx) => <button onClick={() => changeTheme(mode.theme)} data-bs-theme-value={mode.theme} type="button" className={clsx('btn btn-sm mb-0', {
             active: theme === mode.theme
@@ -95,7 +83,7 @@ const ProfileDropdown = ({
                 {toSentenceCase(mode.theme)}
               </button>)}
           </div>
-        </li>
+        </li> */}
       </DropdownMenu>
     </Dropdown>;
 };

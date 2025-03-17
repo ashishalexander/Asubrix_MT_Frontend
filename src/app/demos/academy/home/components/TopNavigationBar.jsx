@@ -104,7 +104,7 @@ const TopNavigationBar = () => {
             </button>
             <Collapse in={isOpen} className="navbar-collapse">
               <div>
-                <Col xxl={6}>
+                {/* <Col xxl={6}>
                   <div className="nav my-3 my-xl-0 px-4 flex-nowrap align-items-center">
                     <div className="nav-item w-100">
                       <form className="rounded position-relative">
@@ -120,14 +120,28 @@ const TopNavigationBar = () => {
                       </form>
                     </div>
                   </div>
-                </Col>
-                {/* <ul className="navbar-nav navbar-nav-scroll ms-auto">
-                  <NavItem>
+                </Col> */}
+                <ul className="navbar-nav navbar-nav-scroll ms-auto">
+                  {[
+                    { label: 'Home', path: '/demos/academy/home' },
+                    { label: 'Courses', path: '/pages/course/grid-2' },
+                    { label: 'Free Test', path: '/pages/free-test' },
+                    { label: 'Gallery', path: '/pages/gallery' },
+                    { label: 'About', path: '/pages/about/about-us' },
+                    { label: 'Contact', path: '/pages/about/contact-us' },
+                  ].map(({ label, path }, idx) => (
+                    <NavItem key={idx}>
+                      <Link className="nav-link" to={path}>
+                        {label}
+                      </Link>
+                    </NavItem>
+                  ))}
+                  {/* <NavItem>
                     <Link className="nav-link" to="/home">
                       Home
                     </Link>
-                  </NavItem>
-                  <NavItem>
+                  </NavItem> */}
+                  {/* <NavItem>
                     <Link className="nav-link" to="/pages/about/about-us">
                       About
                     </Link>
@@ -136,8 +150,8 @@ const TopNavigationBar = () => {
                     <Link className="nav-link" to="/pages/about/contact-us">
                       Contact
                     </Link>
-                  </NavItem>
-                </ul> */}
+                  </NavItem> */}
+                </ul>
               </div>
             </Collapse>
             <ul className="nav flex-row align-items-center list-unstyled ms-xl-auto">
@@ -147,7 +161,7 @@ const TopNavigationBar = () => {
           </Container>
         </nav>
         <hr className="my-0" />
-        <nav className="navbar navbar-expand-xl nav-category">
+        {/* <nav className="navbar navbar-expand-xl nav-category">
           <Container className="px-0">
             <button
               onClick={toggleCategory}
@@ -207,7 +221,7 @@ const TopNavigationBar = () => {
               </div>
             </Collapse>
           </Container>
-        </nav>
+        </nav> */}
       </header>
     </>
   )

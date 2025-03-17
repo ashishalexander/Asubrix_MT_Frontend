@@ -71,7 +71,7 @@ const courseSliderSettings = {
 };
 const Testimonials = () => {
   const allReviews = useFetchData(getAllStudentsReviews);
-  return <section className="pt-0">
+  return <section className="">
       <Container>
         <div className="bg-grey p-4 rounded-3">
           <Row className="mb-4">

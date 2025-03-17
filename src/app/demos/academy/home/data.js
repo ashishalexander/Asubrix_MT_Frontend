@@ -28,17 +28,17 @@ export const counterData = [{
 export const offerCourses = [{
   image: elem1,
   title: 'Online Sessions',
-  description: 'Join our dynamic online sessions for interactive learning. Experience live lectures, real-time interaction, and collaborative activities to master competitive exams.',
+  description: 'Join interactive sessions with live lectures and discussions.',
 }, {
   image: elem3,
   title: 'Test Series',
-  description: 'Designed to assess your knowledge and identify areas for improvement, these tests simulate competitive examination challenges, providing valuable insights to enhance your proficiency.',
+  description: 'Test your knowledge with exam simulations for better proficiency.',
 }, {
   image: elem2,
   title: '1 to 1 Mentorship',
-  description: 'Elevate your learning experience with personalized guidance from experienced mentors. Our one-to-one mentorship program offers individualized support, addressing your specific learning needs ',
+  description: 'Get expert mentorship with personalized guidance.',
 }, {
   image: elem4,
   title: "Topper's Study Material",
-  description: "Unlock top-performer insights with our exclusive study materials. Our toppers' resources offer a comprehensive and effective guide to enhance your understanding of  and excel in your studies",
+  description: "Access topper insights with exclusive study materials.",
 }];

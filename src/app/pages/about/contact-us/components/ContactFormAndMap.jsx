@@ -65,10 +65,10 @@ const ContactFormAndMap = () => {
       </section>
 
       {/* Full-width Map Section */}
-      <section className="pt-0 pb-0">
-        <div className="w-100 vw-100">
+      <section className="pt-0 pb-0 mb-0" style={{ margin: 0, padding: 0 }}>
+        <div className="w-100 vw-100" style={{ margin: 0, padding: 0 }}>
           <iframe
-            className="w-100 vw-100 h-500px grayscale rounded-0"
+            className="w-100 vw-100 h-500px rounded-0 m-0 p-0"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.261996232096!2d77.0243787!3d11.018958999999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85700125327fb%3A0x95423240cfd3a583!2sPudhuyugam%20Academy!5e0!3m2!1sen!2sin!4v1741930122609!5m2!1sen!2sin"
             height={500}
             style={{ border: 0 }}

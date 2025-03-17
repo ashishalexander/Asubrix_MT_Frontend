@@ -21,7 +21,7 @@ const Banner = ({
               <Row className="d-flex justify-content-between">
                 <Col xs={'auto'} className="mt-4 mt-md-0">
                   <div className="avatar avatar-xxl mt-n3">
-                    <img className="avatar-img rounded-circle border border-white border-3 shadow" src={avatar1} alt="avatar" />
+                    <img className="avatar-img rounded-circle border-white border-3 shadow" src={avatar1} alt="avatar" />
                   </div>
                 </Col>
                 <Col className="d-md-flex justify-content-between align-items-center mt-4">
@@ -31,24 +31,20 @@ const Banner = ({
                     </h1>
                     <ul className="list-inline mb-0">
                       <li className="list-inline-item h6 fw-light me-3 mb-1 mb-sm-0">
-                        <FaStar className="text-warning me-2" />
-                        4.5/5.0
+                        {/* <FaStar className="text-warning me-2" /> */}
+                        user@mail.com
                       </li>
-                      <li className="list-inline-item h6 fw-light me-3 mb-1 mb-sm-0">
-                        <FaUserGraduate className="text-orange me-2" />
-                        12k Enrolled Students
-                      </li>
-                      <li className="list-inline-item h6 fw-light me-3 mb-1 mb-sm-0">
-                        <FaBook className="text-purple me-2" />
-                        25 Courses
+                      <li className="list-inline-item me-3 mb-1 mb-sm-0">
+                        <span className="h6">7</span>
+                        &nbsp;<span className="text-body fw-light">Completed courses</span>
                       </li>
                     </ul>
                   </div>
-                  <div className="d-flex align-items-center mt-2 mt-md-0">
+                  {/* <div className="d-flex align-items-center mt-2 mt-md-0">
                     <Link to="/instructor/create-course" className="btn btn-success mb-0">
                       Create a course
                     </Link>
-                  </div>
+                  </div> */}
                 </Col>
               </Row>
             </Card>
