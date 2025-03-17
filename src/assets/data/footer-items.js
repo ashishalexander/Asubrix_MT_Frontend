@@ -18,24 +18,26 @@ export const footerLinks = [{
 }, {
   title: 'Courses',
   items: [{
-    name: 'Documentation'
+    name: 'Test Series'
   }, {
-    name: 'Faq',
+    name: 'TNPSC',
     link: '/help/faq'
   }, {
-    name: 'Form'
+    name: 'UPSC CSE'
   }, {
-    name: 'Sitemap'
+    name: 'Bank Exam'
+  },{
+    name: "Railways Exam"
   }]
 }, {
   title: 'Support',
   items: [{
-    name: 'Become a teacher'
+    name: 'Contact'
   }, {
     name: 'How to guide',
     link: '/help/faq'
   }, {
-    name: 'Term & condition'
+    name: 'FAQ'
   }]
 }];
 export const footerLinks2 = [{

@@ -86,7 +86,7 @@ const TopNavigationBar = () => {
         })}>
         <nav className="navbar navbar-expand-xl z-index-9">
           <Container>
-            <LogoBox height={50} width={200} />
+            <LogoBox height={75} width={275} />
             <button
               onClick={toggle}
               className="navbar-toggler ms-auto"

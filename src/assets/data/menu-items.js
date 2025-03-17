@@ -107,13 +107,15 @@ export const CATEGORY_MENU_ITEMS = [{
     parentKey: 'category'
   }]
 }];
-export const INSTRUCTOR_MENU_ITEMS = [{
-  key: 'dashboard',
-  label: 'Dashboard',
-  icon: BsUiChecksGrid,
-  url: '/instructor/dashboard',
-  parentKey: 'instructor'
-}, {
+export const INSTRUCTOR_MENU_ITEMS = [
+  {
+    key: 'profile',
+    label: 'Dashboard',
+    icon: BsPencilSquare,
+    url: '/instructor/edit-profile',
+    parentKey: 'instructor'
+  }, 
+{
   key: 'courses',
   label: 'My Courses',
   icon: BsBasket,
@@ -152,13 +154,14 @@ export const INSTRUCTOR_MENU_ITEMS = [{
 //   url: '/instructor/review',
 //   parentKey: 'instructor'
 // }, 
-{
-  key: 'profile',
-  label: 'Edit Profile',
-  icon: BsPencilSquare,
-  url: '/instructor/edit-profile',
-  parentKey: 'instructor'
-}, {
+// {
+//   key: 'profile',
+//   label: 'Edit Profile',
+//   icon: BsPencilSquare,
+//   url: '/instructor/edit-profile',
+//   parentKey: 'instructor'
+// },
+ {
   key: 'payout',
   label: 'Payment History',
   icon: BsWallet2,
@@ -166,7 +169,7 @@ export const INSTRUCTOR_MENU_ITEMS = [{
   parentKey: 'instructor'
 }, {
   key: 'setting',
-  label: 'Setting',
+  label: 'Settings',
   icon: BsGear,
   url: '/instructor/setting',
   parentKey: 'instructor'
