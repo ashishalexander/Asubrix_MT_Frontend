@@ -7,7 +7,7 @@ import '@/assets/scss/style.scss'; // Ensure the main SCSS file is imported
 
 const LogoBox = () => {
   return (
-    <Link className="navbar-brand" to="/">
+    <Link className="navbar-brand" to="/demos/academy/home">
       <img className="light-mode-item navbar-brand-item logo-image" src={pymainlogo} alt="logo" />
     </Link>
   );

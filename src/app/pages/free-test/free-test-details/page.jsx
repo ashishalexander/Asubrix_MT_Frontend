@@ -9,7 +9,7 @@ const FreeTestDetails = () => {
       <main>
         <TestDetails />
       </main>
-      <Footer />
+      <Footer className="custom-footer"/>
     </>
   )
 }

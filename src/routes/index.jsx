@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
+
 // Demos Pages
 const DemosDefault = lazy(() => import('@/app/demos/default/home/page'));
 const Eduction = lazy(() => import('@/app/demos/education/home/page'));
@@ -33,6 +34,7 @@ const TermsAndConditions = lazy(() => import('@/app/pages/terms-conditions/page'
 const Gallery = lazy(() => import('@/app/pages/gallery/page'));
 const FreeTest = lazy(() => import('@/app/pages/free-test/page'));
 const TestDetails = lazy(() => import('@/app/pages/free-test/free-test-details/page'));
+const TestQuestion = lazy(() => import('@/app/pages/test-questions/page'))
 const AbroadSingle = lazy(() => import('@/app/pages/abroad-single/page'));
 const WorkshopDetail = lazy(() => import('@/app/pages/workshop-detail/page'));
 const EventDetail = lazy(() => import('@/app/pages/event-detail/page'));
@@ -249,7 +251,10 @@ const pagesRoutes = [{
   path: '/pages/free-test/free-test-details',
   name: 'Free Test Details',
   element: <TestDetails/>
-  
+}, {
+  path: '/pages/test-questions',
+  name: 'Test Questions',
+  element : <TestQuestion/>
 }, {
   path: '/pages/instructors/:instructorId',
   name: 'Instructor Single',

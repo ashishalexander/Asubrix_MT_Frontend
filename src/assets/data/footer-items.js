@@ -3,41 +3,45 @@ export const footerLinks = [{
   title: 'Quick links',
   items: [{
     name: 'Home',
-    link: '/about'
+    link: '/demos/academy/home'
   }, {
     name: 'About us',
-    link: '/about'
+    link: '/pages/about/about-us'
   }, {
     name: 'Blogs'
   }, {
     name: 'Gallery',
-    link: ''
+    link: '/pages/gallery'
   }, {
-    name: 'Course'
+    name: 'Course',
+    link: '/pages/course/grid-2'
   }]
 }, {
   title: 'Courses',
   items: [{
-    name: 'Test Series'
+    name: 'Test Series',
+    link: '/pages/course/grid-2'
   }, {
     name: 'TNPSC',
-    link: '/help/faq'
+    link: '/pages/course/grid-2'
   }, {
-    name: 'UPSC CSE'
+    name: 'UPSC CSE',
+    link: '/pages/course/grid-2'
   }, {
-    name: 'Bank Exam'
+    name: 'Bank Exam',
+    link: '/pages/course/grid-2'
   },{
-    name: "Railways Exam"
+    name: "Railways Exam",
+    link: '/pages/course/grid-2'
   }]
 }, {
   title: 'Support',
   items: [{
-    name: 'Contact'
+    name: 'Contact',
+    link: '/pages/about/contact-us'
   }, {
-    name: 'How to guide',
-    link: '/help/faq'
-  }, {
-    name: 'FAQ'
+    name: 'FAQ',
+    link: '#'
   }]
 }];
 export const footerLinks2 = [{

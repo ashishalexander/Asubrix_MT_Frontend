@@ -15,7 +15,7 @@ const CourseGrid2 = () => {
         <Courses />
         {/* <ActionBox /> */}
       </main>
-      <Footer className="bg-light" />
+      <Footer className="custom-footer"/>
     </>;
 };
 export default CourseGrid2;

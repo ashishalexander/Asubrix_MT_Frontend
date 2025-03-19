@@ -10,6 +10,8 @@ import pylogo from '@/assets/images/puthuyougam_logo.png';
 import googlePlay from '@/assets/images/client/google-play.svg'
 import playStore from '@/assets/images/client/app-store.svg'
 import { footerLinks } from '@/assets/data/footer-items'
+import '@/assets/scss/style.scss'; 
+
 const Footer = ({ className }) => {
   return (
     <footer className={clsx('pt-5', className)}>
@@ -17,12 +19,11 @@ const Footer = ({ className }) => {
         <Row className="g-4">
           <Col lg={3}>
             <Link className="me-0" to="/">
-              <img className="light-mode-item h-40px" width={189} height={40} src={pylogo} alt="logo" />
+              <img className="light-mode-item logo-image-footer" width={189} height={40} src={pylogo} alt="logo" />
               {/* <img className="dark-mode-item h-40px" width={189} height={40} src={pymainlogo} alt="logo" /> */}
             </Link>
             <p className="my-3">
-              Eduport education theme, built specifically for the education centers which is dedicated to teaching and involve learners.
-            </p>
+            Pudhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations  </p>
             <ul className="list-inline mb-0 mt-3">
               <li className="list-inline-item">
                 <a

@@ -7,7 +7,7 @@ const OrderPage = () => {
       <PageMetaData title="Order" />
       <Card className="border bg-transparent rounded-3">
         <CardHeader className="bg-transparent border-bottom">
-          <h3 className="mb-0">Order List</h3>
+          <h3 className="mb-0">Free Test List</h3>
         </CardHeader>
         <CardBody>
           <Row className="g-3 align-items-center justify-content-between mb-4">
@@ -23,7 +23,7 @@ const OrderPage = () => {
               <form>
                 <ChoicesFormInput className="form-select js-choice border-0 z-index-9 bg-transparent" aria-label=".form-select-sm">
                   <option>Sort by</option>
-                  <option>Free</option>
+                  {/* <option>Free</option> */}
                   <option>Newest</option>
                   <option>Oldest</option>
                 </ChoicesFormInput>
@@ -31,11 +31,11 @@ const OrderPage = () => {
             </Col>
           </Row>
           <div className="table-responsive border-0">
-            <table className="table table-dark-gray align-middle p-4 mb-0 table-hover">
+            {/* <table className="table table-dark-gray align-middle p-4 mb-0 table-hover">
               <thead>
                 <tr>
                   <th scope="col" className="border-0 rounded-start">
-                    Course name
+                    Test name
                   </th>
                   <th scope="col" className="border-0">
                     Order ID
@@ -141,6 +141,40 @@ const OrderPage = () => {
                   <td>14/1/2023</td>
                   <td>$325</td>
                   <td>Debit Card</td>
+                </tr>
+              </tbody>
+            </table> */}
+            <table className="table table-dark-gray align-middle p-4 mb-0 table-hover">
+              <thead>
+                <tr>
+                  <th scope="col" className="border-0 rounded-start">Test name</th>
+                  <th scope="col" className="border-0 rounded-end">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>The complete Digital Marketing Course - 8 Course in 1</td>
+                  <td>18/1/2023</td>
+                </tr>
+                <tr>
+                  <td>Time Management Mastery: Do More, Stress Less</td>
+                  <td>25/1/2023</td>
+                </tr>
+                <tr>
+                  <td>Building Scalable APIs with GraphQL</td>
+                  <td>4/9/2020</td>
+                </tr>
+                <tr>
+                  <td>Sketch from A to Z: for app designer</td>
+                  <td>5/1/2023</td>
+                </tr>
+                <tr>
+                  <td>Build Responsive Websites with HTML</td>
+                  <td>2/1/2023</td>
+                </tr>
+                <tr>
+                  <td>JavaScript: Full Understanding</td>
+                  <td>14/1/2023</td>
                 </tr>
               </tbody>
             </table>

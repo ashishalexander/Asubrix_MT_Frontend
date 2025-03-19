@@ -1,37 +1,24 @@
 import React from 'react'
-import { Container, Row, Col, Card, Accordion } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { BsShieldCheck, BsStopwatch } from 'react-icons/bs'
-import { FaCheckCircle } from 'react-icons/fa'
-import clsx from 'clsx'
-import about1 from '@/assets/images/about/01.jpg'
-import about2 from '@/assets/images/about/02.jpg'
 import { Link } from 'react-router-dom'
-
-const aboutData = [
-  { title: 'Our Vision', subTitle: 'Future ready', icon: BsStopwatch, variant: 'bg-primary' },
-  { title: 'Our Mission', subTitle: 'Quality education', icon: BsShieldCheck, variant: 'bg-success' },
-]
 
 const AboutAndNoticeBoard = () => {
   return (
-    <section className="w-100 py-5 bg-gray">
-      <div className="mx-5">
+    <section className="w-100 pt-2 pb-4 bg-gray">
+      <Container> {/* Added Container here */}
         <Row className="g-5 align-items-start">
           {/* About Section */}
-          <Col lg={7}>
-            <h5>About the company</h5>
-            <h2 className="mb-3">Welcome to Puthuyugam</h2>
+          <Col lg={6}>
+            <h5>About me</h5>
+            <h2 className="mb-3">Welcome to pudhuyugam</h2>
             <p className="mb-3 mb-lg-4">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur illo, temporibus in sunt facere commodi quos ducimus ipsam! Officia
-              amet ipsum perspiciatis repellat! Quos possimus dicta,Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur illo,
-              temporibus in sunt facere commodi quos ducimus ipsam! Officia amet ipsum perspiciatis repellat! Quos possimus dicta, similique dolor
-              rerum laborum! similique dolor rerum laborum!
+              amet ipsum perspiciatis repellat! Quos possimus dicta, similique dolor rerum laborum!
             </p>
             <p className="mb-3 mb-lg-4">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur illo, temporibus in sunt facere commodi quos ducimus ipsam! Officia
-              amet ipsum perspiciatis repellat! Quos possimus dicta,Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur illo,
-              temporibus in sunt facere commodi quos ducimus ipsam! Officia amet ipsum perspiciatis repellat! Quos possimus dicta, similique dolor
-              rerum laborum! similique dolor rerum laborum!
+              amet ipsum perspiciatis repellat! Quos possimus dicta, similique dolor rerum laborum!
             </p>
             <Link to={'/pages/about/about-us'} className="btn btn-primary-soft mb-0 mt-3 mt-lg-4">
               More about us
@@ -39,6 +26,8 @@ const AboutAndNoticeBoard = () => {
           </Col>
 
           {/* Notice Board Section */}
+          <Col lg={1}>
+          </Col>
           <Col
             lg={5}
             style={{
@@ -78,7 +67,7 @@ const AboutAndNoticeBoard = () => {
             </div>
           </Col>
         </Row>
-      </div>
+      </Container> {/* Closed Container here */}
     </section>
   )
 }

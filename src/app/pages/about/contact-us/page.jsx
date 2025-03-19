@@ -13,7 +13,7 @@ const ContactUs = () => {
         <HeroImage/>
         <ContactFormAndMap />
       </main>
-      <Footer className="bg-light" style={{ marginTop: 0, paddingTop: 0 }} />
+      <Footer className="custom-footer" style={{ marginTop: 0, paddingTop: 0 }} />
     </>
   )
 }

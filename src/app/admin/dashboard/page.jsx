@@ -7,6 +7,8 @@ import TopInstructors from './components/TopInstructors';
 import TrafficSourcesChart from './components/TrafficSourcesChart';
 import PageMetaData from '@/components/PageMetaData';
 const AdminDashboardPage = () => {
+
+
   return <>
       <PageMetaData title="Admin Dashboard" />
       <Row>

@@ -13,7 +13,7 @@ const AboutUs = () => {
         <Hero />
         <About />
       </main>
-      <Footer className="bg-light" />
+      <Footer className="custom-footer" />
     </>;
 };
 export default AboutUs;

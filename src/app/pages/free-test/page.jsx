@@ -13,7 +13,7 @@ const FreeTest = () => {
         {/* <Banner /> */}
         <FreeTestsList />
       </main>
-      <Footer className="bg-light" />
+      <Footer className="custom-footer"/>
     </>
   )
 }

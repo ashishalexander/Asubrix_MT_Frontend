@@ -1,10 +1,7 @@
-import { Card, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import TinySlider from '@/components/TinySlider';
+import { Card, Col, Row, Container } from 'react-bootstrap';
 import { renderToString } from 'react-dom/server';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import backgroundImg1 from '@/assets/images/bg/01.jpg';
-import backgroundImg2 from '@/assets/images/bg/02.jpg';
+import TinySlider from '@/components/TinySlider';
 import backgroundBannerImg from '@/assets/images/bg/banner1.png';
 import backgroundBannerImg2 from '@/assets/images/bg/banner2.png';
 
@@ -26,70 +23,67 @@ const HeroSlider = () => {
 
   return (
     <section className="pt-0">
-      <div className="w-100">
-        <Row className="mx-0">
-          <Col xs={12} className="p-0">
-            <div className="tiny-slider arrow-round arrow-blur arrow-hover rounded-0 overflow-hidden">
-              <TinySlider settings={courseSliderSettings} className="tiny-slider-inner">
-                <Card className="overflow-hidden h-500px h-md-600px text-start rounded-0" style={{
-                  backgroundImage: `url(${backgroundBannerImg})`,
-                  backgroundPosition: 'center left',
-                  backgroundSize: 'cover'
-                }}>
-                  <div className="card-img-overlay d-flex align-items-center p-2 p-sm-4">
-                    <div className="w-100 my-auto">
-                      <Row className="justify-content-start">
-                        <Col xs={11} lg={7}>
-                          <h1 className="mb-0 text-black display-6">
-                            Get new skills <br /> for the&nbsp;
-                            <span className="position-relative">
-                              digital world
-                            </span>
-                          </h1>
-                          <p className="text-black w-75">
-                            Get the right professional certificate program for you. See what course other students and experts in your domain are
-                            learning on
-                          </p>
-                          <a href="#" className="btn mb-0 text-white" style={{ backgroundColor: "#ed155a" }}>
-                            Get Started
-                          </a>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                </Card>
-                <Card className="overflow-hidden h-500px h-md-600px text-start rounded-0" style={{
-                  backgroundImage: `url(${backgroundBannerImg2})`,
-                  backgroundPosition: 'center left',
-                  backgroundSize: 'cover'
-                }}>
-                  <div className="card-img-overlay d-flex align-items-center p-3 p-sm-4">
-                    <div className="w-100 my-auto">
-                      <Row className="justify-content-start">
-                        <Col xs={11} lg={6}>
-                          <h1 className="mb-0 text-black display-6">
-                            Get new skills <br /> for the&nbsp;
-                            <span className="position-relative">
-                              digital world
-                            </span>
-                          </h1>
-                          <p className="text-black w-75">
-                            Get the right professional certificate program for you. See what course other students and experts in your domain are
-                            learning on
-                          </p>
-                          <a href="#" className="btn mb-0 text-white" style={{ backgroundColor: "#ed155a" }}>
-                            Get Started
-                          </a>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                </Card>
-              </TinySlider>
-            </div>
-          </Col>
-        </Row>
-      </div>
+      <Row className="mx-0">
+        <Col xs={12} className="p-0">
+          <div className="tiny-slider arrow-round arrow-blur arrow-hover rounded-0 overflow-hidden">
+            <TinySlider settings={courseSliderSettings} className="tiny-slider-inner">
+              {/* First Banner */}
+              <Card className="overflow-hidden h-500px h-md-600px text-start rounded-0" style={{
+                backgroundImage: `url(${backgroundBannerImg})`,
+                backgroundPosition: 'center left',
+                backgroundSize: 'cover'
+              }}>
+                <div className="card-img-overlay d-flex align-items-center p-2 p-sm-4">
+                  <Container> {/* Added Container only for text */}
+                    <Row className="justify-content-start">
+                      <Col xs={11} lg={7}>
+                        <h1 className="mb-0 text-black display-6">
+                          Get new skills <br /> for the&nbsp;
+                          <span className="position-relative">digital world</span>
+                        </h1>
+                        <p className="text-black w-75">
+                          Get the right professional certificate program for you. See what course other students and experts in your domain are
+                          learning on
+                        </p>
+                        <a href="#" className="btn mb-0 text-white bg-primary" >
+                          Get Started
+                        </a>
+                      </Col>
+                    </Row>
+                  </Container>
+                </div>
+              </Card>
+
+              {/* Second Banner */}
+              <Card className="overflow-hidden h-500px h-md-600px text-start rounded-0" style={{
+                backgroundImage: `url(${backgroundBannerImg2})`,
+                backgroundPosition: 'center left',
+                backgroundSize: 'cover'
+              }}>
+                <div className="card-img-overlay d-flex align-items-center p-3 p-sm-4">
+                  <Container> {/* Added Container only for text */}
+                    <Row className="justify-content-start">
+                      <Col xs={11} lg={6}>
+                        <h1 className="mb-0 text-black display-6">
+                          Get new skills <br /> for the&nbsp;
+                          <span className="position-relative">digital world</span>
+                        </h1>
+                        <p className="text-black w-75">
+                          Get the right professional certificate program for you. See what course other students and experts in your domain are
+                          learning on
+                        </p>
+                        <a href="#" className="btn mb-0 text-white bg-primary" >
+                          Get Started
+                        </a>
+                      </Col>
+                    </Row>
+                  </Container>
+                </div>
+              </Card>
+            </TinySlider>
+          </div>
+        </Col>
+      </Row>
     </section>
   );
 };

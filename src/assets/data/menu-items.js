@@ -141,13 +141,15 @@ export const INSTRUCTOR_MENU_ITEMS = [
 //   icon: BsPeople,
 //   url: '/instructor/student-list',
 //   parentKey: 'instructor'
-// }, {
-//   key: 'orders',
-//   label: 'Orders',
-//   icon: BsFolderCheck,
-//   url: '/instructor/order',
-//   parentKey: 'instructor'
-// }, {
+// }, 
+{
+  key: 'orders',
+  label: 'Free Tests',
+  icon: BsFolderCheck,
+  url: '/instructor/order',
+  parentKey: 'instructor'
+},
+//  {
 //   key: 'reviews',
 //   label: 'Reviews',
 //   icon: BsStar,
@@ -167,13 +169,14 @@ export const INSTRUCTOR_MENU_ITEMS = [
   icon: BsWallet2,
   url: '/instructor/payout',
   parentKey: 'instructor'
-}, {
-  key: 'setting',
-  label: 'Settings',
-  icon: BsGear,
-  url: '/instructor/setting',
-  parentKey: 'instructor'
-}, 
+},
+//  {
+//   key: 'setting',
+//   label: 'Settings',
+//   icon: BsGear,
+//   url: '/instructor/setting',
+//   parentKey: 'instructor'
+// }, 
 // {
 //   key: 'delete',
 //   label: 'Delete Profile',

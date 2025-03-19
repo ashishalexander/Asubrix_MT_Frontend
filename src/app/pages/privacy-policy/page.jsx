@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
 
       <h2>1. Introduction</h2>
       <p>
-        Welcome to <strong>Puthuyugam</strong>. We respect your privacy and are committed to protecting your personal data.
+        Welcome to <strong>pudhuyugam</strong>. We respect your privacy and are committed to protecting your personal data.
         This privacy policy explains how we collect, use, and safeguard your information.
       </p>
 

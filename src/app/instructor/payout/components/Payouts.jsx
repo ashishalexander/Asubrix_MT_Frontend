@@ -21,7 +21,7 @@ const Payouts = () => {
             <form>
               <ChoicesFormInput className="form-select js-choice border-0 z-index-9 bg-transparent" aria-label=".form-select-sm">
                 <option>Sort by</option>
-                <option>Free</option>
+                {/* <option>Free</option> */}
                 <option>Newest</option>
                 <option>Oldest</option>
               </ChoicesFormInput>
@@ -54,30 +54,30 @@ const Payouts = () => {
                   </h6>
                 </td>
                 <td>
-                  $3,999
-                  <a href="#" className="h6 mb-0" role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
+                ₹3,999
+                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
                     &nbsp;
                     <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a>
+                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Commission</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="me-4 small">Us royalty withholding</span>
-                        <span className="text-danger small">-$0.00</span>
+                        <span className="text-danger small">-₹0.00</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Earning</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                     </li>
                   </ul>
@@ -94,30 +94,30 @@ const Payouts = () => {
                   </h6>
                 </td>
                 <td>
-                  $4,875
-                  <a href="#" className="h6 mb-0" role="button" id="dropdownShare1" data-bs-toggle="dropdown" aria-expanded="false">
+                ₹4,875
+                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare1" data-bs-toggle="dropdown" aria-expanded="false">
                     &nbsp;
                     <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a>
+                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare1">
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Commission</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="me-4 small">Us royalty withholding</span>
-                        <span className="text-danger small">-$0.00</span>
+                        <span className="text-danger small">-₹0.00</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Earning</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                     </li>
                   </ul>
@@ -134,30 +134,30 @@ const Payouts = () => {
                   </h6>
                 </td>
                 <td>
-                  $1,800
-                  <a href="#" className="h6 mb-0" role="button" id="dropdownShare2" data-bs-toggle="dropdown" aria-expanded="false">
+                ₹1,800
+                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare2" data-bs-toggle="dropdown" aria-expanded="false">
                     &nbsp;
                     <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a>
+                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare2">
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Commission</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="me-4 small">Us royalty withholding</span>
-                        <span className="text-danger small">-$0.00</span>
+                        <span className="text-danger small">-₹0.00</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Earning</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                     </li>
                   </ul>
@@ -174,30 +174,30 @@ const Payouts = () => {
                   </h6>
                 </td>
                 <td>
-                  $6,800
-                  <a href="#" className="h6 mb-0" role="button" id="dropdownShare3" data-bs-toggle="dropdown" aria-expanded="false">
+                ₹6,800
+                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare3" data-bs-toggle="dropdown" aria-expanded="false">
                     &nbsp;
                     <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a>
+                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare3">
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Commission</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="me-4 small">Us royalty withholding</span>
-                        <span className="text-danger small">-$0.00</span>
+                        <span className="text-danger small">-₹0.00</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Earning</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                     </li>
                   </ul>
@@ -214,30 +214,30 @@ const Payouts = () => {
                   </h6>
                 </td>
                 <td>
-                  $3,576
-                  <a href="#" className="h6 mb-0" role="button" id="dropdownShare4" data-bs-toggle="dropdown" aria-expanded="false">
+                ₹3,576
+                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare4" data-bs-toggle="dropdown" aria-expanded="false">
                     &nbsp;
                     <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a>
+                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare4">
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Commission</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="me-4 small">Us royalty withholding</span>
-                        <span className="text-danger small">-$0.00</span>
+                        <span className="text-danger small">-₹0.00</span>
                       </div>
                       <hr className="my-1" />
                     </li>
                     <li>
                       <div className="d-flex justify-content-between">
                         <span className="small">Earning</span>
-                        <span className="h6 mb-0 small">$86</span>
+                        <span className="h6 mb-0 small">₹86</span>
                       </div>
                     </li>
                   </ul>

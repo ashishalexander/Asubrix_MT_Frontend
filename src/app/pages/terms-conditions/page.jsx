@@ -8,7 +8,7 @@ const TermsAndConditions = () => {
 
       <h2>1. Introduction</h2>
       <p>
-        Welcome to <strong>Puthuyugam</strong>. By accessing or using our website, you agree to be bound by these Terms and
+        Welcome to <strong>pudhuyugam</strong>. By accessing or using our website, you agree to be bound by these Terms and
         Conditions. If you do not agree with any part of these terms, please do not use our services.
       </p>
 

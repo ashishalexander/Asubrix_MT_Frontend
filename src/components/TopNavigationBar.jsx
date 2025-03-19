@@ -124,10 +124,11 @@ const TopNavigationBar = () => {
                 <ul className="navbar-nav navbar-nav-scroll ms-auto">
                   {[
                     { label: 'Home', path: '/demos/academy/home' },
+                    { label: 'About', path: '/pages/about/about-us' },
+                    { label: 'Our Team', path: '/pages/instructors' },
                     { label: 'Courses', path: '/pages/course/grid-2' },
                     { label: 'Free Test', path: '/pages/free-test' },
                     { label: 'Gallery', path: '/pages/gallery' },
-                    { label: 'About', path: '/pages/about/about-us' },
                     { label: 'Contact', path: '/pages/about/contact-us' },
                   ].map(({ label, path }, idx) => (
                     <NavItem key={idx}>
