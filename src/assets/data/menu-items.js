@@ -114,76 +114,76 @@ export const INSTRUCTOR_MENU_ITEMS = [
     icon: BsPencilSquare,
     url: '/instructor/edit-profile',
     parentKey: 'instructor'
-  }, 
-{
-  key: 'courses',
-  label: 'My Courses',
-  icon: BsBasket,
-  url: '/instructor/manage-course',
-  parentKey: 'instructor'
-}, 
-// {
-//   key: 'quiz',
-//   label: 'Quiz',
-//   icon: BsQuestionDiamond,
-//   url: '/instructor/quiz',
-//   parentKey: 'instructor'
-// },
-//  {
-//   key: 'earnings',
-//   label: 'Earnings',
-//   icon: BsGraphUp,
-//   url: '/instructor/earning',
-//   parentKey: 'instructor'
-// }, {
-//   key: 'students',
-//   label: 'Students',
-//   icon: BsPeople,
-//   url: '/instructor/student-list',
-//   parentKey: 'instructor'
-// }, 
-{
-  key: 'orders',
-  label: 'Free Tests',
-  icon: BsFolderCheck,
-  url: '/instructor/order',
-  parentKey: 'instructor'
-},
-//  {
-//   key: 'reviews',
-//   label: 'Reviews',
-//   icon: BsStar,
-//   url: '/instructor/review',
-//   parentKey: 'instructor'
-// }, 
-// {
-//   key: 'profile',
-//   label: 'Edit Profile',
-//   icon: BsPencilSquare,
-//   url: '/instructor/edit-profile',
-//   parentKey: 'instructor'
-// },
- {
-  key: 'payout',
-  label: 'Payment History',
-  icon: BsWallet2,
-  url: '/instructor/payout',
-  parentKey: 'instructor'
-},
-//  {
-//   key: 'setting',
-//   label: 'Settings',
-//   icon: BsGear,
-//   url: '/instructor/setting',
-//   parentKey: 'instructor'
-// }, 
-// {
-//   key: 'delete',
-//   label: 'Delete Profile',
-//   icon: BsTrash,
-//   url: '/instructor/delete-account',
-//   parentKey: 'instructor'
-// }
+  },
+  {
+    key: 'courses',
+    label: 'My Courses',
+    icon: BsBasket,
+    url: '/instructor/manage-course',
+    parentKey: 'instructor'
+  },
+  // {
+  //   key: 'quiz',
+  //   label: 'Quiz',
+  //   icon: BsQuestionDiamond,
+  //   url: '/instructor/quiz',
+  //   parentKey: 'instructor'
+  // },
+  //  {
+  //   key: 'earnings',
+  //   label: 'Earnings',
+  //   icon: BsGraphUp,
+  //   url: '/instructor/earning',
+  //   parentKey: 'instructor'
+  // }, {
+  //   key: 'students',
+  //   label: 'Students',
+  //   icon: BsPeople,
+  //   url: '/instructor/student-list',
+  //   parentKey: 'instructor'
+  // }, 
+  {
+    key: 'orders',
+    label: 'Free Tests',
+    icon: BsFolderCheck,
+    url: '/instructor/order',
+    parentKey: 'instructor'
+  },
+  //  {
+  //   key: 'reviews',
+  //   label: 'Reviews',
+  //   icon: BsStar,
+  //   url: '/instructor/review',
+  //   parentKey: 'instructor'
+  // }, 
+  // {
+  //   key: 'profile',
+  //   label: 'Edit Profile',
+  //   icon: BsPencilSquare,
+  //   url: '/instructor/edit-profile',
+  //   parentKey: 'instructor'
+  // },
+  {
+    key: 'payout',
+    label: 'Payment History',
+    icon: BsWallet2,
+    url: '/instructor/payout',
+    parentKey: 'instructor'
+  },
+  //  {
+  //   key: 'setting',
+  //   label: 'Settings',
+  //   icon: BsGear,
+  //   url: '/instructor/setting',
+  //   parentKey: 'instructor'
+  // }, 
+  // {
+  //   key: 'delete',
+  //   label: 'Delete Profile',
+  //   icon: BsTrash,
+  //   url: '/instructor/delete-account',
+  //   parentKey: 'instructor'
+  // }
 ];
 export const STUDENT_MENU_ITEMS = [{
   key: 'dashboard',
@@ -246,13 +246,13 @@ export const STUDENT_MENU_ITEMS = [{
   url: '/student/delete-account',
   parentKey: 'student'
 }
-// {
-//   key: 'level',
-//   label: 'Dropdown level',
-//   icon: BsLock,
-//   url: '/student/dropdown-level',
-//   parentKey: 'student',
-// },
+  // {
+  //   key: 'level',
+  //   label: 'Dropdown level',
+  //   icon: BsLock,
+  //   url: '/student/dropdown-level',
+  //   parentKey: 'student',
+  // },
 ];
 export const APP_MENU_ITEMS = [{
   key: 'demos',
@@ -822,22 +822,23 @@ export const ADMIN_MENU_ITEMS = [{
   key: 'courses',
   label: 'Courses',
   icon: BsBasket,
-  children: [{
-    key: 'all-courses',
-    label: 'All Courses',
-    parentKey: 'courses',
-    url: '/admin/all-courses'
-  }, {
-    key: 'course-category',
-    label: 'Course Category',
-    url: '/admin/course-category',
-    parentKey: 'courses'
-  }, {
-    key: 'course-detail',
-    label: 'Course Detail',
-    url: '/admin/course-detail',
-    parentKey: 'courses'
-  }]
+  url: '/admin/all-courses',
+  // children: [{
+  //   key: 'all-courses',
+  //   label: 'All Courses',
+  //   parentKey: 'courses',
+  //   url: '/admin/all-courses'
+  // }, {
+  //   key: 'course-category',
+  //   label: 'Course Category',
+  //   url: '/admin/course-category',
+  //   parentKey: 'courses'
+  // }, {
+  //   key: 'course-detail',
+  //   label: 'Course Detail',
+  //   url: '/admin/course-detail',
+  //   parentKey: 'courses'
+  // }]
 }, {
   key: 'students',
   label: 'Students',
@@ -864,6 +865,11 @@ export const ADMIN_MENU_ITEMS = [{
     parentKey: 'instructors',
     badge: '2'
   }]
+}, {
+  key: 'contents',
+  label: 'Test Contents',
+  icon: FaRegFileAlt,
+  url: '/admin/content-management'
 }, {
   key: 'reviews',
   label: 'Reviews',

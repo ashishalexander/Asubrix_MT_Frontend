@@ -6,6 +6,7 @@ import CourseSearch from './components/CourseSearch';
 import CourseSort from './components/CourseSort';
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const AllCourses = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -15,6 +16,8 @@ const AllCourses = () => {
     subCategory: '',
     status: ''
   });
+  
+  const navigate = useNavigate();
 
   return (
     <>
@@ -33,7 +36,10 @@ const AllCourses = () => {
                 </ol>
               </nav>
             </div>
-            <button className="btn btn-dark rounded-pill px-4 py-2 d-flex align-items-center">
+            <button 
+              className="btn btn-dark rounded-pill px-4 py-2 d-flex align-items-center"
+              onClick={() => navigate('/admin/edit-course')}
+            >
               <FaPlus className="me-2" />
               Create New Course
             </button>

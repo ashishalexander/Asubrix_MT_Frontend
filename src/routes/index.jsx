@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
+import ContentManagement from '@/app/admin/content-management/page';
 
 
 // Demos Pages
@@ -105,6 +106,7 @@ const AdminDashboard = lazy(() => import('@/app/admin/dashboard/page'));
 const AllCourses = lazy(() => import('@/app/admin/all-courses/page'));
 const CourseCategory = lazy(() => import('@/app/admin/course-category/page'));
 const CourseDetail = lazy(() => import('@/app/admin/course-detail/page'));
+const EditCourse = lazy(() => import('@/app/admin/edit-course/page'));
 const AdminStudents = lazy(() => import('@/app/admin/students/page'));
 const AdminInstructors = lazy(() => import('@/app/admin/instructors/page'));
 const AdminInstructorsDetails = lazy(() => import('@/app/admin/instructor-detail/page'));
@@ -455,6 +457,10 @@ export const adminRoutes = [{
   name: 'All Courses',
   element: <AllCourses />
 }, {
+  path: '/admin/edit-course',
+  name: 'Create Course',
+  element: <EditCourse />
+}, {
   path: '/admin/course-category',
   name: 'Course Category',
   element: <CourseCategory />
@@ -494,5 +500,9 @@ export const adminRoutes = [{
   path: '/admin/not-found',
   name: 'Not Found',
   element: <NotFound />
+}, {
+  path: '/admin/content-management',
+  name: 'Content Management',
+  element: <ContentManagement />,
 }];
 export const appRoutes = [...initialRoutes, ...demosRoutes, ...otherRoutes, ...pagesRoutes, ...helpRoutes];

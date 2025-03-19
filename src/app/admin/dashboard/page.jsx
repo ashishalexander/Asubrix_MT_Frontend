@@ -1,15 +1,11 @@
-import { Col, Row } from 'react-bootstrap';
-import Counter from './components/Counter';
-import Earnings from './components/Earnings';
-import NoticeBoard from './components/NoticeBoard';
-import LatestEnquiries from './components/LatestEnquiries';
-import TopInstructors from './components/TopInstructors';
-import TrafficSourcesChart from './components/TrafficSourcesChart';
-import PageMetaData from '@/components/PageMetaData';
+import PageMetaData from '@/components/PageMetaData'
+import { Col, Row } from 'react-bootstrap'
+import Counter from './components/Counter'
+import Earnings from './components/Earnings'
+import LatestEnquiries from './components/LatestEnquiries'
 const AdminDashboardPage = () => {
-
-
-  return <>
+  return (
+    <>
       <PageMetaData title="Admin Dashboard" />
       <Row>
         <Col xs={12} className=" mb-3">
@@ -21,6 +17,7 @@ const AdminDashboardPage = () => {
         <Earnings />
         <LatestEnquiries />
       </Row>
-    </>;
-};
-export default AdminDashboardPage;
+    </>
+  )
+}
+export default AdminDashboardPage
