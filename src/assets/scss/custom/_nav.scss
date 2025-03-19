@@ -135,6 +135,26 @@
   border-radius: $border-radius;
 }
 
+//Nav tabs theme-secondary
+.bg-theme-secondary {
+  .nav-link {
+    color: var(--#{$prefix}white);
+    border-radius: $border-radius-lg;
+    padding: 0.825rem;
+    margin-bottom: 5px;
+    
+    &:hover {
+      color: var(--#{$prefix}primary);
+      background-color: rgba(var(--#{$prefix}white-rgb), 0.1);
+    }
+  }
+  .nav-link.active, .show > .nav-link {
+    color: var(--#{$prefix}theme-secondary) !important;
+    background-color: var(--#{$prefix}white);
+    border-radius: $border-radius;
+  }
+}
+
 
 
 

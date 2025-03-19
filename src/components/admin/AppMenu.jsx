@@ -74,7 +74,7 @@ const AdminMenu = () => {
   return <ul className="navbar-nav flex-column">
       {(menuItems ?? []).map((item, idx) => {
       return <Fragment key={idx + item.key}>
-            {item.isTitle ? <li className="nav-item ms-2 my-2">{item.label}</li> : item.children ? <MenuItemWithChildren item={item} activeMenuItems={activeMenuItems} itemClassName="nav-item" linkClassName={clsx('nav-link', {
+            {item.isTitle ? <li className="nav-item ms-2 my-2 text-white-50">{item.label}</li> : item.children ? <MenuItemWithChildren item={item} activeMenuItems={activeMenuItems} itemClassName="nav-item" linkClassName={clsx('nav-link', {
           active: activeMenuItems.includes(item.key)
         })} /> : <MenuItem item={item} activeMenuItems={activeMenuItems} itemClassName="nav-item" linkClassName={clsx('nav-link', {
           active: activeMenuItems.includes(item.key)

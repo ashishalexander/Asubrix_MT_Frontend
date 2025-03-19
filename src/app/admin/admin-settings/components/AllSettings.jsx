@@ -20,40 +20,40 @@ const AllSettings = () => {
           <Tab.Container defaultActiveKey="tab-1">
             <Row>
               <Col xl={3}>
-                <Nav variant="pills" className="flex-column nav-tabs-bg-dark">
+                <Nav variant="pills" className="flex-column bg-theme-secondary rounded p-3">
                   <Nav.Item>
                     <Nav.Link eventKey="tab-1">
-                      <FaGlobe className="me-2" />
+                      <FaGlobe className="me-2 text-white" />
                       Website Settings
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-2">
-                      <FaShieldAlt className="me-2" />
+                      <FaShieldAlt className="me-2 text-white" />
                       Terms and Conditions
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-3">
-                      <FaLock className="me-2" />
+                      <FaLock className="me-2 text-white" />
                       Privacy Policy
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-4">
-                      <FaCog className="me-2" />
+                      <FaCog className="me-2 text-white" />
                       Mail Configurations
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-5">
-                      <FaUserLock className="me-2" />
+                      <FaUserLock className="me-2 text-white" />
                       User Roles and Permission
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-6">
-                      <FaSearch className="me-2" />
+                      <FaSearch className="me-2 text-white" />
                       SEO
                     </Nav.Link>
                   </Nav.Item>

@@ -12,6 +12,9 @@ function App() {
   const [showContactForm, setShowContactForm] = useState(false);
 
   useEffect(() => {
+    // Set light theme on document
+    document.documentElement.setAttribute('data-bs-theme', 'light');
+    
     const hasFormBeenShown = sessionStorage.getItem("contactFormShown");
     if (!hasFormBeenShown) {
       setShowContactForm(true);

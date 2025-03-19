@@ -4,7 +4,6 @@
 // Bootstrap variables
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
 
 @import 'custom/footer';
 
@@ -15,7 +14,6 @@
 
 // Theme variables
 @import "variables";
-@import "variables-dark";
 
 // User variables
 @import "user-variables";
@@ -61,9 +59,6 @@
 @import "components/vendor/custom-scrollbar";
 @import "components/whatsapp";
 @import "components/content-management";
-
-// Theme dark
-@import "dark-mode";
 
 // In this scss you can write your scss/css
 @import "user";

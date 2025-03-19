@@ -21,45 +21,45 @@ const AdminLayout = ({
     removeSession
   } = useAuthContext();
   return <main>
-      <nav className="navbar sidebar navbar-expand-xl navbar-dark bg-dark">
+      <nav className="navbar sidebar navbar-expand-xl navbar-dark bg-theme-secondary">
         <div className="d-flex align-items-center">
           <Link className="navbar-brand" to="/">
             <img className="navbar-brand-item" src={logoImg} alt="logo" />
           </Link>
         </div>
-        {width >= 1200 ? <div className="sidebar-content d-flex flex-column bg-dark">
+        {width >= 1200 ? <div className="sidebar-content d-flex flex-column bg-theme-secondary">
             <AppMenu />
             <div className="px-3 mt-auto pt-3">
               <div className="d-flex align-items-center justify-content-between text-primary-hover">
                 <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Settings</Tooltip>}>
-                  <Link className="h5 mb-0 text-body" to="/admin/admin-settings" data-bs-toggle="tooltip" data-bs-placement="top" title="Settings">
+                  <Link className="h5 mb-0 text-white" to="/admin/admin-settings" data-bs-toggle="tooltip" data-bs-placement="top" title="Settings">
                     <BsGearFill />
                   </Link>
                 </OverlayTrigger>
                 <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Home</Tooltip>}>
-                  <Link className="h5 mb-0 text-body" to="/" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+                  <Link className="h5 mb-0 text-white" to="/" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
                     <BsGlobe />
                   </Link>
                 </OverlayTrigger>
                 <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Sign out</Tooltip>}>
-                  <Link className="h5 mb-0 text-body" onClick={removeSession} to="/auth/sign-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Sign out">
+                  <Link className="h5 mb-0 text-white" onClick={removeSession} to="/auth/sign-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Sign out">
                     <BsPower />
                   </Link>
                 </OverlayTrigger>
               </div>
             </div>
           </div> : <Offcanvas className="flex-row custom-scrollbar h-100 " show={appMenuControl.open} placement="start" onHide={appMenuControl.toggle}>
-            <OffcanvasBody className="admin-offcanvas-menu d-flex flex-column bg-dark">
+            <OffcanvasBody className="admin-offcanvas-menu d-flex flex-column bg-theme-secondary">
               <AppMenu />
               <div className="px-3 mt-auto pt-3">
                 <div className="d-flex align-items-center justify-content-between text-primary-hover">
-                  <Link className="h5 mb-0 text-body" to="/admin/admin-settings" data-bs-toggle="tooltip" data-bs-placement="top" title="Settings">
+                  <Link className="h5 mb-0 text-white" to="/admin/admin-settings" data-bs-toggle="tooltip" data-bs-placement="top" title="Settings">
                     <BsGearFill />
                   </Link>
-                  <Link className="h5 mb-0 text-body" to="/" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
+                  <Link className="h5 mb-0 text-white" to="/" data-bs-toggle="tooltip" data-bs-placement="top" title="Home">
                     <BsGlobe />
                   </Link>
-                  <Link className="h5 mb-0 text-body" onClick={removeSession} to="/auth/sign-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Sign out">
+                  <Link className="h5 mb-0 text-white" onClick={removeSession} to="/auth/sign-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Sign out">
                     <BsPower />
                   </Link>
                 </div>
