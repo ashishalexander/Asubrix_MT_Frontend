@@ -2,7 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import Counter from './components/Counter';
 import Earnings from './components/Earnings';
 import NoticeBoard from './components/NoticeBoard';
-import SupportRequests from './components/SupportRequests';
+import LatestEnquiries from './components/LatestEnquiries';
 import TopInstructors from './components/TopInstructors';
 import TrafficSourcesChart from './components/TrafficSourcesChart';
 import PageMetaData from '@/components/PageMetaData';
@@ -19,12 +19,7 @@ const AdminDashboardPage = () => {
       <Counter />
       <Row className="g-4 mb-4">
         <Earnings />
-        <SupportRequests />
-      </Row>
-      <Row className="g-4">
-        <TopInstructors />
-        <NoticeBoard />
-        <TrafficSourcesChart />
+        <LatestEnquiries />
       </Row>
     </>;
 };
