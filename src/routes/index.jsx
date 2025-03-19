@@ -116,6 +116,8 @@ const AdminEarnings = lazy(() => import('@/app/admin/earnings/page'));
 const AdminSettings = lazy(() => import('@/app/admin/admin-settings/page'));
 const NotFound = lazy(() => import('@/app/admin/error-404/page'));
 const AdminChat = lazy(() => import('@/app/admin/chat/page'));
+const StudentManagement = lazy(() => import('@/app/admin/student-management/page'));
+const FacultyManagement = lazy(() => import('@/app/admin/faculty-management/page'));
 
 // Add this import for Reports & Analytics
 const ReportsPage = lazy(() => import('@/app/admin/reports/page'));
@@ -510,6 +512,14 @@ export const adminRoutes = [{
   path: '/admin/content-management',
   name: 'Content Management',
   element: <ContentManagement />,
+}, {
+  path: '/admin/student-management',
+  name: 'Student Management',
+  element: <StudentManagement />,
+}, {
+  path: '/admin/faculty-management',
+  name: 'Faculty Management',
+  element: <FacultyManagement />,
 }, {
   path: '/admin/chat',
   name: 'Chat Section',
