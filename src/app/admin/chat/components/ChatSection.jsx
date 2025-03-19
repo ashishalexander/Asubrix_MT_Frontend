@@ -136,10 +136,6 @@ const ChatSection = () => {
 
   return (
     <Card>
-      <Card.Header>
-        <h4 className="card-title mb-0">Chat</h4>
-        <p className="text-muted">Send messages to your students on a daily basis</p>
-      </Card.Header>
       <Card.Body className="p-0">
         <Row className="g-0" style={{ minHeight: '70vh' }}>
           {/* Left sidebar - Chat list */}

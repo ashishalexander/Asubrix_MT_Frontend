@@ -148,7 +148,7 @@ const WebsiteSettings = () => {
                   accept="image/x-icon,image/png"
                 />
               </Form.Group>
-            </Col>
+          </Col>
 
             <Col md={12}>
               <Form.Group>
@@ -161,7 +161,7 @@ const WebsiteSettings = () => {
                   placeholder="Enter copyright text"
                 />
               </Form.Group>
-            </Col>
+          </Col>
 
             <Col md={6}>
               <Form.Group>
@@ -174,7 +174,7 @@ const WebsiteSettings = () => {
                   placeholder="Enter Facebook URL"
                 />
               </Form.Group>
-            </Col>
+          </Col>
 
             <Col md={6}>
               <Form.Group>
@@ -187,7 +187,7 @@ const WebsiteSettings = () => {
                   placeholder="Enter Twitter URL"
                 />
               </Form.Group>
-            </Col>
+          </Col>
 
             <Col md={6}>
               <Form.Group>
@@ -200,7 +200,7 @@ const WebsiteSettings = () => {
                   placeholder="Enter LinkedIn URL"
                 />
               </Form.Group>
-            </Col>
+          </Col>
 
             <Col md={6}>
               <Form.Group>
@@ -213,13 +213,13 @@ const WebsiteSettings = () => {
                   placeholder="Enter Instagram URL"
                 />
               </Form.Group>
-            </Col>
+          </Col>
 
             <Col md={12}>
               <div className="text-end">
                 <button type="submit" className="btn btn-primary">Save Settings</button>
-              </div>
-            </Col>
+            </div>
+          </Col>
           </Row>
         </Form>
       </Card.Body>
