@@ -1,90 +1,230 @@
-import TextAreaFormInput from '@/components/form/TextAreaFormInput';
-import TextFormInput from '@/components/form/TextFormInput';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Card, CardBody, CardHeader, Col } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-const WebsiteSettings = () => {
-  const websiteSettingsFormSchema = yup.object({
-    name: yup.string().required('Please enter your first name'),
-    copyrights: yup.string().required('Please enter site copyrights'),
-    email: yup.string().email('Please enter valid email').required('Please enter your email'),
-    supportEmail: yup.string().email('Please enter valid email').required('Please enter your email'),
-    phoneNo: yup.number().required('Please enter your phone number'),
-    description: yup.string().required('Please enter your description'),
-    address: yup.string().required('Please enter your address')
-  });
-  const {
-    control,
-    handleSubmit
-  } = useForm({
-    resolver: yupResolver(websiteSettingsFormSchema)
-  });
-  return <Card className="shadow">
-      <CardHeader className="border-bottom">
-        <h5 className="card-header-title">Website Settings</h5>
-      </CardHeader>
-      <CardBody>
-        <form className="row g-4 align-items-center" onSubmit={handleSubmit(() => {})}>
-          <Col lg={4}>
-            <TextFormInput name="name" placeholder="Site Name" label="Site Name" control={control} />
-            <div className="form-text">Enter Website Name. It Display in Website and Email.</div>
-          </Col>
+import { Card, Form, Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
 
-          <Col lg={4}>
-            <TextFormInput name="copyrights" label="Site Copyrights" placeholder="Site Copyrights" control={control} />
-            <div className="form-text">Using for Contact and Send Email</div>
-          </Col>
-          <Col lg={4}>
-            <TextFormInput name="email" label="Site Email" placeholder="Site Email" control={control} />
-            <div className="form-text">For Copyrights Text</div>
-          </Col>
-          <Col xs={12}>
-            <TextAreaFormInput name="description" label="Site Description" control={control} />
-            <div className="form-text">For write brief description of your organization, or a Website.</div>
-          </Col>
-          <Col lg={6}>
-            <TextFormInput name="phoneNo" placeholder="Contact Phone" label="Contact Phone" control={control} />
-            <div className="form-text">Using for Contact and Support</div>
-          </Col>
-          <Col lg={6}>
-            <TextFormInput name="supportEmail" label="Support Email" placeholder="Support Email" control={control} />
-            <div className="form-text">For Support Email</div>
-          </Col>
-          <Col lg={6}>
-            <label className="form-label">Allow Registration</label>
-            <div className="d-sm-flex">
-              <div className="form-check radio-bg-light me-4">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                  Enable
-                </label>
+const WebsiteSettings = () => {
+  const [settings, setSettings] = useState({
+    siteName: '',
+    siteTitle: '',
+    siteDescription: '',
+    siteEmail: '',
+    sitePhone: '',
+    siteAddress: '',
+    siteLogo: null,
+    siteFavicon: null,
+    copyrightText: '',
+    facebookUrl: '',
+    twitterUrl: '',
+    linkedinUrl: '',
+    instagramUrl: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      setSettings(prev => ({
+        ...prev,
+        [name]: files[0]
+      }));
+    } else {
+      setSettings(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(settings);
+  };
+
+  return (
+    <Card>
+      <Card.Header>
+        <h4 className="card-title mb-0">Website Settings</h4>
+      </Card.Header>
+      <Card.Body>
+        <Form onSubmit={handleSubmit}>
+          <Row className="g-3">
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Site Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="siteName"
+                  value={settings.siteName}
+                  onChange={handleChange}
+                  placeholder="Enter site name"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Site Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="siteTitle"
+                  value={settings.siteTitle}
+                  onChange={handleChange}
+                  placeholder="Enter site title"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={12}>
+              <Form.Group>
+                <Form.Label>Site Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  name="siteDescription"
+                  value={settings.siteDescription}
+                  onChange={handleChange}
+                  placeholder="Enter site description"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Site Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="siteEmail"
+                  value={settings.siteEmail}
+                  onChange={handleChange}
+                  placeholder="Enter site email"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Site Phone</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="sitePhone"
+                  value={settings.sitePhone}
+                  onChange={handleChange}
+                  placeholder="Enter site phone"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={12}>
+              <Form.Group>
+                <Form.Label>Site Address</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={2}
+                  name="siteAddress"
+                  value={settings.siteAddress}
+                  onChange={handleChange}
+                  placeholder="Enter site address"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Site Logo</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="siteLogo"
+                  onChange={handleChange}
+                  accept="image/*"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Site Favicon</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="siteFavicon"
+                  onChange={handleChange}
+                  accept="image/x-icon,image/png"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={12}>
+              <Form.Group>
+                <Form.Label>Copyright Text</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="copyrightText"
+                  value={settings.copyrightText}
+                  onChange={handleChange}
+                  placeholder="Enter copyright text"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Facebook URL</Form.Label>
+                <Form.Control
+                  type="url"
+                  name="facebookUrl"
+                  value={settings.facebookUrl}
+                  onChange={handleChange}
+                  placeholder="Enter Facebook URL"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Twitter URL</Form.Label>
+                <Form.Control
+                  type="url"
+                  name="twitterUrl"
+                  value={settings.twitterUrl}
+                  onChange={handleChange}
+                  placeholder="Enter Twitter URL"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>LinkedIn URL</Form.Label>
+                <Form.Control
+                  type="url"
+                  name="linkedinUrl"
+                  value={settings.linkedinUrl}
+                  onChange={handleChange}
+                  placeholder="Enter LinkedIn URL"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label>Instagram URL</Form.Label>
+                <Form.Control
+                  type="url"
+                  name="instagramUrl"
+                  value={settings.instagramUrl}
+                  onChange={handleChange}
+                  placeholder="Enter Instagram URL"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={12}>
+              <div className="text-end">
+                <button type="submit" className="btn btn-primary">Save Settings</button>
               </div>
-              <div className="form-check radio-bg-light me-4">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                  Disable
-                </label>
-              </div>
-              <div className="form-check radio-bg-light">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                <label className="form-check-label" htmlFor="flexRadioDefault3">
-                  On Request
-                </label>
-              </div>
-            </div>
-          </Col>
-          <Col xs={12}>
-            <TextAreaFormInput name="address" label="Contact Address" control={control} />
-            <div className="form-text">Enter support Address</div>
-          </Col>
-          <div className="d-sm-flex justify-content-end">
-            <button type="submit" className="btn btn-primary mb-0">
-              Update
-            </button>
-          </div>
-        </form>
-      </CardBody>
-    </Card>;
+            </Col>
+          </Row>
+        </Form>
+      </Card.Body>
+    </Card>
+  );
 };
+
 export default WebsiteSettings;

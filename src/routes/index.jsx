@@ -115,6 +115,9 @@ const AdminReviews = lazy(() => import('@/app/admin/reviews/page'));
 const AdminEarnings = lazy(() => import('@/app/admin/earnings/page'));
 const AdminSettings = lazy(() => import('@/app/admin/admin-settings/page'));
 const NotFound = lazy(() => import('@/app/admin/error-404/page'));
+const AdminChat = lazy(() => import('@/app/admin/chat/page'));
+
+//other
 const initialRoutes = [{
   path: '/',
   name: 'root',
@@ -504,5 +507,9 @@ export const adminRoutes = [{
   path: '/admin/content-management',
   name: 'Content Management',
   element: <ContentManagement />,
+}, {
+  path: '/admin/chat',
+  name: 'Chat Section',
+  element: <AdminChat />,
 }];
 export const appRoutes = [...initialRoutes, ...demosRoutes, ...otherRoutes, ...pagesRoutes, ...helpRoutes];

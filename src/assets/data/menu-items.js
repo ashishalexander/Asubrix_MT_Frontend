@@ -822,92 +822,35 @@ export const ADMIN_MENU_ITEMS = [{
   key: 'courses',
   label: 'Courses',
   icon: BsBasket,
-  url: '/admin/all-courses',
-  // children: [{
-  //   key: 'all-courses',
-  //   label: 'All Courses',
-  //   parentKey: 'courses',
-  //   url: '/admin/all-courses'
-  // }, {
-  //   key: 'course-category',
-  //   label: 'Course Category',
-  //   url: '/admin/course-category',
-  //   parentKey: 'courses'
-  // }, {
-  //   key: 'course-detail',
-  //   label: 'Course Detail',
-  //   url: '/admin/course-detail',
-  //   parentKey: 'courses'
-  // }]
-}, {
-  key: 'students',
-  label: 'Students',
-  icon: FaUserGraduate,
-  url: '/admin/students'
-}, {
-  key: 'instructors',
-  label: 'Instructors',
-  icon: FaUserTie,
-  children: [{
-    key: 'instructors',
-    label: 'Instructors',
-    url: '/admin/instructors',
-    parentKey: 'instructors'
-  }, {
-    key: 'instructor-detail',
-    label: 'Instructor Detail',
-    url: '/admin/instructor-detail',
-    parentKey: 'instructors'
-  }, {
-    key: 'instructor-requests',
-    label: 'Instructor Requests',
-    url: '/admin/instructor-requests',
-    parentKey: 'instructors',
-    badge: '2'
-  }]
+  url: '/admin/all-courses'
 }, {
   key: 'contents',
   label: 'Test Contents',
   icon: FaRegFileAlt,
   url: '/admin/content-management'
 }, {
-  key: 'reviews',
-  label: 'Reviews',
+  key: 'student-management',
+  label: 'Student Management',
+  icon: FaUserGraduate,
+  url: '/admin/student-management'
+}, {
+  key: 'faculty-management',
+  label: 'Faculties Management',
+  icon: FaUserTie,
+  url: '/admin/faculty-management'
+}, {
+  key: 'chat',
+  label: 'Chat Section',
   icon: FaRegCommentDots,
-  url: '/admin/reviews'
+  url: '/admin/chat'
 }, {
-  key: 'earnings',
-  label: 'Earnings',
+  key: 'enquiries',
+  label: 'Enquiries',
+  icon: BsQuestionDiamond,
+  url: '/admin/enquiries'
+}, {
+  key: 'reports',
+  label: 'Reports & Analytics',
   icon: FaChartBar,
-  url: '/admin/earnings'
-}, {
-  key: 'admin-settings',
-  label: 'Admin Settings',
-  icon: FaUserCog,
-  url: '/admin/admin-settings'
-}, {
-  key: 'authentication',
-  label: 'Authentication',
-  icon: BsLock,
-  children: [{
-    key: 'sign-up',
-    label: 'Sign Up',
-    url: '/auth/sign-up',
-    parentKey: 'authentication'
-  }, {
-    key: 'sign-in',
-    label: 'Sign In',
-    url: '/auth/sign-in',
-    parentKey: 'authentication'
-  }, {
-    key: 'forgot-password',
-    label: 'Forgot Password',
-    url: '/auth/forgot-password',
-    parentKey: 'authentication'
-  }, {
-    key: 'error-404',
-    label: 'Error 404',
-    url: '/admin/not-found',
-    parentKey: 'authentication'
-  }]
+  url: '/admin/reports'
 }];
