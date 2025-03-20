@@ -11,6 +11,7 @@ import FeaturedCourses from './components/FeaturedCourses'
 import Testimonials from './components/Testimonials'
 import UpcomingEvents from './components/UpcomingEvents'
 import AboutAndNoticeBoard from './components/AboutAndNoticeBoard'
+import EnrolledCourses from './components/EnrolledCourses'
 
 const AcademicHome = () => {
   return (
@@ -21,6 +22,7 @@ const AcademicHome = () => {
         <HeroSlider />
         <AboutAndNoticeBoard/>
         <OfferCourses />
+        <EnrolledCourses />
         {/* <CourseSlider /> */}
         {/* <TrendingCourses /> */}
         <FeaturedCourses />

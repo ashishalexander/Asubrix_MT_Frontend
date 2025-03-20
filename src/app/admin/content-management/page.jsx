@@ -17,7 +17,7 @@ const ContentManagement = () => {
     <Container fluid className="content-management px-3 px-md-4 py-4">
       {/* Header Section */}
       <div className="content-management-header mb-4">
-        <h1 className="h3 mb-2">Content Management</h1>
+        <h1 className="h3 mb-2">Test Management</h1>
         <p className="text-muted mb-0 d-none d-sm-block">Create and manage your tests, quizzes, and assessments</p>
       </div>
 

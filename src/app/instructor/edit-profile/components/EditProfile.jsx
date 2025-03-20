@@ -63,13 +63,7 @@ const EditProfile = () => {
             </div>
           </Col>
 
-          <Col md={6}>
-            <label className="form-label">Username</label>
-            <div className="input-group">
-              {/* <span className="input-group-text">Eduport.com</span> */}
-              <input type="text" className="form-control" defaultValue="loristev" />
-            </div>
-          </Col>
+          
           <TextFormInput name="email" label="Email id" control={control} containerClassName="col-md-6" />
           <TextFormInput name="phoneNo" label="Phone number" control={control} containerClassName="col-md-6" />
           <Col xs={12}>

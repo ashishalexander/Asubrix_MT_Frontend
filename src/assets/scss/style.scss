@@ -59,6 +59,15 @@
 @import "components/vendor/custom-scrollbar";
 @import "components/whatsapp";
 @import "components/content-management";
+@import "components/enquiries";
+
+// Custom styles
+@import "custom/details";
 
 // In this scss you can write your scss/css
 @import "user";
+
+@import "components/details-page";
+
+// Components
+@import "./components/banner-management";

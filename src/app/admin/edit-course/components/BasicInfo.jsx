@@ -1,4 +1,4 @@
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 import { useState } from 'react';
 import { courseCategories } from '@/assets/data/products';
 import { FaCloudUploadAlt } from 'react-icons/fa';
@@ -6,6 +6,8 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 const BasicInfo = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
+  const [showNewCategoryModal, setShowNewCategoryModal] = useState(false);
+  const [newCategory, setNewCategory] = useState('');
 
   const handleCategoryChange = (e) => {
     const value = e.target.value;
@@ -21,6 +23,13 @@ const BasicInfo = () => {
     if (file) {
       setThumbnail(URL.createObjectURL(file));
     }
+  };
+
+  const handleNewCategory = () => {
+    // Here you would typically make an API call to save the new category
+    // For now, we'll just close the modal
+    setShowNewCategoryModal(false);
+    setNewCategory('');
   };
 
   return (
@@ -92,7 +101,16 @@ const BasicInfo = () => {
 
         {/* Categories */}
         <Form.Group className="mb-4">
-          <Form.Label className="fw-medium">Categories</Form.Label>
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <Form.Label className="fw-medium mb-0">Categories</Form.Label>
+            <Button 
+              variant="outline-primary" 
+              size="sm"
+              onClick={() => setShowNewCategoryModal(true)}
+            >
+              Create New Category
+            </Button>
+          </div>
           <div className="row g-3">
             {courseCategories.map((category) => (
               <div className="col-lg-4 col-md-6" key={category.id}>
@@ -116,6 +134,33 @@ const BasicInfo = () => {
             ))}
           </div>
         </Form.Group>
+
+        {/* New Category Modal */}
+        <Modal show={showNewCategoryModal} onHide={() => setShowNewCategoryModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Create New Category</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group>
+              <Form.Label>Category Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter category name"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                className="bg-light border-0"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="light" onClick={() => setShowNewCategoryModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={handleNewCategory}>
+              Create Category
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
         {/* Action Buttons */}
         <div className="d-flex justify-content-end gap-3">

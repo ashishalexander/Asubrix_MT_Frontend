@@ -1,6 +1,7 @@
 import { Card, Col, Row, Badge } from 'react-bootstrap';
 import { coursesData } from '@/assets/data/products';
 import { FaClock, FaUserGraduate, FaStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const CourseGrid = ({ searchQuery, sortBy, filters }) => {
   // Filter and sort courses
@@ -45,79 +46,59 @@ const CourseGrid = ({ searchQuery, sortBy, filters }) => {
     <Row className="g-4">
       {filteredCourses.map((course) => (
         <Col sm={6} lg={6} xl={4} key={course.id}>
-          <Card className="h-100 shadow-sm hover-shadow transition-all border-0">
-            <div className="position-relative">
-              <div 
-                className="card-img-top"
-                style={{
-                  height: '200px',
-                  backgroundImage: `url(${course.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              />
-            </div>
-            <Card.Body className="p-4">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <Badge 
-                  bg="light"
-                  className="text-dark px-3 py-2 rounded-pill fw-normal"
-                >
-                  {course.category}
-                </Badge>
+          <Link 
+            to={`/admin/edit-course/${course.id}`} 
+            className="text-decoration-none"
+          >
+            <Card className="h-100 shadow-sm hover-shadow transition-all border-0">
+              <div className="position-relative">
+                <div 
+                  className="card-img-top"
+                  style={{
+                    height: '160px',
+                    backgroundImage: `url(${course.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
                 <Badge 
                   bg={course.status === 'Live' ? 'success' : 'warning'} 
-                  className="bg-opacity-10 px-3 py-2 rounded-pill"
+                  className="position-absolute top-0 end-0 m-2"
                 >
                   {course.status}
                 </Badge>
               </div>
-              
-              <h5 className="card-title mb-3">
-                <a href="#" className="text-dark text-decoration-none stretched-link hover-text">
+              <Card.Body className="p-3">
+                <Badge 
+                  bg="light"
+                  className="text-dark px-2 py-1 rounded-pill fw-normal mb-2"
+                >
+                  {course.category}
+                </Badge>
+                
+                <h5 className="card-title mb-2 text-dark">
                   {course.title}
-                </a>
-              </h5>
-              
-              <ul className="list-inline mb-0">
-                <li className="list-inline-item me-4">
-                  <div className="d-flex align-items-center text-muted small">
-                    <FaClock className="me-2" />
-                    <span>{course.duration}</span>
+                </h5>
+                
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex align-items-center">
+                    <h4 className="mb-0 text-success fw-bold">
+                      ₹{course.price}
+                    </h4>
+                    {course.originalPrice && (
+                      <span className="text-muted text-decoration-line-through ms-2">
+                        ₹{course.originalPrice}
+                      </span>
+                    )}
                   </div>
-                </li>
-                <li className="list-inline-item me-4">
-                  <div className="d-flex align-items-center text-muted small">
-                    <FaUserGraduate className="me-2" />
-                    <span>{course.enrolled.toLocaleString()}</span>
-                  </div>
-                </li>
-                <li className="list-inline-item">
                   <div className="d-flex align-items-center small">
-                    <FaStar className="me-2 text-warning" />
+                    <FaStar className="text-warning me-1" />
                     <span className="text-warning fw-bold">{course.rating.star}</span>
                   </div>
-                </li>
-              </ul>
-            </Card.Body>
-            <Card.Footer className="bg-transparent border-top p-4">
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="d-flex align-items-center">
-                  <h4 className="mb-0 text-dark fw-bold">
-                    ${course.price}
-                  </h4>
-                  {course.originalPrice && (
-                    <span className="text-muted text-decoration-line-through ms-2">
-                      ${course.originalPrice}
-                    </span>
-                  )}
                 </div>
-                <button className="btn btn-sm btn-dark rounded-pill px-3">
-                  View Details
-                </button>
-              </div>
-            </Card.Footer>
-          </Card>
+              </Card.Body>
+            </Card>
+          </Link>
         </Col>
       ))}
       

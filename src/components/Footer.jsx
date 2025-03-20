@@ -5,13 +5,11 @@ import { currentYear, developedBy, developedByLink } from '@/context/constants'
 import clsx from 'clsx'
 import logo from '@/assets/images/logo.svg'
 import logoLight from '@/assets/images/logo-light.svg'
-// import pymainlogo from '@/assets/images/pymainlogo.webp';
 import pylogo from '@/assets/images/puthuyougam_logo.png';
 import googlePlay from '@/assets/images/client/google-play.svg'
 import playStore from '@/assets/images/client/app-store.svg'
 import { footerLinks } from '@/assets/data/footer-items'
 import '@/assets/scss/style.scss'; 
-
 const Footer = ({ className }) => {
   return (
     <footer className={clsx('pt-5', className)}>

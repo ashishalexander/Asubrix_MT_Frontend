@@ -1,0 +1,186 @@
+// Enquiries component styles
+
+// Icon utility for enquiry page
+.icon-md {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+// Message truncation styles
+.enquiry-message {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+// Status badge enhancements
+.badge-status {
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 0.35em 0.65em;
+  border-radius: 0.25rem;
+  
+  &.badge-new {
+    background-color: rgba(var(--bs-success-rgb), 0.1);
+    color: var(--bs-success);
+  }
+  
+  &.badge-pending {
+    background-color: rgba(var(--bs-warning-rgb), 0.1);
+    color: var(--bs-warning);
+  }
+  
+  &.badge-responded {
+    background-color: rgba(var(--bs-info-rgb), 0.1);
+    color: var(--bs-info);
+  }
+  
+  &.badge-closed {
+    background-color: rgba(var(--bs-secondary-rgb), 0.1);
+    color: var(--bs-secondary);
+  }
+}
+
+// Enquiry detail modal customizations
+.enquiry-detail-modal {
+  .modal-header, .modal-footer {
+    border: none;
+  }
+  
+  .avatar-section {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: rgba(var(--bs-light-rgb), 0.5);
+    margin-bottom: 1.5rem;
+  }
+  
+  .enquiry-contact-info {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    
+    .contact-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      
+      .icon-container {
+        margin-right: 0.75rem;
+      }
+    }
+  }
+  
+  .enquiry-message-container {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: rgba(var(--bs-light-rgb), 0.5);
+    margin-bottom: 1.5rem;
+    
+    .message-title {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .message-content {
+      color: var(--bs-gray-700);
+    }
+  }
+  
+  .response-form {
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    
+    .form-control, .form-select {
+      background-color: var(--bs-light);
+      border: none;
+      
+      &:focus {
+        box-shadow: none;
+        background-color: var(--bs-light);
+      }
+    }
+  }
+}
+
+// Table improvements for enquiry listing
+.enquiries-table {
+  th {
+    font-weight: 600;
+    color: var(--bs-gray-700);
+  }
+  
+  td {
+    vertical-align: middle;
+  }
+  
+  .avatar-column {
+    width: 250px;
+  }
+  
+  .message-column {
+    min-width: 250px;
+    max-width: 300px;
+  }
+  
+  .time-column, .status-column {
+    width: 120px;
+  }
+  
+  .action-column {
+    width: 100px;
+    text-align: center;
+  }
+}
+
+// Search and filter section
+.enquiry-search-container {
+  .form-control {
+    height: 48px;
+    border: none;
+    background-color: var(--bs-light);
+    
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  
+  .search-button {
+    background: transparent;
+    border: none;
+    color: var(--bs-primary);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+// Empty state for no results
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  
+  .empty-icon {
+    font-size: 2.5rem;
+    color: var(--bs-gray-400);
+    margin-bottom: 1rem;
+  }
+  
+  .empty-title {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .empty-description {
+    color: var(--bs-gray-600);
+    max-width: 300px;
+    margin: 0 auto;
+  }
+} 

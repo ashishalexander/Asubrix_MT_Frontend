@@ -16,6 +16,10 @@
       &#{$infix} {
 
         // Navbar styling for all screen sizes
+        .navbar-brand-item {
+          height: 50px;
+          width: auto;
+        }
 
         .sidebar-content {
           padding: 0 1rem 1rem;

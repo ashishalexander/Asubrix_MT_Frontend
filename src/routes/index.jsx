@@ -104,6 +104,7 @@ const StudentDeleteAccount = lazy(() => import('@/app/student/delete-account/pag
 //Admin
 const AdminDashboard = lazy(() => import('@/app/admin/dashboard/page'));
 const AllCourses = lazy(() => import('@/app/admin/all-courses/page'));
+const BannersPage = lazy(() => import('@/app/admin/banners/page'));
 const CourseCategory = lazy(() => import('@/app/admin/course-category/page'));
 const CourseDetail = lazy(() => import('@/app/admin/course-detail/page'));
 const EditCourse = lazy(() => import('@/app/admin/edit-course/page'));
@@ -118,6 +119,7 @@ const NotFound = lazy(() => import('@/app/admin/error-404/page'));
 const AdminChat = lazy(() => import('@/app/admin/chat/page'));
 const StudentManagement = lazy(() => import('@/app/admin/student-management/page'));
 const FacultyManagement = lazy(() => import('@/app/admin/faculty-management/page'));
+const EnquiriesPage = lazy(() => import('@/app/admin/enquiries/page'));
 
 // Add this import for Reports & Analytics
 const ReportsPage = lazy(() => import('@/app/admin/reports/page'));
@@ -465,6 +467,14 @@ export const adminRoutes = [{
   name: 'All Courses',
   element: <AllCourses />
 }, {
+  path: '/admin/content-management',
+  name: 'Content Management',
+  element: <ContentManagement />,
+}, {
+  path: '/admin/banners',
+  name: 'Banners',
+  element: <BannersPage />,
+}, {
   path: '/admin/edit-course',
   name: 'Create Course',
   element: <EditCourse />
@@ -509,10 +519,6 @@ export const adminRoutes = [{
   name: 'Not Found',
   element: <NotFound />
 }, {
-  path: '/admin/content-management',
-  name: 'Content Management',
-  element: <ContentManagement />,
-}, {
   path: '/admin/student-management',
   name: 'Student Management',
   element: <StudentManagement />,
@@ -524,6 +530,10 @@ export const adminRoutes = [{
   path: '/admin/chat',
   name: 'Chat Section',
   element: <AdminChat />,
+}, {
+  path: '/admin/enquiries',
+  name: 'Enquiries',
+  element: <EnquiriesPage />,
 }, {
   path: '/admin/reports',
   name: 'Reports & Analytics',

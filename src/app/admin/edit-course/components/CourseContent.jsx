@@ -12,19 +12,22 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
       id: '1',
       type: 'folder',
       name: 'Bank Exams',
+      isFree: false,
       items: [
         {
           id: '1-1',
           type: 'video',
           name: 'Welcome Video',
           duration: '5:30',
-          isPreview: true
+          isPreview: true,
+          isFree: false
         },
         {
           id: '1-2',
           type: 'document',
           name: 'Course Overview',
-          size: '1.2 MB'
+          size: '1.2 MB',
+          isFree: false
         }
       ]
     }
@@ -37,6 +40,7 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
   const [addContentType, setAddContentType] = useState(null);
   const [contentName, setContentName] = useState('');
   const [contentFile, setContentFile] = useState(null);
+  const [isFreeContent, setIsFreeContent] = useState(false);
 
   // Get current folder contents based on path
   const getCurrentContents = () => {
@@ -56,7 +60,8 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
       id: Date.now().toString(),
       type,
       name,
-      items: type === 'folder' ? [] : undefined
+      items: type === 'folder' ? [] : undefined,
+      isFree: isFreeContent // Allow free status for all content types including folders
     };
 
     if (currentPath.length === 0) {
@@ -143,17 +148,10 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
 
   const handleContentSubmit = () => {
     if (contentName.trim()) {
-      const newContent = {
-        id: Date.now().toString(),
-        type: addContentType,
-        name: contentName,
-        size: contentFile?.size ? `${(contentFile.size / (1024 * 1024)).toFixed(1)} MB` : undefined,
-        duration: addContentType === 'video' ? '0:00' : undefined,
-      };
-
       addContent(addContentType, contentName);
       setContentName('');
       setContentFile(null);
+      setIsFreeContent(false);
       setShowAddContent(false);
     }
   };
@@ -174,25 +172,101 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
           setContents(contents.filter(content => content.id !== contentId));
         }
         break;
+      case 'toggleFree':
+        const updateContentFreeStatus = (items, targetId) => {
+          return items.map(item => {
+            if (item.id === targetId) {
+              // If it's a folder, update all items inside it
+              if (item.type === 'folder' && item.items) {
+                return {
+                  ...item,
+                  isFree: !item.isFree,
+                  items: item.items.map(subItem => ({
+                    ...subItem,
+                    isFree: !item.isFree
+                  }))
+                };
+              }
+              return { ...item, isFree: !item.isFree };
+            }
+            if (item.items) {
+              return { ...item, items: updateContentFreeStatus(item.items, targetId) };
+            }
+            return item;
+          });
+        };
+        
+        setContents(updateContentFreeStatus(contents, contentId));
+        break;
       default:
         break;
     }
   };
 
-  const ContentActions = ({ contentId, parentId = null }) => (
-    <Dropdown align="end">
-      <Dropdown.Toggle variant="link" className="btn-sm text-muted p-0 shadow-none">
-        <FiMoreVertical />
-      </Dropdown.Toggle>
-      <Dropdown.Menu className="border-0 shadow-sm">
-        <Dropdown.Item onClick={() => handleContentAction('edit', contentId, parentId)}>
-          <FiEdit2 className="me-2" /> Edit
-        </Dropdown.Item>
-        <Dropdown.Item onClick={() => handleContentAction('delete', contentId, parentId)} className="text-danger">
-          <FiTrash2 className="me-2" /> Delete
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+  const ContentActions = ({ contentId, parentId = null, type, isFree }) => (
+    <div 
+      onClick={(e) => e.stopPropagation()} 
+      className="dropdown-wrapper"
+      style={{ position: 'relative' }}
+    >
+      <style>
+        {`
+          .dropdown-wrapper .dropdown-menu {
+            position: fixed !important;
+            transform: none !important;
+            top: auto !important;
+            left: auto !important;
+            z-index: 9999;
+          }
+          .card-content {
+            position: relative;
+          }
+          .action-wrapper {
+            position: static;
+          }
+        `}
+      </style>
+      <Dropdown>
+        <Dropdown.Toggle variant="link" className="btn-sm text-muted p-0 shadow-none">
+          <FiMoreVertical />
+        </Dropdown.Toggle>
+        <Dropdown.Menu 
+          className="border-0 shadow-sm"
+          popperConfig={{
+            strategy: 'absolute',
+            modifiers: [
+              {
+                name: 'preventOverflow',
+                options: {
+                  altAxis: true,
+                  padding: 8
+                }
+              }
+            ]
+          }}
+        >
+          <Dropdown.Item onClick={() => handleContentAction('edit', contentId, parentId)}>
+            <FiEdit2 className="me-2" /> Edit
+          </Dropdown.Item>
+          <Dropdown.Item 
+            as="button" 
+            className="d-flex align-items-center"
+            onClick={() => handleContentAction('toggleFree', contentId, parentId)}
+          >
+            <Form.Check
+              type="checkbox"
+              checked={isFree}
+              onChange={() => {}}
+              label={type === 'folder' ? "Make folder content free" : "Make it free"}
+              className="m-0"
+            />
+          </Dropdown.Item>
+          <Dropdown.Item onClick={() => handleContentAction('delete', contentId, parentId)} className="text-danger">
+            <FiTrash2 className="me-2" /> Delete
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
   );
 
   return (
@@ -269,7 +343,7 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
               className="bg-light border-0"
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>File</Form.Label>
             <Form.Control
               type="file"
@@ -283,6 +357,17 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
               }
             />
           </Form.Group>
+          {addContentType !== 'folder' && (
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="checkbox"
+                id="make-free-content"
+                label="Make this content free"
+                checked={isFreeContent}
+                onChange={(e) => setIsFreeContent(e.target.checked)}
+              />
+            </Form.Group>
+          )}
         </Modal.Body>
         <Modal.Footer className="border-0">
           <Button 
@@ -354,32 +439,25 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
         {getCurrentContents().map(content => (
           <Card 
             key={content.id} 
-            className="border-0 bg-white mb-2 cursor-pointer"
-            onClick={() => {
+            className="border-0 bg-white mb-2 cursor-pointer card-content"
+            onClick={(e) => {
               if (content.type === 'folder') {
                 navigateToFolder(content.id, content.name);
               }
             }}
           >
             <Card.Body className="py-2 px-3">
-              <div className="d-flex align-items-center">
+              <div className="d-flex align-items-center action-wrapper">
                 <div className="me-3">
-                  {content.type === 'folder' ? (
-                    <FiFolder className="text-primary" size={24} />
-                  ) : content.type === 'video' ? (
-                    <FiVideo className="text-info" size={24} />
-                  ) : content.type === 'image' ? (
-                    <FiImage className="text-success" size={24} />
-                  ) : content.type === 'archive' ? (
-                    <FiArchive className="text-warning" size={24} />
-                  ) : content.type === 'link' ? (
-                    <FiLink className="text-purple" size={24} />
-                  ) : (
-                    <FiFileText className="text-success" size={24} />
-                  )}
+                  {getContentIcon(content.type)}
                 </div>
                 <div className="flex-grow-1">
-                  <h6 className="mb-0">{content.name}</h6>
+                  <div className="d-flex align-items-center">
+                    <h6 className="mb-0">{content.name}</h6>
+                    {content.isFree && (
+                      <span className="badge bg-success ms-2">Free</span>
+                    )}
+                  </div>
                   {content.type === 'folder' && content.items && (
                     <small className="text-muted">
                       {content.items.filter(item => item.type === 'video').length} video(s), 
@@ -393,19 +471,12 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
                     <small className="text-muted">Size: {content.size}</small>
                   )}
                 </div>
-                <Dropdown>
-                  <Dropdown.Toggle variant="link" className="text-muted p-0">
-                    <FiMoreVertical />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="border-0 shadow-sm">
-                    <Dropdown.Item>
-                      <FiEdit2 className="me-2" /> Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item className="text-danger">
-                      <FiTrash2 className="me-2" /> Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <ContentActions 
+                  contentId={content.id} 
+                  parentId={currentPath.length > 0 ? currentPath[currentPath.length - 1] : null}
+                  type={content.type}
+                  isFree={content.isFree}
+                />
               </div>
             </Card.Body>
           </Card>
@@ -431,11 +502,11 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
           variant="primary" 
           className="px-4 rounded-pill"
           onClick={() => {
-            setProgress(75);
-            setActiveStep(4);
+            setProgress(100);
+            setActiveStep(3);
           }}
         >
-          Next
+          Finish
         </Button>
       </div>
     </div>

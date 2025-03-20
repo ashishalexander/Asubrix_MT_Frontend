@@ -815,19 +815,20 @@ export const ADMIN_MENU_ITEMS = [{
   icon: BsHouse,
   url: '/admin/dashboard'
 }, {
-  key: 'pages',
-  isTitle: true,
-  label: 'Pages'
-}, {
   key: 'courses',
   label: 'Courses',
   icon: BsBasket,
   url: '/admin/all-courses'
 }, {
   key: 'contents',
-  label: 'Test Contents',
+  label: 'Test Management',
   icon: FaRegFileAlt,
   url: '/admin/content-management'
+}, {
+  key: 'banners',
+  label: 'Banners',
+  icon: BsUiRadiosGrid,
+  url: '/admin/banners'
 }, {
   key: 'student-management',
   label: 'Student Management',

@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { FiUser, FiDollarSign, FiFolder, FiPackage } from 'react-icons/fi';
+import { FiUser, FiDollarSign, FiFolder } from 'react-icons/fi';
 import BasicInfo from './components/BasicInfo';
 import PricingPlans from './components/PricingPlans';
 import CourseContent from './components/CourseContent';
-import CourseBundle from './components/CourseBundle';
 
 const EditCourse = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -14,8 +13,7 @@ const EditCourse = () => {
   const steps = [
     { number: 1, title: 'Basic Information', icon: <FiUser />, component: BasicInfo },
     { number: 2, title: 'Edit Price', icon: <FiDollarSign />, component: PricingPlans },
-    { number: 3, title: 'Add Content', icon: <FiFolder />, component: CourseContent },
-    { number: 4, title: 'Bundle(Optional)', icon: <FiPackage />, component: CourseBundle }
+    { number: 3, title: 'Add Content', icon: <FiFolder />, component: CourseContent }
   ];
 
   return (

@@ -5,16 +5,20 @@ export const footerLinks = [{
     name: 'Home',
     link: '/demos/academy/home'
   }, {
-    name: 'About us',
+    name: 'About',
     link: '/pages/about/about-us'
-  }, {
-    name: 'Blogs'
   }, {
     name: 'Gallery',
     link: '/pages/gallery'
   }, {
-    name: 'Course',
+    name: 'Courses',
     link: '/pages/course/grid-2'
+  }, {
+    name: 'Free Test',
+    link: '/pages/free-test'
+  }, {
+    name: 'Out Team',
+    link: '/pages/instructors'
   }]
 }, {
   title: 'Courses',
