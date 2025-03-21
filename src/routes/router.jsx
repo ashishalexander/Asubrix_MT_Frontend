@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { adminRoutes, appRoutes, authRoutes, InstructorRoutes, shopRoutes, studentRoutes } from '@/routes/index';
+import { adminRoutes, appRoutes, authRoutes, InstructorRoutes, shopRoutes, studentRoutes, demosRoutes, initialRoutes } from '@/routes/index';
 import AdminLayout from '@/layouts/AdminLayout';
 import ShopLayout from '@/layouts/ShopLayout';
 import InstructorLayout from '@/layouts/InstructorLayout';
@@ -44,60 +44,123 @@ const AppRouter = props => {
   
   return (
     <Routes>
+      {/* Initial Routes */}
+      {(initialRoutes || []).map((route, idx) => (
+        <Route key={idx + route.name} path={route.path} element={route.element} />
+      ))}
+
+      {/* Demo Routes */}
+      {(demosRoutes || []).map((route, idx) => (
+        <Route key={idx + route.name} path={route.path} element={<OtherLayout {...props}>{route.element}</OtherLayout>} />
+      ))}
+
+      {/* Auth Routes */}
       {(authRoutes || []).map((route, idx) => (
         <Route key={idx + route.name} path={route.path} element={<OtherLayout {...props}>{route.element}</OtherLayout>} />
       ))}
 
+      {/* App Routes */}
       {(appRoutes || []).map((route, idx) => (
         <Route
           key={idx + route.name}
           path={route.path}
           element={
-            // Temporarily remove redirection
-            <OtherLayout {...props}>{route.element}</OtherLayout>
+            isAuthenticated ? (
+              <OtherLayout {...props}>{route.element}</OtherLayout>
+            ) : (
+              <Navigate
+                to={{
+                  pathname: '/auth/sign-in',
+                  search: 'redirectTo=' + route.path
+                }}
+              />
+            )
           }
         />
       ))}
 
+      {/* Shop Routes */}
       {(shopRoutes || []).map((route, idx) => (
         <Route
           key={idx + route.name}
           path={route.path}
           element={
-            <ShopLayout {...props}>{route.element}</ShopLayout>
+            isAuthenticated ? (
+              <ShopLayout {...props}>{route.element}</ShopLayout>
+            ) : (
+              <Navigate
+                to={{
+                  pathname: '/auth/sign-in',
+                  search: 'redirectTo=' + route.path
+                }}
+              />
+            )
           }
         />
       ))}
 
+      {/* Instructor Routes */}
       {(InstructorRoutes || []).map((route, idx) => (
         <Route
           key={idx + route.name}
           path={route.path}
           element={
-            <InstructorLayout {...props}>{route.element}</InstructorLayout>
+            isAuthenticated ? (
+              <InstructorLayout {...props}>{route.element}</InstructorLayout>
+            ) : (
+              <Navigate
+                to={{
+                  pathname: '/auth/sign-in',
+                  search: 'redirectTo=' + route.path
+                }}
+              />
+            )
           }
         />
       ))}
 
+      {/* Student Routes */}
       {(studentRoutes || []).map((route, idx) => (
         <Route
           key={idx + route.name}
           path={route.path}
           element={
-            <StudentLayout {...props}>{route.element}</StudentLayout>
+            isAuthenticated ? (
+              <StudentLayout {...props}>{route.element}</StudentLayout>
+            ) : (
+              <Navigate
+                to={{
+                  pathname: '/auth/sign-in',
+                  search: 'redirectTo=' + route.path
+                }}
+              />
+            )
           }
         />
       ))}
 
+      {/* Admin Routes */}
       {(adminRoutes || []).map((route, idx) => (
         <Route
           key={idx + route.name}
           path={route.path}
           element={
-            <AdminLayout {...props}>{route.element}</AdminLayout>
+            isAuthenticated ? (
+              <AdminLayout {...props}>{route.element}</AdminLayout>
+            ) : (
+              <Navigate
+                to={{
+                  pathname: '/auth/sign-in',
+                  search: 'redirectTo=' + route.path
+                }}
+              />
+            )
           }
         />
       ))}
+
+      {/* Catch all route - 404 */}
+      <Route path="*" element={<Navigate to="/demos/default/home" replace />} />
     </Routes>
   );
 };

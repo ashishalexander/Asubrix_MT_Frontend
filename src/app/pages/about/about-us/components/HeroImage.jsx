@@ -24,7 +24,7 @@ const HeroImage = () => {
           <Col sm={10} lg={8} xl={6} className="all-text-white my-5 mt-md-0">
             <div className="py-0 py-md-5 my-5">
               <h1 className="text-white display-5">
-                About <span className="text-warning">Us</span>
+                About
               </h1>
               
             </div>

@@ -29,11 +29,13 @@ const TestDetails = () => {
         <Row className="g-4">
           {testAttempts.map((attempt) => (
             <Col lg={6} key={attempt.id}>
-              <Card className="shadow p-3">
+              <Card className="test-card shadow p-3">
                 <Row className="d-flex align-items-center justify-content-between">
-                  <Col xs={2} className="d-flex justify-content-center">
-                    {/* <img src="/folder-icon.png" alt="test" width={40} /> */}
-                    <FaFile size={40} color="#3256a8"/>
+                  <Col xs={2}>
+                    <div className="icon-wrapper">
+                      {/* <img src="/folder-icon.png" alt="test" width={40} /> */}
+                      <FaFile size={40} color="#3256a8"/>
+                    </div>
                   </Col>
                   <Col xs={6}>
                     <h5 className="mb-0">{attempt.date}</h5>

@@ -70,4 +70,36 @@
 @import "components/details-page";
 
 // Components
-@import "./components/banner-management";
+@import "components/hero";
+@import "components/images";
+@import "components/avatar";
+@import "components/general";
+@import "components/utilities";
+@import "components/whatsapp";
+@import "components/question-styles";
+@import "components/enquiries";
+@import "components/tables";
+@import "components/details-page";
+@import "components/banner-management";
+@import "components/sidebar-admin";
+@import "components/content-management";
+
+// Custom styles
+@import "custom/reboot";
+@import "custom/utilities";
+@import "custom/type";
+@import "custom/card";
+@import "custom/buttons";
+@import "custom/breadcrumb";
+@import "custom/pagination";
+@import "custom/navbar";
+@import "custom/nav";
+@import "custom/dropdowns";
+@import "custom/progress";
+@import "custom/list-group";
+@import "custom/tables";
+@import "custom/popupmodal";
+@import "custom/logo";
+@import "custom/footer";
+@import "custom/resource-carousel";
+@import "custom/accordion";

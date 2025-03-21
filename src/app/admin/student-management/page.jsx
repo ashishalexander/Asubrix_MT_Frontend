@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import PageMetaData from '@/components/PageMetaData';
-import StudentTable from './components/StudentTable';
-import { FaUserGraduate, FaSearch } from 'react-icons/fa';
+import React, { useState } from 'react'
+import PageMetaData from '@/components/PageMetaData'
+import StudentTable from './components/StudentTable'
+import { FaUserGraduate, FaPlus } from 'react-icons/fa'
+import { FiSearch } from 'react-icons/fi'
+import { Container, Form, Button } from 'react-bootstrap'
 
 const dummyStudents = [
   {
@@ -12,7 +14,7 @@ const dummyStudents = [
     phone: '+1 234-567-8901',
     enrollmentDate: '2023-09-01',
     status: 'active',
-    courses: ['Computer Science 101', 'Data Structures', 'Web Development']
+    courses: ['Computer Science 101', 'Data Structures', 'Web Development'],
   },
   {
     id: 2,
@@ -22,7 +24,7 @@ const dummyStudents = [
     phone: '+1 234-567-8902',
     enrollmentDate: '2023-09-01',
     status: 'blocked',
-    courses: ['Mathematics 101', 'Physics 101']
+    courses: ['Mathematics 101', 'Physics 101'],
   },
   {
     id: 3,
@@ -32,7 +34,7 @@ const dummyStudents = [
     phone: '+1 234-567-8903',
     enrollmentDate: '2023-09-02',
     status: 'active',
-    courses: ['Chemistry 101', 'Biology 101', 'Lab Practice']
+    courses: ['Chemistry 101', 'Biology 101', 'Lab Practice'],
   },
   {
     id: 4,
@@ -42,7 +44,7 @@ const dummyStudents = [
     phone: '+1 234-567-8904',
     enrollmentDate: '2023-09-02',
     status: 'active',
-    courses: ['English Literature', 'Creative Writing']
+    courses: ['English Literature', 'Creative Writing'],
   },
   {
     id: 5,
@@ -52,131 +54,163 @@ const dummyStudents = [
     phone: '+1 234-567-8905',
     enrollmentDate: '2023-09-03',
     status: 'active',
-    courses: ['Computer Networks', 'Database Systems', 'Software Engineering']
-  }
-];
+    courses: ['Computer Networks', 'Database Systems', 'Software Engineering'],
+  },
+]
 
 const StudentManagement = () => {
-  const [students, setStudents] = useState(dummyStudents);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [students, setStudents] = useState(dummyStudents)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState('newest')
 
   const handleEdit = (student) => {
     // Handle edit functionality
-    console.log('Edit student:', student);
-  };
+    console.log('Edit student:', student)
+  }
 
   const handleDelete = (student) => {
-    setStudents(students.filter(s => s.id !== student.id));
-  };
+    setStudents(students.filter((s) => s.id !== student.id))
+  }
 
   const handleStatusChange = (studentId, newStatus) => {
-    setStudents(students.map(student => 
-      student.id === studentId 
-        ? { ...student, status: newStatus }
-        : student
-    ));
-  };
+    setStudents(students.map((student) => (student.id === studentId ? { ...student, status: newStatus } : student)))
+  }
 
-  return (
-    <div className="container-fluid py-4">
-      {/* Page Header */}
-      <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
-        <div className="d-flex align-items-center">
-          <div className="icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg me-3">
-            <FaUserGraduate className="text-white opacity-10" style={{ width: "24px", height: "24px" }} />
-          </div>
-          <div>
-            <h5 className="mb-0">Student Management</h5>
-            <p className="mb-0 text-sm">Manage all students</p>
-          </div>
-        </div>
-        <div className="ms-md-auto my-2 my-md-0">
-          <div className="input-group">
-            <span className="input-group-text text-body">
-              <FaSearch className="text-muted" style={{ fontSize: '14px' }} />
-            </span>
-            <input 
-              type="text" 
-              className="form-control" 
-              placeholder="Search student..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
-      </div>
+  const handleAddStudent = () => {
+    // Handle add student functionality
+    console.log('Add new student')
+  }
 
-      {/* Stats Cards */}
-      <div className="row mb-4">
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div className="card">
-            <div className="card-body p-3">
-              <div className="row">
-                <div className="col-8">
-                  <div className="numbers">
-                    <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Students</p>
-                    <h5 className="font-weight-bolder mb-0">
-                      {students.length}
-                    </h5>
-                  </div>
-                </div>
-                <div className="col-4 text-end">
-                  <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <FaUserGraduate className="text-white opacity-10" style={{ width: "20px", height: "20px" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div className="card">
-            <div className="card-body p-3">
-              <div className="row">
-                <div className="col-8">
-                  <div className="numbers">
-                    <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Students</p>
-                    <h5 className="font-weight-bolder mb-0">
-                      {students.filter(s => s.status === 'active').length}
-                    </h5>
-                  </div>
-                </div>
-                <div className="col-4 text-end">
-                  <div className="icon icon-shape bg-gradient-success shadow text-center border-radius-md">
-                    <FaUserGraduate className="text-white opacity-10" style={{ width: "20px", height: "20px" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Student Table */}
-      <div className="card">
-        <div className="card-body px-0 pt-0 pb-2">
-          <StudentTable
-            students={students.filter(student => 
-              student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              student.enrollmentId.toLowerCase().includes(searchTerm.toLowerCase())
-            )}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onStatusChange={handleStatusChange}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const StudentManagementPage = () => {
   return (
     <>
       <PageMetaData title="Student Management" />
-      <StudentManagement />
-    </>
-  );
-};
+      
+      {/* Header Section */}
+      <div className="bg-light py-4 mb-4">
+        <Container fluid>
+          <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div>
+              <h3 className="mb-0 fw-bold">Student Management</h3>
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb mb-0 mt-2">
+                  <li className="breadcrumb-item">
+                    <a href="#" className="text-muted">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li className="breadcrumb-item active text-dark" aria-current="page">
+                    Students
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <Button 
+              className="btn-add-content d-flex align-items-center" 
+              onClick={handleAddStudent}
+            >
+              <FaPlus className="me-2" />
+              Add Student
+            </Button>
+          </div>
 
-export default StudentManagementPage; 
+          {/* Search and Sort Section */}
+          <div className="row g-3 align-items-center">
+            <div className="col-md-8">
+              <div className="search-input">
+                <div className="input-group">
+                  <span className="input-group-text border-end-0">
+                    <FiSearch className="text-muted" />
+                  </span>
+                  <Form.Control
+                    type="text"
+                    placeholder="Search students..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="border-start-0 ps-0 rounded-end"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="d-flex align-items-center justify-content-end">
+                <label className="me-2 text-nowrap fw-medium">Sort by:</label>
+                <Form.Select 
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="form-select"
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                  <option value="name">Student Name</option>
+                  <option value="status">Status</option>
+                </Form.Select>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* Stats Cards */}
+      <Container fluid>
+        <div className="row mb-4">
+          <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div className="card">
+              <div className="card-body p-3">
+                <div className="row">
+                  <div className="col-8">
+                    <div className="numbers">
+                      <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Students</p>
+                      <h5 className="font-weight-bolder mb-0">{students.length}</h5>
+                    </div>
+                  </div>
+                  <div className="col-4 text-end">
+                    <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                      <FaUserGraduate className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div className="card">
+              <div className="card-body p-3">
+                <div className="row">
+                  <div className="col-8">
+                    <div className="numbers">
+                      <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Students</p>
+                      <h5 className="font-weight-bolder mb-0">{students.filter((s) => s.status === 'active').length}</h5>
+                    </div>
+                  </div>
+                  <div className="col-4 text-end">
+                    <div className="icon icon-shape bg-gradient-success shadow text-center border-radius-md">
+                      <FaUserGraduate className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Student Table */}
+        <div className="card">
+          <div className="card-body px-0 pt-0 pb-2">
+            <StudentTable
+              students={students.filter(
+                (student) =>
+                  student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  student.enrollmentId.toLowerCase().includes(searchQuery.toLowerCase())
+              )}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onStatusChange={handleStatusChange}
+            />
+          </div>
+        </div>
+      </Container>
+    </>
+  )
+}
+
+export default StudentManagement

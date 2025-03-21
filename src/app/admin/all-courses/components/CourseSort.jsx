@@ -14,7 +14,7 @@ const CourseSort = ({ sortBy, setSortBy }) => {
     <Form.Select
       value={sortBy}
       onChange={(e) => setSortBy(e.target.value)}
-      className="form-select-sm"
+      className="form-select"
     >
       {sortOptions.map((option) => (
         <option key={option.value} value={option.value}>

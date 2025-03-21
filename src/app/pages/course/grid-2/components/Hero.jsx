@@ -24,7 +24,7 @@ const Hero = () => {
           <Col sm={10} lg={8} xl={6} className="all-text-white my-5 mt-md-0">
             <div className="py-0 py-md-5 my-5">
               <h1 className="text-white display-5">
-                Course's <span className="text-warning">For you</span>
+                Course's
               </h1>
               
             </div>

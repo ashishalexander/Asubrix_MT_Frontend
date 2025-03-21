@@ -7,7 +7,15 @@ import {
 } from 'react-icons/fi';
 import CreateChoiceModal from './CreateChoiceModal';
 
-const TestsPortal = ({ view, searchQuery, onCreateTest, onOpenSettings }) => {
+const TestsPortal = ({ 
+  view, 
+  searchQuery, 
+  sortBy,
+  showAddFolder,
+  setShowAddFolder,
+  onCreateTest, 
+  onOpenSettings 
+}) => {
   // State for folders and tests
   const [folders, setFolders] = useState([
     { id: 1, name: 'Mathematics', parentId: null },
@@ -39,11 +47,7 @@ const TestsPortal = ({ view, searchQuery, onCreateTest, onOpenSettings }) => {
 
   // State for sorting and filtering
   const [currentPath, setCurrentPath] = useState([]);
-  const [sortBy, setSortBy] = useState('lastModified');
-  const [sortOrder, setSortOrder] = useState('desc');
-  const [showAddFolder, setShowAddFolder] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
-  const [showAddContent, setShowAddContent] = useState(false);
 
   // Get current folder contents based on path
   const getCurrentContents = () => {
@@ -114,7 +118,7 @@ const TestsPortal = ({ view, searchQuery, onCreateTest, onOpenSettings }) => {
     }
   };
 
-  // Sort tests
+  // Sort tests based on sortBy prop
   const sortItems = (items) => {
     return [...items].sort((a, b) => {
       let comparison = 0;
@@ -125,13 +129,13 @@ const TestsPortal = ({ view, searchQuery, onCreateTest, onOpenSettings }) => {
         case 'lastModified':
           comparison = new Date(b.lastModified) - new Date(a.lastModified);
           break;
-        case 'lastAttempted':
-          comparison = new Date(b.lastAttempted) - new Date(a.lastAttempted);
+        case 'attempts':
+          comparison = b.attempts - a.attempts;
           break;
         default:
-          comparison = 0;
+          comparison = new Date(b.lastModified) - new Date(a.lastModified);
       }
-      return sortOrder === 'asc' ? comparison : -comparison;
+      return comparison;
     });
   };
 
@@ -145,142 +149,19 @@ const TestsPortal = ({ view, searchQuery, onCreateTest, onOpenSettings }) => {
   return (
     <div className="tests-portal">
       {/* Content Header */}
-      <div className="content-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
-        <div className="mb-3 mb-md-0">
-          <Breadcrumb className="mb-0">
-            {getBreadcrumbItems().map((item, index) => (
-              <Breadcrumb.Item
-                key={index}
-                active={index === getBreadcrumbItems().length - 1}
-                onClick={() => navigateToPath(index)}
-                className="breadcrumb-item-custom"
-              >
-                {item.name}
-              </Breadcrumb.Item>
-            ))}
-          </Breadcrumb>
-        </div>
-        <div className="d-flex flex-wrap gap-2 align-items-center">
-          <Button 
-            variant="primary" 
-            className="btn-add-content d-flex align-items-center"
-            onClick={() => setShowAddFolder(true)}
-          >
-            <FiPlus className="me-2" /> New Folder
-          </Button>
-          <Button 
-            variant="primary" 
-            className="btn-add-content d-flex align-items-center"
-            onClick={onCreateTest}
-          >
-            <FiFileText className="me-2" /> New Test
-          </Button>
-          <div className="d-flex gap-2 ms-md-2">
-            <Dropdown align="end">
-              <Dropdown.Toggle variant="light" className="btn-sort d-flex align-items-center">
-                <span className="d-none d-sm-inline">Sort by:</span> {sortBy}
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="shadow-sm">
-                <Dropdown.Item onClick={() => setSortBy('title')}>Title</Dropdown.Item>
-                <Dropdown.Item onClick={() => setSortBy('lastModified')}>Modified Date</Dropdown.Item>
-                <Dropdown.Item onClick={() => setSortBy('lastAttempted')}>Last Attempted</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Button 
-              variant="light" 
-              className="btn-sort-order"
-              onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+      <div className="content-header mb-4">
+        <Breadcrumb className="mb-0">
+          {getBreadcrumbItems().map((item, index) => (
+            <Breadcrumb.Item
+              key={index}
+              active={index === getBreadcrumbItems().length - 1}
+              onClick={() => navigateToPath(index)}
+              className="breadcrumb-item-custom"
             >
-              {sortOrder === 'asc' ? <FiArrowUp /> : <FiArrowDown />}
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Content List */}
-      <div className="content-list">
-        {/* Folders */}
-        {currentContents.folders.map(folder => (
-          <Card 
-            key={folder.id} 
-            className="content-card folder-card"
-            onClick={() => navigateToFolder(folder.id)}
-          >
-            <Card.Body>
-              <div className="d-flex align-items-center">
-                <div className="content-icon">
-                  <FiFolder size={24} />
-                </div>
-                <div className="content-details">
-                  <h6 className="content-title">{folder.name}</h6>
-                  <div className="content-meta">
-                    {folders.filter(f => f.parentId === folder.id).length} folders, 
-                    {tests.filter(t => t.folderId === folder.id).length} tests
-                  </div>
-                </div>
-                <Dropdown onClick={e => e.stopPropagation()}>
-                  <Dropdown.Toggle variant="link" className="btn-actions">
-                    <FiMoreVertical />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu-end">
-                    <Dropdown.Item>
-                      <FiEdit2 className="me-2" /> Rename
-                    </Dropdown.Item>
-                    <Dropdown.Item 
-                      className="text-danger"
-                      onClick={() => handleDelete(folder.id, 'folder')}
-                    >
-                      <FiTrash2 className="me-2" /> Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </Card.Body>
-          </Card>
-        ))}
-
-        {/* Tests */}
-        {filteredAndSortedTests.map(test => (
-          <Card key={test.id} className="content-card test-card">
-            <Card.Body>
-              <div className="d-flex align-items-center">
-                <div className="content-icon">
-                  <FiFileText size={24} />
-                </div>
-                <div className="content-details">
-                  <h6 className="content-title">{test.title}</h6>
-                  <div className="content-meta">
-                    <span><FiClock className="me-1" />{test.duration}</span>
-                    <span><FiUsers className="me-1" />{test.attempts} attempts</span>
-                    <span><FiCalendar className="me-1" />{test.lastModified}</span>
-                  </div>
-                </div>
-                <Dropdown>
-                  <Dropdown.Toggle variant="link" className="btn-actions">
-                    <FiMoreVertical />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu-end">
-                    <Dropdown.Item>
-                      <FiEdit2 className="me-2" /> Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item 
-                      className="text-danger"
-                      onClick={() => handleDelete(test.id, 'test')}
-                    >
-                      <FiTrash2 className="me-2" /> Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </Card.Body>
-          </Card>
-        ))}
-
-        {currentContents.folders.length === 0 && filteredAndSortedTests.length === 0 && (
-          <div className="empty-state">
-            <p>No content in this folder</p>
-          </div>
-        )}
+              {item.name}
+            </Breadcrumb.Item>
+          ))}
+        </Breadcrumb>
       </div>
 
       {/* Add Folder Modal */}
@@ -320,6 +201,97 @@ const TestsPortal = ({ view, searchQuery, onCreateTest, onOpenSettings }) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Content List */}
+      <div className="content-list">
+        {/* Folders */}
+        <Row>
+          {currentContents.folders.map(folder => (
+            <Col key={folder.id} xs={12} md={6} lg={4} xl={3} className="mb-4">
+              <Card 
+                className="content-card folder-card h-100"
+                onClick={() => navigateToFolder(folder.id)}
+              >
+                <Card.Body>
+                  <div className="d-flex align-items-center">
+                    <div className="content-icon me-3">
+                      <FiFolder size={24} className="text-primary" />
+                    </div>
+                    <div className="content-details flex-grow-1">
+                      <h6 className="content-title mb-1">{folder.name}</h6>
+                      <div className="content-meta text-muted small">
+                        {folders.filter(f => f.parentId === folder.id).length} folders, 
+                        {tests.filter(t => t.folderId === folder.id).length} tests
+                      </div>
+                    </div>
+                    <Dropdown onClick={e => e.stopPropagation()}>
+                      <Dropdown.Toggle variant="link" className="btn-actions text-muted">
+                        <FiMoreVertical />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu className="dropdown-menu-end">
+                        <Dropdown.Item>
+                          <FiEdit2 className="me-2" /> Rename
+                        </Dropdown.Item>
+                        <Dropdown.Item 
+                          className="text-danger"
+                          onClick={() => handleDelete(folder.id, 'folder')}
+                        >
+                          <FiTrash2 className="me-2" /> Delete
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+
+          {/* Tests */}
+          {filteredAndSortedTests.map(test => (
+            <Col key={test.id} xs={12} md={6} lg={4} xl={3} className="mb-4">
+              <Card className="content-card test-card h-100">
+                <Card.Body>
+                  <div className="d-flex align-items-center">
+                    <div className="content-icon me-3">
+                      <FiFileText size={24} className="text-success" />
+                    </div>
+                    <div className="content-details flex-grow-1">
+                      <h6 className="content-title mb-1">{test.title}</h6>
+                      <div className="content-meta text-muted small">
+                        <div><FiClock className="me-1" />{test.duration}</div>
+                        <div><FiUsers className="me-1" />{test.attempts} attempts</div>
+                        <div><FiCalendar className="me-1" />{test.lastModified}</div>
+                      </div>
+                    </div>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="link" className="btn-actions text-muted">
+                        <FiMoreVertical />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu className="dropdown-menu-end">
+                        <Dropdown.Item>
+                          <FiEdit2 className="me-2" /> Edit
+                        </Dropdown.Item>
+                        <Dropdown.Item 
+                          className="text-danger"
+                          onClick={() => handleDelete(test.id, 'test')}
+                        >
+                          <FiTrash2 className="me-2" /> Delete
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {currentContents.folders.length === 0 && filteredAndSortedTests.length === 0 && (
+          <div className="empty-state text-center py-5">
+            <p className="text-muted mb-0">No content in this folder</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -425,10 +425,17 @@
         background: var(--bs-gray-100);
         border: 1px solid var(--bs-gray-200);
         color: var(--bs-gray-700);
+        min-width: 200px;
 
         &:hover, &:focus {
           background: var(--bs-gray-200);
           border-color: var(--bs-gray-300);
+        }
+
+        .sort-label {
+          display: flex;
+          align-items: center;
+          font-weight: 500;
         }
       }
 
@@ -602,6 +609,27 @@
         }
       }
     }
+
+    .dropdown-menu {
+      border-radius: 0.5rem;
+      border: 1px solid var(--bs-gray-200);
+      min-width: 200px;
+
+      .dropdown-item {
+        font-size: 0.875rem;
+        color: var(--bs-gray-700);
+        
+        &:hover, &:focus {
+          background-color: var(--bs-gray-100);
+          color: var(--bs-primary);
+        }
+
+        &:active {
+          background-color: var(--bs-primary);
+          color: white;
+        }
+      }
+    }
   }
 }
 
@@ -647,6 +675,25 @@
         &:hover, &:focus {
           background: var(--bs-gray-700);
           border-color: var(--bs-gray-600);
+        }
+      }
+
+      .dropdown-menu {
+        background: var(--bs-gray-800);
+        border-color: var(--bs-gray-700);
+
+        .dropdown-item {
+          color: var(--bs-gray-300);
+
+          &:hover, &:focus {
+            background-color: var(--bs-gray-700);
+            color: var(--bs-primary);
+          }
+
+          &:active {
+            background-color: var(--bs-primary);
+            color: white;
+          }
         }
       }
     }

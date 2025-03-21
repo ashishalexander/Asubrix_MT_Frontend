@@ -125,11 +125,12 @@ const EnquiriesPage = lazy(() => import('@/app/admin/enquiries/page'));
 const ReportsPage = lazy(() => import('@/app/admin/reports/page'));
 
 //other
-const initialRoutes = [{
+export const initialRoutes = [{
   path: '/',
   name: 'root',
   element: <Navigate to="/demos/default/home" />
 }];
+
 export const demosRoutes = [{
   path: '/demos/default/home',
   name: 'Demos',

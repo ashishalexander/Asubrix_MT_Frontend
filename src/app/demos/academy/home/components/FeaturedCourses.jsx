@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom'
 import { Card, CardBody, CardTitle, Col, Container, Row } from 'react-bootstrap'
 import { FaRegBookmark, FaRegClock, FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa'
 import { useFetchData } from '@/hooks/useFetchData'
+import thumbnailPlaceholder from '@/assets/images/bg/thumbnail-placeholder.webp'
+
 const CourseCard = ({ course }) => {
   const { avatar, studentImage, rating, price, role, courseDuration, title, name, badge, duration } = course
   return (
-    <Card className="shadow-hover overflow-hidden bg-transparent border border-light">
+    <Card className="shadow-hover overflow-hidden bg-transparent border border-2">
       <div className="position-relative">
         <img
           className="card-img-top"
-          src={'https://cdn.prod.website-files.com/615fe732842b1953eb640cc2/64998eac013d863c5c51aab2_Foundation-course-Thumbnail.png'}
+          src={thumbnailPlaceholder}
           alt="Card image"
         />
         <div className="bg-overlay bg-dark opacity-4" />
@@ -95,8 +97,8 @@ const FeaturedCourses = () => {
           </Col>
         </Row>
         <Row className="g-4">
-          {trendingCourses?.slice(0, 3).map((course, idx) => (
-            <Col md={6} xl={4} key={idx}>
+          {trendingCourses?.slice(0, 4).map((course, idx) => (
+            <Col sm={6} md={6} lg={3} key={idx}>
               <CourseCard course={course} />
             </Col>
           ))}
