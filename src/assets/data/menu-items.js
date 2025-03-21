@@ -853,5 +853,15 @@ export const ADMIN_MENU_ITEMS = [{
   key: 'reports',
   label: 'Reports & Analytics',
   icon: FaChartBar,
-  url: '/admin/reports'
+  children: [{
+    key: 'course-reports',
+    label: 'Course Reports',
+    url: '/admin/reports/courses',
+    parentKey: 'reports'
+  }, {
+    key: 'payment-reports',
+    label: 'Payment Reports',
+    url: '/admin/reports/payments',
+    parentKey: 'reports'
+  }]
 }];

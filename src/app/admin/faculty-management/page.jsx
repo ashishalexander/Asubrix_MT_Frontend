@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { Container, Form, Button } from 'react-bootstrap';
+import { FiSearch } from 'react-icons/fi';
+import { FaPlus, FaUserTie } from 'react-icons/fa';
 import PageMetaData from '@/components/PageMetaData';
 import FacultyTable from './components/FacultyTable';
-import { FaUserTie, FaSearch } from 'react-icons/fa';
 
 const dummyFaculties = [
   {
@@ -68,7 +70,8 @@ const dummyFaculties = [
 
 const FacultyManagement = () => {
   const [faculties, setFaculties] = useState(dummyFaculties);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('newest');
 
   const handleEdit = (faculty) => {
     // Handle edit functionality
@@ -88,94 +91,133 @@ const FacultyManagement = () => {
   };
 
   return (
-    <div className="container-fluid py-4">
-      {/* Page Header */}
-      <div className="d-flex flex-wrap justify-content-between align-items-center mb-4">
-        <div className="d-flex align-items-center">
-          <div className="icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg me-3">
-            <FaUserTie className="text-white opacity-10" style={{ width: "24px", height: "24px" }} />
+    <div className="faculty-management">
+      {/* Header Section */}
+      <div className="bg-light py-4 mb-4">
+        <Container fluid>
+          <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div>
+              <h3 className="page-title mb-0">Faculty Management</h3>
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb mb-0 mt-2">
+                  <li className="breadcrumb-item">
+                    <a href="#" className="text-muted">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li className="breadcrumb-item active text-dark" aria-current="page">
+                    Faculty
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <Button 
+              className="btn-add-content d-flex align-items-center" 
+              onClick={() => console.log('Add faculty')}
+            >
+              <FaPlus className="me-2" />
+              Add New Faculty
+            </Button>
           </div>
-          <div>
-            <h5 className="mb-0">Faculty Management</h5>
-            <p className="mb-0 text-sm">Manage all faculty members</p>
+
+          {/* Search and Sort Section */}
+          <div className="row g-3 align-items-center">
+            <div className="col-md-8">
+              <div className="search-input">
+                <div className="input-group">
+                  <span className="input-group-text border-end-0">
+                    <FiSearch className="text-muted" />
+                  </span>
+                  <Form.Control
+                    type="text"
+                    placeholder="Search faculty..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="border-start-0 ps-0"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="d-flex align-items-center justify-content-end">
+                <label className="me-2 text-nowrap fw-medium">Sort by:</label>
+                <Form.Select 
+                  value={sortBy} 
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="form-select"
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="oldest">Oldest First</option>
+                  <option value="name">Name</option>
+                  <option value="status">Status</option>
+                </Form.Select>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="ms-md-auto my-2 my-md-0">
-          <div className="input-group">
-            <span className="input-group-text text-body">
-              <FaSearch className="text-muted" style={{ fontSize: '14px' }} />
-            </span>
-            <input 
-              type="text" 
-              className="form-control" 
-              placeholder="Search faculty..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
+        </Container>
       </div>
 
       {/* Stats Cards */}
-      <div className="row mb-4">
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div className="card">
-            <div className="card-body p-3">
-              <div className="row">
-                <div className="col-8">
-                  <div className="numbers">
-                    <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Faculty</p>
-                    <h5 className="font-weight-bolder mb-0">
-                      {faculties.length}
-                    </h5>
+      <Container fluid>
+        <div className="row mb-4">
+          <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div className="card">
+              <div className="card-body p-3">
+                <div className="row">
+                  <div className="col-8">
+                    <div className="numbers">
+                      <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Faculty</p>
+                      <h5 className="font-weight-bolder mb-0">{faculties.length}</h5>
+                    </div>
+                  </div>
+                  <div className="col-4 text-end">
+                    <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                      <FaUserTie className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    </div>
                   </div>
                 </div>
-                <div className="col-4 text-end">
-                  <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                    <FaUserTie className="text-white opacity-10" style={{ width: "20px", height: "20px" }} />
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div className="card">
+              <div className="card-body p-3">
+                <div className="row">
+                  <div className="col-8">
+                    <div className="numbers">
+                      <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Faculty</p>
+                      <h5 className="font-weight-bolder mb-0">
+                        {faculties.filter(f => f.status === 'active').length}
+                      </h5>
+                    </div>
+                  </div>
+                  <div className="col-4 text-end">
+                    <div className="icon icon-shape bg-gradient-success shadow text-center border-radius-md">
+                      <FaUserTie className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-          <div className="card">
-            <div className="card-body p-3">
-              <div className="row">
-                <div className="col-8">
-                  <div className="numbers">
-                    <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Faculty</p>
-                    <h5 className="font-weight-bolder mb-0">
-                      {faculties.filter(f => f.status === 'active').length}
-                    </h5>
-                  </div>
-                </div>
-                <div className="col-4 text-end">
-                  <div className="icon icon-shape bg-gradient-success shadow text-center border-radius-md">
-                    <FaUserTie className="text-white opacity-10" style={{ width: "20px", height: "20px" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Faculty Table */}
-      <div className="card">
-        <div className="card-body px-0 pt-0 pb-2">
-          <FacultyTable
-            faculty={faculties.filter(faculty => 
-              faculty.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              faculty.facultyId.toLowerCase().includes(searchTerm.toLowerCase())
-            )}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onStatusChange={handleStatusChange}
-          />
+        {/* Faculty Table */}
+        <div className="card">
+          <div className="card-body px-0 pt-0 pb-2">
+            <FacultyTable
+              faculty={faculties.filter(faculty => 
+                faculty.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                faculty.facultyId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                faculty.designation.toLowerCase().includes(searchQuery.toLowerCase())
+              )}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onStatusChange={handleStatusChange}
+            />
+          </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

@@ -1,11 +1,17 @@
 import PageMetaData from '@/components/PageMetaData';
-import ReportsAnalytics from './components/ReportsAnalytics';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import CourseReports from './courses/page';
+import PaymentReports from './payments/page';
 
 const ReportsPage = () => {
   return (
     <>
       <PageMetaData title="Reports & Analytics" />
-      <ReportsAnalytics />
+      <Routes>
+        <Route index element={<Navigate to="courses" replace />} />
+        <Route path="courses" element={<CourseReports />} />
+        <Route path="payments" element={<PaymentReports />} />
+      </Routes>
     </>
   );
 };

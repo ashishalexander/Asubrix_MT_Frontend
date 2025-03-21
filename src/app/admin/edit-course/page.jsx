@@ -25,24 +25,7 @@ const EditCourse = () => {
             <h2 className="mb-1">{courseName || 'Create Course'}</h2>
             <p className="text-muted mb-0">Add / view content of your course</p>
           </div>
-          <div className="d-flex align-items-center gap-3">
-            <div className="bg-white rounded-pill px-3 py-2 d-flex align-items-center gap-2">
-              <div className="progress flex-grow-1" style={{ width: '100px', height: '6px' }}>
-                <div 
-                  className="progress-bar bg-info" 
-                  role="progressbar" 
-                  style={{ width: `${progress}%` }}
-                  aria-valuenow={progress} 
-                  aria-valuemin="0" 
-                  aria-valuemax="100"
-                />
-              </div>
-              <span className="text-info small">{progress}%</span>
-            </div>
-            <button className="btn btn-outline-primary rounded-pill px-4">
-              Add Your Name
-            </button>
-          </div>
+          
         </div>
 
         {/* Steps */}

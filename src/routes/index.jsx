@@ -536,7 +536,7 @@ export const adminRoutes = [{
   name: 'Enquiries',
   element: <EnquiriesPage />,
 }, {
-  path: '/admin/reports',
+  path: '/admin/reports/*',
   name: 'Reports & Analytics',
   element: <ReportsPage />,
 }];

@@ -486,14 +486,6 @@ const CreateTest = ({ onClose, onSave }) => {
                       className="mb-3"
                     />
                     
-                    <Form.Check
-                      type="switch"
-                      id="require-proctoring"
-                      label="Require Proctoring"
-                      checked={testData.settings.requireProctoring}
-                      onChange={(e) => handleSettingsChange('requireProctoring', e.target.checked)}
-                      className="mb-3"
-                    />
                     
                     <Form.Check
                       type="switch"

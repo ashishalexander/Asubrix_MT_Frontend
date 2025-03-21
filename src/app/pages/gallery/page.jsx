@@ -14,7 +14,7 @@ const GalleryPage = () => {
         <HeroImage/>
         <Gallery />
       </main>
-      <Footer />
+      <Footer className="custom-footer"/>
     </>
   )
 }

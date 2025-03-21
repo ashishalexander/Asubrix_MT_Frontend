@@ -185,23 +185,3 @@
     -webkit-opacity: 0;
   }
 }
-
-.dropdown-wrapper {
-  position: relative;
-
-  .dropdown-menu {
-    position: fixed !important;
-    transform: none !important;
-    top: auto !important;
-    left: auto !important;
-    z-index: 9999;
-  }
-}
-
-.card-content {
-  position: relative;
-}
-
-.action-wrapper {
-  position: static;
-}

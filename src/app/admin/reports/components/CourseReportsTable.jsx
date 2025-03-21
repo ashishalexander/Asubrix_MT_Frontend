@@ -3,111 +3,47 @@ import { Card, Form, InputGroup, Table } from 'react-bootstrap';
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table';
 import { FaSearch, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 
-const PaymentReportsTable = () => {
+const CourseReportsTable = () => {
   const [globalFilter, setGlobalFilter] = useState('');
 
-  // Sample data for payment reports
+  // Sample data for course reports
   const data = useMemo(
     () => [
       {
-        id: 'ORD-2023-0001',
-        course: 'Advanced JavaScript Course',
-        student: 'John Smith',
-        phone: '+1 (555) 123-4567',
-        amount: '$89.99',
-        gross: '$89.99',
-        platformFee: '$8.99',
-        net: '$81.00'
+        courseName: 'React Complete Guide',
+        instructor: 'John Doe',
+        category: 'Web Development',
+        enrolledStudents: '150',
+        completionRate: '85%',
+        averageRating: '4.5',
+        revenue: '$15,000'
       },
       {
-        id: 'ORD-2023-0002',
-        course: 'React Development Masterclass',
-        student: 'Emily Johnson',
-        phone: '+1 (555) 234-5678',
-        amount: '$94.99',
-        gross: '$94.99',
-        platformFee: '$9.50',
-        net: '$85.49'
+        courseName: 'Python for Beginners',
+        instructor: 'Jane Smith',
+        category: 'Programming',
+        enrolledStudents: '200',
+        completionRate: '78%',
+        averageRating: '4.2',
+        revenue: '$18,000'
       },
       {
-        id: 'ORD-2023-0003',
-        course: 'Python for Data Science',
-        student: 'Michael Brown',
-        phone: '+1 (555) 345-6789',
-        amount: '$79.99',
-        gross: '$79.99',
-        platformFee: '$8.00',
-        net: '$71.99'
+        courseName: 'Machine Learning Basics',
+        instructor: 'Mike Johnson',
+        category: 'Data Science',
+        enrolledStudents: '175',
+        completionRate: '82%',
+        averageRating: '4.7',
+        revenue: '$20,000'
       },
       {
-        id: 'ORD-2023-0004',
-        course: 'Complete Web Development Bootcamp',
-        student: 'Jessica Williams',
-        phone: '+1 (555) 456-7890',
-        amount: '$129.99',
-        gross: '$129.99',
-        platformFee: '$13.00',
-        net: '$116.99'
-      },
-      {
-        id: 'ORD-2023-0005',
-        course: 'Mobile App Development with Flutter',
-        student: 'David Miller',
-        phone: '+1 (555) 567-8901',
-        amount: '$74.99',
-        gross: '$74.99',
-        platformFee: '$7.50',
-        net: '$67.49'
-      },
-      {
-        id: 'ORD-2023-0006',
-        course: 'SQL Database Design',
-        student: 'Sarah Davis',
-        phone: '+1 (555) 678-9012',
-        amount: '$59.99',
-        gross: '$59.99',
-        platformFee: '$6.00',
-        net: '$53.99'
-      },
-      {
-        id: 'ORD-2023-0007',
-        course: 'AWS Certification Course',
-        student: 'James Wilson',
-        phone: '+1 (555) 789-0123',
-        amount: '$119.99',
-        gross: '$119.99',
-        platformFee: '$12.00',
-        net: '$107.99'
-      },
-      {
-        id: 'ORD-2023-0008',
-        course: 'Machine Learning Fundamentals',
-        student: 'Lisa Thomas',
-        phone: '+1 (555) 890-1234',
-        amount: '$99.99',
-        gross: '$99.99',
-        platformFee: '$10.00',
-        net: '$89.99'
-      },
-      {
-        id: 'ORD-2023-0009',
-        course: 'Advanced JavaScript Course',
-        student: 'Ryan Garcia',
-        phone: '+1 (555) 901-2345',
-        amount: '$89.99',
-        gross: '$89.99',
-        platformFee: '$8.99',
-        net: '$81.00'
-      },
-      {
-        id: 'ORD-2023-0010',
-        course: 'React Development Masterclass',
-        student: 'Amanda Clark',
-        phone: '+1 (555) 012-3456',
-        amount: '$94.99',
-        gross: '$94.99',
-        platformFee: '$9.50',
-        net: '$85.49'
+        courseName: 'JavaScript Masterclass',
+        instructor: 'Sarah Wilson',
+        category: 'Web Development',
+        enrolledStudents: '220',
+        completionRate: '90%',
+        averageRating: '4.8',
+        revenue: '$22,000'
       }
     ],
     []
@@ -116,32 +52,32 @@ const PaymentReportsTable = () => {
   const columns = useMemo(
     () => [
       {
-        Header: 'Transaction ID',
-        accessor: 'id',
+        Header: 'Course Name',
+        accessor: 'courseName',
       },
       {
-        Header: 'Student Name',
-        accessor: 'student',
+        Header: 'Instructor',
+        accessor: 'instructor',
       },
       {
-        Header: 'Course',
-        accessor: 'course',
+        Header: 'Category',
+        accessor: 'category',
       },
       {
-        Header: 'Amount',
-        accessor: 'amount',
+        Header: 'Enrolled Students',
+        accessor: 'enrolledStudents',
       },
       {
-        Header: 'Payment Method',
-        accessor: 'phone',
+        Header: 'Completion Rate',
+        accessor: 'completionRate',
       },
       {
-        Header: 'Status',
-        accessor: 'net',
+        Header: 'Average Rating',
+        accessor: 'averageRating',
       },
       {
-        Header: 'Date',
-        accessor: 'gross',
+        Header: 'Revenue',
+        accessor: 'revenue',
       }
     ],
     []
@@ -164,8 +100,8 @@ const PaymentReportsTable = () => {
     setGlobalFilter: setTableGlobalFilter,
     state: { pageIndex, pageSize }
   } = useTable(
-    { 
-      columns, 
+    {
+      columns,
       data,
       initialState: { pageIndex: 0, pageSize: 5 }
     },
@@ -190,7 +126,7 @@ const PaymentReportsTable = () => {
           <Form.Control
             value={globalFilter || ''}
             onChange={handleSearchChange}
-            placeholder="Search payments..."
+            placeholder="Search courses..."
             className="border-0 bg-light"
           />
         </InputGroup>
@@ -199,15 +135,31 @@ const PaymentReportsTable = () => {
         <div className="table-responsive">
           <Table hover className="table table-dark-gray align-middle mb-0" {...getTableProps()}>
             <thead>
-              <tr>
-                <th scope="col">Transaction ID</th>
-                <th scope="col">Student Name</th>
-                <th scope="col">Course</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Payment Method</th>
-                <th scope="col">Status</th>
-                <th scope="col">Date</th>
-              </tr>
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th 
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      className="py-3 px-4 text-nowrap"
+                    >
+                      <div className="d-flex align-items-center">
+                        {column.render('Header')}
+                        <span className="ms-1">
+                          {column.isSorted ? (
+                            column.isSortedDesc ? (
+                              <FaSortDown className="text-muted" />
+                            ) : (
+                              <FaSortUp className="text-muted" />
+                            )
+                          ) : (
+                            <FaSort className="text-muted opacity-50" />
+                          )}
+                        </span>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              ))}
             </thead>
             <tbody {...getTableBodyProps()}>
               {page.map(row => {
@@ -303,4 +255,4 @@ const PaymentReportsTable = () => {
   );
 };
 
-export default PaymentReportsTable; 
+export default CourseReportsTable; 

@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { Badge, Button, Card, Container, Form } from 'react-bootstrap';
-import { BsPencilSquare, BsTrash, BsEye } from 'react-icons/bs';
-import { FiSearch } from 'react-icons/fi';
-import { FaPlus } from 'react-icons/fa';
-import BannerModal from './components/BannerModal';
-import PageMetaData from '@/components/PageMetaData';
+import { useState } from 'react'
+import { Badge, Button, Card, Container, Form } from 'react-bootstrap'
+import { BsPencilSquare, BsTrash, BsEye } from 'react-icons/bs'
+import { FiSearch } from 'react-icons/fi'
+import { FaPlus } from 'react-icons/fa'
+import BannerModal from './components/BannerModal'
+import PageMetaData from '@/components/PageMetaData'
 
 const BannersPage = () => {
   const [banners, setBanners] = useState([
@@ -16,7 +16,7 @@ const BannersPage = () => {
       status: 'Active',
       image: '/path/to/banner1.jpg',
       link: '#',
-      description: 'Main homepage banner'
+      description: 'Main homepage banner',
     },
     {
       id: 2,
@@ -24,40 +24,40 @@ const BannersPage = () => {
       status: 'Active',
       image: '/path/to/banner2.jpg',
       link: '#',
-      description: 'Secondary promotional banner'
-    }
-  ]);
+      description: 'Secondary promotional banner',
+    },
+  ])
 
-  const [showModal, setShowModal] = useState(false);
-  const [selectedBanner, setSelectedBanner] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('newest');
+  const [showModal, setShowModal] = useState(false)
+  const [selectedBanner, setSelectedBanner] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState('newest')
 
   const handleAddBanner = () => {
-    setSelectedBanner(null);
-    setShowModal(true);
-  };
+    setSelectedBanner(null)
+    setShowModal(true)
+  }
 
   const handleEditBanner = (banner) => {
-    setSelectedBanner(banner);
-    setShowModal(true);
-  };
+    setSelectedBanner(banner)
+    setShowModal(true)
+  }
 
   const handleViewBanner = (banner) => {
     // Implement view functionality
-    console.log('Viewing banner:', banner);
-  };
+    console.log('Viewing banner:', banner)
+  }
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedBanner(null);
-  };
+    setShowModal(false)
+    setSelectedBanner(null)
+  }
 
   // Filter banners based on search query
-  const filteredBanners = banners.filter(banner =>
-    banner.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    banner.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredBanners = banners.filter(
+    (banner) =>
+      banner.title.toLowerCase().includes(searchQuery.toLowerCase()) || banner.description.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
 
   return (
     <>
@@ -82,10 +82,7 @@ const BannersPage = () => {
                 </ol>
               </nav>
             </div>
-            <Button 
-              className="btn-add-content d-flex align-items-center" 
-              onClick={handleAddBanner}
-            >
+            <Button className="btn-add-content d-flex align-items-center" onClick={handleAddBanner}>
               <FaPlus className="me-2" />
               Add New Banner
             </Button>
@@ -112,11 +109,7 @@ const BannersPage = () => {
             <div className="col-md-4">
               <div className="d-flex align-items-center justify-content-end">
                 <label className="me-2 text-nowrap fw-medium">Sort by:</label>
-                <Form.Select 
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="form-select"
-                >
+                <Form.Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="form-select">
                   <option value="newest">Newest First</option>
                   <option value="oldest">Oldest First</option>
                   <option value="title">Title</option>
@@ -147,28 +140,18 @@ const BannersPage = () => {
                     <tr key={banner.id}>
                       <td>{banner.title}</td>
                       <td>
-                        <Badge bg={banner.status === 'Active' ? 'success' : 'secondary'}>
-                          {banner.status}
-                        </Badge>
+                        <Badge bg={banner.status === 'Active' ? 'success' : 'secondary'}>{banner.status}</Badge>
                       </td>
                       <td>{banner.description}</td>
                       <td>
                         <div className="action-buttons">
-                          <Button 
-                            className="btn-action view-btn"
-                            onClick={() => handleViewBanner(banner)}
-                          >
+                          <Button className="btn-action view-btn" onClick={() => handleViewBanner(banner)}>
                             <BsEye />
                           </Button>
-                          <Button 
-                            className="btn-action edit-btn"
-                            onClick={() => handleEditBanner(banner)}
-                          >
+                          <Button className="btn-action edit-btn" onClick={() => handleEditBanner(banner)}>
                             <BsPencilSquare />
                           </Button>
-                          <Button 
-                            className="btn-action delete-btn"
-                          >
+                          <Button className="btn-action delete-btn">
                             <BsTrash />
                           </Button>
                         </div>
@@ -182,13 +165,9 @@ const BannersPage = () => {
         </Card>
       </div>
 
-      <BannerModal 
-        show={showModal}
-        onHide={handleCloseModal}
-        banner={selectedBanner}
-      />
+      <BannerModal show={showModal} onHide={handleCloseModal} banner={selectedBanner} />
     </>
-  );
-};
+  )
+}
 
-export default BannersPage; 
+export default BannersPage

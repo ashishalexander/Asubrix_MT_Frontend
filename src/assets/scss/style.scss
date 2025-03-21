@@ -103,3 +103,8 @@
 @import "custom/footer";
 @import "custom/resource-carousel";
 @import "custom/accordion";
+
+// Import all scss files
+@import 'components/banner-management';
+@import 'components/student-management';
+@import 'components/faculty-management';
