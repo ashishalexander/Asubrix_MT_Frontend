@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Card, Form, InputGroup, Row, Col } from 'react-bootstrap';
 import { FaSearch, FaPaperPlane, FaUserGraduate } from 'react-icons/fa';
 import chatIcon from '@/assets/images/avatar/01.jpg'; // You might need to change this to an appropriate image
@@ -8,6 +8,22 @@ const ChatSection = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [message, setMessage] = useState('');
   const messageInputRef = useRef(null);
+
+  const adjustTextareaHeight = (element) => {
+    element.style.height = 'auto';
+    element.style.height = `${Math.min(element.scrollHeight, 100)}px`;
+  };
+
+  useEffect(() => {
+    if (messageInputRef.current) {
+      messageInputRef.current.style.height = '40px';
+    }
+  }, []);
+
+  const handleMessageChange = (e) => {
+    setMessage(e.target.value);
+    adjustTextareaHeight(e.target);
+  };
 
   // Mock data for chats
   const [chats] = useState([
@@ -137,7 +153,7 @@ const ChatSection = () => {
   return (
     <Card>
       <Card.Body className="p-0">
-        <Row className="g-0" style={{ minHeight: '70vh' }}>
+        <Row className="g-0 chat-section">
           {/* Left sidebar - Chat list */}
           <Col md={4} className="border-end">
             <div className="p-3 border-bottom">
@@ -156,20 +172,15 @@ const ChatSection = () => {
                 />
               </InputGroup>
             </div>
-            
-            <div className="border-bottom p-2">
-              <h6 className="text-uppercase small text-muted px-2 py-1">MESSAGES</h6>
-            </div>
 
             {/* Chat list */}
-            <div className="chat-list" style={{ height: 'calc(70vh - 150px)', overflowY: 'auto' }}>
+            <div className="chat-list">
               {filteredChats.length > 0 ? (
                 filteredChats.map((chat) => (
                   <div 
                     key={chat.id}
                     className={`chat-item p-3 border-bottom ${selectedChat?.id === chat.id ? 'bg-light' : ''}`}
                     onClick={() => handleSelectChat(chat)}
-                    style={{ cursor: 'pointer' }}
                   >
                     <div className="d-flex align-items-center">
                       <div className="avatar me-3 position-relative">
@@ -181,8 +192,7 @@ const ChatSection = () => {
                           height={40}
                         />
                         {chat.status === 'online' && (
-                          <span className="position-absolute bottom-0 end-0 bg-success rounded-circle" 
-                                style={{ width: '10px', height: '10px', border: '2px solid white' }}></span>
+                          <span className="position-absolute bottom-0 end-0 bg-success rounded-circle online-indicator"></span>
                         )}
                       </div>
                       <div className="flex-grow-1">
@@ -192,7 +202,7 @@ const ChatSection = () => {
                             <span className="badge bg-danger rounded-pill">{chat.unread}</span>
                           )}
                         </div>
-                        <p className="small text-truncate mb-0" style={{ maxWidth: '150px' }}>
+                        <p className="small text-truncate mb-0 message-preview">
                           {chat.lastMessage}
                         </p>
                       </div>
@@ -211,7 +221,7 @@ const ChatSection = () => {
           </Col>
 
           {/* Right side - Chat area */}
-          <Col md={8}>
+          <Col md={8} className="chat-input-wrapper">
             {selectedChat ? (
               <>
                 {/* Chat header */}
@@ -226,8 +236,7 @@ const ChatSection = () => {
                         height={40}
                       />
                       {selectedChat.status === 'online' && (
-                        <span className="position-absolute bottom-0 end-0 bg-success rounded-circle" 
-                              style={{ width: '10px', height: '10px', border: '2px solid white' }}></span>
+                        <span className="position-absolute bottom-0 end-0 bg-success rounded-circle online-indicator"></span>
                       )}
                     </div>
                     <div>
@@ -240,21 +249,12 @@ const ChatSection = () => {
                 </div>
 
                 {/* Chat messages */}
-                <div 
-                  className="chat-messages p-3"
-                  style={{ 
-                    height: 'calc(70vh - 200px)',
-                    overflowY: 'auto',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}
-                >
+                <div className="chat-messages p-3">
                   {selectedChat.messages && selectedChat.messages.length > 0 ? (
                     selectedChat.messages.map((msg, index) => (
                       <div 
                         key={index}
                         className={`message mb-3 ${msg.sent ? 'ms-auto' : ''}`}
-                        style={{ maxWidth: '70%' }}
                       >
                         <div className={`p-3 rounded ${msg.sent ? 'bg-primary text-white' : 'bg-light'}`}>
                           {msg.content}
@@ -272,7 +272,7 @@ const ChatSection = () => {
                           alt="Start chatting" 
                           width={100}
                           height={100}
-                          style={{ opacity: 0.6 }}
+                          className="chat-bubble-icon"
                         />
                       </div>
                       <h5>No messages yet</h5>
@@ -282,16 +282,18 @@ const ChatSection = () => {
                 </div>
 
                 {/* Message input */}
-                <div className="p-3 border-top">
+                <div className="chat-input-container">
                   <Form onSubmit={handleSendMessage}>
                     <InputGroup>
                       <Form.Control
-                        type="text"
+                        as="textarea"
+                        rows={1}
                         placeholder="Type a message..."
                         aria-label="Message"
                         value={message}
-                        onChange={(e) => setMessage(e.target.value)}
+                        onChange={handleMessageChange}
                         ref={messageInputRef}
+                        className="chat-input"
                       />
                       <button 
                         type="submit" 

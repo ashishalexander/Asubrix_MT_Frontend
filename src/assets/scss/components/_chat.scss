@@ -1,0 +1,120 @@
+.chat-section {
+  min-height: 80vh;
+  position: relative;
+
+  .chat-list {
+    height: calc(80vh - 150px);
+    overflow-y: auto;
+  }
+
+  .chat-item {
+    cursor: pointer;
+  }
+
+  .chat-messages {
+    height: calc(80vh - 180px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 70px; // Add space for input box
+  }
+
+  .message {
+    max-width: 70%;
+    
+    &.ms-auto {
+      margin-left: auto;
+    }
+  }
+
+  .online-indicator {
+    width: 10px;
+    height: 10px;
+    border: 2px solid white;
+  }
+
+  .message-preview {
+    max-width: 150px;
+  }
+}
+
+// Chat input styles
+.chat-input-wrapper {
+  position: relative;
+}
+
+.chat-input-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid #dee2e6;
+  padding: 15px;
+
+  .input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    width: 100%;
+    
+    .form-control {
+      border-radius: 4px;
+      padding-right: 50px;
+    }
+  }
+}
+
+.chat-input {
+  min-height: 45px !important;
+  max-height: 100px !important;
+  overflow-y: auto !important;
+  line-height: 1.5 !important;
+  padding: 8px 12px !important;
+  resize: none !important;
+  width: 100% !important;
+  
+  // Hide scrollbar for Chrome, Safari and Opera
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  // Hide scrollbar for IE, Edge and Firefox
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  
+  // Smooth height transition
+  transition: height 0.1s ease-out !important;
+  transform-origin: bottom !important;
+}
+
+.input-group {
+  .btn {
+    position: absolute !important;
+    right: 0 !important;
+    height: 45px !important;
+    min-height: 45px !important;
+    max-height: 45px !important;
+    width: 45px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 5 !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-self: flex-end !important;
+    bottom: 0 !important;
+    
+    &:focus {
+      box-shadow: none !important;
+    }
+  }
+}
+
+.chat-bubble-icon {
+  opacity: 0.6;
+} 
