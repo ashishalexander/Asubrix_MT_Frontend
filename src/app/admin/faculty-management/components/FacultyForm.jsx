@@ -58,24 +58,23 @@ const FacultyForm = ({ faculty, onSubmit }) => {
     { id: 12, name: 'Cloud Computing' }
   ];
 
-  // If faculty prop exists, initialize form with faculty data
+  // Initialize form data when editing
   useEffect(() => {
     if (faculty) {
       setFormData({
-        id: faculty.id,
-        facultyId: faculty.facultyId,
-        name: faculty.name,
-        email: faculty.email,
-        phone: faculty.phone,
-        department: faculty.department,
-        designation: faculty.designation,
-        subjects: faculty.subjects,
-        status: faculty.status,
-        qualification: faculty.qualification,
-        experience: faculty.experience,
-        joiningDate: faculty.joiningDate,
-        avatar: faculty.avatar
+        name: faculty.name || '',
+        email: faculty.email || '',
+        phone: faculty.phone || '',
+        department: faculty.department || 'Computer Science',
+        designation: faculty.designation || 'Assistant Professor',
+        subjects: faculty.courses || [],
+        status: faculty.status || 'active',
+        qualification: faculty.qualification || '',
+        experience: faculty.experience || '',
+        avatar: faculty.avatar || 'default'
       });
+    } else {
+      setFormData(initialFormState);
     }
   }, [faculty]);
 

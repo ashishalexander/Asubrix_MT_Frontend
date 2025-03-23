@@ -196,7 +196,6 @@ const StudentDetails = ({ student, onBack, onEdit, onDelete }) => {
                     <th>Instructor</th>
                     <th>Credits</th>
                     <th>Status</th>
-                    <th>Progress</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -217,18 +216,6 @@ const StudentDetails = ({ student, onBack, onEdit, onDelete }) => {
                         <span className={`course-status ${course.status}`}>
                           {course.status.charAt(0).toUpperCase() + course.status.slice(1)}
                         </span>
-                      </td>
-                      <td>
-                        <div className="progress" style={{ height: '8px' }}>
-                          <div
-                            className="progress-bar"
-                            role="progressbar"
-                            style={{ width: `${course.progress}%` }}
-                            aria-valuenow={course.progress}
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                          />
-                        </div>
                       </td>
                     </tr>
                   ))}

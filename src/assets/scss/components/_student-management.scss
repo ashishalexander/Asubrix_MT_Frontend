@@ -99,4 +99,18 @@
       color: var(--bs-secondary);
     }
   }
+
+  .stats-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .icon-shape {
+    &.bg-gradient-theme-secondary {
+      background: linear-gradient(310deg, $theme-secondary, darken($theme-secondary, 10%));
+    }
+    &.bg-gradient-primary {
+      background: linear-gradient(310deg, $primary, darken($primary, 10%));
+    }
+  }
 } 

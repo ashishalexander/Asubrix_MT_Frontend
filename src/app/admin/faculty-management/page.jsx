@@ -7,12 +7,13 @@
  * - General: src/assets/scss/components/_general.scss
  */
 
-import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
-import { FiSearch } from 'react-icons/fi';
-import { FaPlus, FaUserTie } from 'react-icons/fa';
-import PageMetaData from '@/components/PageMetaData';
-import FacultyTable from './components/FacultyTable';
+import React, { useState } from 'react'
+import { Container, Form, Button, Modal } from 'react-bootstrap'
+import { FiSearch } from 'react-icons/fi'
+import { FaPlus, FaUserTie } from 'react-icons/fa'
+import PageMetaData from '@/components/PageMetaData'
+import FacultyTable from './components/FacultyTable'
+import FacultyForm from './components/FacultyForm'
 
 const dummyFaculties = [
   {
@@ -25,7 +26,7 @@ const dummyFaculties = [
     department: 'Computer Science',
     joinDate: '2020-01-15',
     status: 'active',
-    courses: ['Advanced Algorithms', 'Data Structures', 'Machine Learning']
+    courses: ['Advanced Algorithms', 'Data Structures', 'Machine Learning'],
   },
   {
     id: 2,
@@ -37,7 +38,7 @@ const dummyFaculties = [
     department: 'Mathematics',
     joinDate: '2019-08-20',
     status: 'active',
-    courses: ['Calculus I', 'Linear Algebra', 'Statistics']
+    courses: ['Calculus I', 'Linear Algebra', 'Statistics'],
   },
   {
     id: 3,
@@ -49,7 +50,7 @@ const dummyFaculties = [
     department: 'Physics',
     joinDate: '2021-03-10',
     status: 'blocked',
-    courses: ['Quantum Mechanics', 'Classical Physics']
+    courses: ['Quantum Mechanics', 'Classical Physics'],
   },
   {
     id: 4,
@@ -61,7 +62,7 @@ const dummyFaculties = [
     department: 'Chemistry',
     joinDate: '2018-06-25',
     status: 'active',
-    courses: ['Organic Chemistry', 'Biochemistry']
+    courses: ['Organic Chemistry', 'Biochemistry'],
   },
   {
     id: 5,
@@ -73,31 +74,48 @@ const dummyFaculties = [
     department: 'Computer Science',
     joinDate: '2020-09-01',
     status: 'active',
-    courses: ['Web Development', 'Database Systems', 'Software Engineering']
-  }
-];
+    courses: ['Web Development', 'Database Systems', 'Software Engineering'],
+  },
+]
 
 const FacultyManagement = () => {
-  const [faculties, setFaculties] = useState(dummyFaculties);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('newest');
+  const [faculties, setFaculties] = useState(dummyFaculties)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState('newest')
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [editingFaculty, setEditingFaculty] = useState(null)
 
   const handleEdit = (faculty) => {
-    // Handle edit functionality
-    console.log('Edit faculty:', faculty);
-  };
+    setEditingFaculty(faculty)
+    setShowAddModal(true)
+  }
 
   const handleDelete = (faculty) => {
-    setFaculties(faculties.filter(f => f.id !== faculty.id));
-  };
+    setFaculties(faculties.filter((f) => f.id !== faculty.id))
+  }
 
   const handleStatusChange = (facultyId, newStatus) => {
-    setFaculties(faculties.map(faculty => 
-      faculty.id === facultyId 
-        ? { ...faculty, status: newStatus }
-        : faculty
-    ));
-  };
+    setFaculties(faculties.map((faculty) => (faculty.id === facultyId ? { ...faculty, status: newStatus } : faculty)))
+  }
+
+  const handleAddFaculty = (newFaculty) => {
+    if (editingFaculty) {
+      // Update existing faculty
+      setFaculties(faculties.map((faculty) => 
+        faculty.id === editingFaculty.id ? { ...newFaculty, id: faculty.id } : faculty
+      ))
+    } else {
+      // Add new faculty
+      setFaculties([...faculties, { ...newFaculty, id: faculties.length + 1 }])
+    }
+    setShowAddModal(false)
+    setEditingFaculty(null)
+  }
+
+  const handleCloseModal = () => {
+    setShowAddModal(false)
+    setEditingFaculty(null)
+  }
 
   return (
     <div className="faculty-management">
@@ -120,10 +138,7 @@ const FacultyManagement = () => {
                 </ol>
               </nav>
             </div>
-            <Button 
-              className="btn-add-content d-flex align-items-center" 
-              onClick={() => console.log('Add faculty')}
-            >
+            <Button className="btn-add-content d-flex align-items-center" onClick={() => setShowAddModal(true)}>
               <FaPlus className="me-2" />
               Add New Faculty
             </Button>
@@ -150,11 +165,7 @@ const FacultyManagement = () => {
             <div className="col-md-4">
               <div className="d-flex align-items-center justify-content-end">
                 <label className="me-2 text-nowrap fw-medium">Sort by:</label>
-                <Form.Select 
-                  value={sortBy} 
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="form-select"
-                >
+                <Form.Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="form-select">
                   <option value="newest">Newest First</option>
                   <option value="oldest">Oldest First</option>
                   <option value="name">Name</option>
@@ -180,8 +191,8 @@ const FacultyManagement = () => {
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                      <FaUserTie className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    <div className="icon icon-shape bg-theme-secondary shadow text-center border-radius-md">
+                      <FaUserTie className="text-white opacity-10 stats-icon" />
                     </div>
                   </div>
                 </div>
@@ -195,14 +206,12 @@ const FacultyManagement = () => {
                   <div className="col-8">
                     <div className="numbers">
                       <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Faculty</p>
-                      <h5 className="font-weight-bolder mb-0">
-                        {faculties.filter(f => f.status === 'active').length}
-                      </h5>
+                      <h5 className="font-weight-bolder mb-0">{faculties.filter((f) => f.status === 'active').length}</h5>
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-gradient-success shadow text-center border-radius-md">
-                      <FaUserTie className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    <div className="icon icon-shape bg-primary shadow text-center border-radius-md">
+                      <FaUserTie className="text-white opacity-10 stats-icon" />
                     </div>
                   </div>
                 </div>
@@ -215,10 +224,11 @@ const FacultyManagement = () => {
         <div className="card">
           <div className="card-body px-0 pt-0 pb-2">
             <FacultyTable
-              faculty={faculties.filter(faculty => 
-                faculty.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                faculty.facultyId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                faculty.designation.toLowerCase().includes(searchQuery.toLowerCase())
+              faculty={faculties.filter(
+                (faculty) =>
+                  faculty.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  faculty.facultyId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  faculty.designation.toLowerCase().includes(searchQuery.toLowerCase()),
               )}
               onEdit={handleEdit}
               onDelete={handleDelete}
@@ -227,9 +237,19 @@ const FacultyManagement = () => {
           </div>
         </div>
       </Container>
+
+      {/* Add/Edit Faculty Modal */}
+      <Modal show={showAddModal} onHide={handleCloseModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>{editingFaculty ? 'Edit Faculty' : 'Add New Faculty'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FacultyForm onSubmit={handleAddFaculty} faculty={editingFaculty} />
+        </Modal.Body>
+      </Modal>
     </div>
-  );
-};
+  )
+}
 
 const FacultyManagementPage = () => {
   return (
@@ -237,7 +257,7 @@ const FacultyManagementPage = () => {
       <PageMetaData title="Faculty Management" />
       <FacultyManagement />
     </>
-  );
-};
+  )
+}
 
-export default FacultyManagementPage; 
+export default FacultyManagementPage

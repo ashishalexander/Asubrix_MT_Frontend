@@ -23,7 +23,7 @@ const enquiriesData = [
     message: item.description,
     time: item.time,
     image: item.image,
-    status: ['New', 'Pending', 'Responded', 'Closed'][Math.floor(Math.random() * 4)]
+    status: ['New', 'Pending', 'Responded'][Math.floor(Math.random() * 3)]
   })),
   {
     id: supportRequestsData.length + 1,
@@ -152,7 +152,24 @@ const EnquiriesPage = () => {
         
         return matchesSearch && matchesStatus;
       })
-      .sort((a, b) => new Date(b.time) - new Date(a.time)); // Sort by newest first
+      .sort((a, b) => {
+        // Priority order: New > Pending > Responded
+        const statusPriority = {
+          'New': 3,
+          'Pending': 2,
+          'Responded': 1
+        };
+
+        // First sort by status priority
+        const statusDiff = statusPriority[b.status] - statusPriority[a.status];
+        
+        // If same status, sort by time (newest first)
+        if (statusDiff === 0) {
+          return new Date(b.time) - new Date(a.time);
+        }
+        
+        return statusDiff;
+      });
   }, [searchTerm, statusFilter, enquiriesData]);
 
   // Calculate pagination
@@ -279,7 +296,6 @@ const EnquiriesPage = () => {
                   <option value="New">New</option>
                   <option value="Pending">Pending</option>
                   <option value="Responded">Responded</option>
-                  <option value="Closed">Closed</option>
                 </Form.Select>
               </div>
             </div>

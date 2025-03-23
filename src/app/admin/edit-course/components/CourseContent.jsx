@@ -1117,8 +1117,8 @@ const CourseContent = ({ setActiveStep, setProgress }) => {
           Previous
         </Button>
         <Button 
-          variant="primary" 
-          className="px-4 rounded-pill"
+          variant="light" 
+          className="px-4 rounded-pill bg-theme-secondary text-white"
           onClick={() => {
             setProgress(100);
             setActiveStep(3);

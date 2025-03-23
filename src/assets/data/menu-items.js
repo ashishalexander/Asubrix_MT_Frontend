@@ -136,6 +136,13 @@ export const INSTRUCTOR_MENU_ITEMS = [
     url: '/instructor/manage-course',
     parentKey: 'instructor'
   },
+  {
+    key: 'chat',
+    label: 'Chat with Admin',
+    icon: FaRegCommentDots,
+    url: '/instructor/chat',
+    parentKey: 'instructor'
+  },
   // {
   //   key: 'quiz',
   //   label: 'Quiz',

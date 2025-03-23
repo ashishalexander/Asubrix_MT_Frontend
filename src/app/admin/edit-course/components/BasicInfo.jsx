@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { courseCategories } from '@/assets/data/products';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 
-const BasicInfo = () => {
+const BasicInfo = ({ setActiveStep, setProgress }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
   const [showNewCategoryModal, setShowNewCategoryModal] = useState(false);
@@ -163,12 +163,23 @@ const BasicInfo = () => {
         </Modal>
 
         {/* Action Buttons */}
-        <div className="d-flex justify-content-end gap-3">
-          <Button variant="light" className="px-4">
-            Cancel
+        <div className="d-flex justify-content-between mt-4">
+          <Button 
+            variant="light" 
+            className="px-4 rounded-pill"
+            disabled
+          >
+            Previous
           </Button>
-          <Button variant="dark" className="px-4">
-            Save & Continue
+          <Button 
+            variant="light" 
+            className="px-4 rounded-pill bg-theme-secondary text-white"
+            onClick={() => {
+              setProgress(45);
+              setActiveStep(2);
+            }}
+          >
+            Next
           </Button>
         </div>
       </Form>

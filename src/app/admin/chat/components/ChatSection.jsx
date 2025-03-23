@@ -32,7 +32,7 @@ const ChatSection = () => {
       name: 'John Smith',
       avatar: null,
       lastMessage: 'Hello, when is the next class?',
-      status: 'online',
+      phone: '+1 (555) 123-4567',
       unread: 2,
       messages: [
         {
@@ -57,7 +57,7 @@ const ChatSection = () => {
       name: 'Emily Johnson',
       avatar: null,
       lastMessage: 'Thank you for your help!',
-      status: 'offline',
+      phone: '+1 (555) 234-5678',
       unread: 0,
       messages: [
         {
@@ -92,7 +92,7 @@ const ChatSection = () => {
       name: 'Michael Davis',
       avatar: null,
       lastMessage: 'Can I get a copy of yesterday\'s notes?',
-      status: 'online',
+      phone: '+1 (555) 345-6789',
       unread: 1,
       messages: [
         {
@@ -191,9 +191,6 @@ const ChatSection = () => {
                           width={40}
                           height={40}
                         />
-                        {chat.status === 'online' && (
-                          <span className="position-absolute bottom-0 end-0 bg-success rounded-circle online-indicator"></span>
-                        )}
                       </div>
                       <div className="flex-grow-1">
                         <div className="d-flex justify-content-between align-items-center">
@@ -203,7 +200,7 @@ const ChatSection = () => {
                           )}
                         </div>
                         <p className="small text-truncate mb-0 message-preview">
-                          {chat.lastMessage}
+                          {chat.phone}
                         </p>
                       </div>
                     </div>
@@ -235,14 +232,11 @@ const ChatSection = () => {
                         width={40}
                         height={40}
                       />
-                      {selectedChat.status === 'online' && (
-                        <span className="position-absolute bottom-0 end-0 bg-success rounded-circle online-indicator"></span>
-                      )}
                     </div>
                     <div>
                       <h5 className="mb-0">{selectedChat.name}</h5>
                       <p className="small text-muted mb-0">
-                        {selectedChat.status === 'online' ? 'Online' : 'Offline'}
+                        {selectedChat.phone}
                       </p>
                     </div>
                   </div>

@@ -88,6 +88,7 @@ const Payout = lazy(() => import('@/app/instructor/payout/page'));
 const EditProfile = lazy(() => import('@/app/instructor/edit-profile/page'));
 const Settings = lazy(() => import('@/app/instructor/setting/page'));
 const DeleteAccount = lazy(() => import('@/app/instructor/delete-account/page'));
+const InstructorChatPage = lazy(() => import('@/app/instructor/chat/page'));
 
 //Student
 const StudentDashboard = lazy(() => import('@/app/student/dashboard/page'));
@@ -377,6 +378,10 @@ export const InstructorRoutes = [{
   path: '/instructor/manage-course',
   name: 'Courses',
   element: <InstructorCourses />
+}, {
+  path: '/instructor/chat',
+  name: 'Chat with Admin',
+  element: <InstructorChatPage />
 }, {
   path: '/instructor/course-added',
   name: 'Course Added',

@@ -10,9 +10,10 @@
 import React, { useState } from 'react'
 import PageMetaData from '@/components/PageMetaData'
 import StudentTable from './components/StudentTable'
+import StudentForm from './components/StudentForm'
 import { FaUserGraduate, FaPlus } from 'react-icons/fa'
 import { FiSearch } from 'react-icons/fi'
-import { Container, Form, Button } from 'react-bootstrap'
+import { Container, Form, Button, Modal } from 'react-bootstrap'
 
 const dummyStudents = [
   {
@@ -71,10 +72,12 @@ const StudentManagement = () => {
   const [students, setStudents] = useState(dummyStudents)
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState('newest')
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [editingStudent, setEditingStudent] = useState(null)
 
   const handleEdit = (student) => {
-    // Handle edit functionality
-    console.log('Edit student:', student)
+    setEditingStudent(student)
+    setShowAddModal(true)
   }
 
   const handleDelete = (student) => {
@@ -86,8 +89,35 @@ const StudentManagement = () => {
   }
 
   const handleAddStudent = () => {
-    // Handle add student functionality
-    console.log('Add new student')
+    setShowAddModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setShowAddModal(false)
+    setEditingStudent(null)
+  }
+
+  const handleSubmitStudent = (studentData) => {
+    if (!studentData) {
+      handleCloseModal()
+      return
+    }
+
+    if (editingStudent) {
+      // Update existing student
+      setStudents(students.map((student) => 
+        student.id === editingStudent.id ? { ...studentData, id: student.id, enrollmentId: student.enrollmentId } : student
+      ))
+    } else {
+      // Add new student
+      const newStudent = {
+        ...studentData,
+        id: students.length + 1,
+        enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}`
+      }
+      setStudents([...students, newStudent])
+    }
+    handleCloseModal()
   }
 
   return (
@@ -173,8 +203,8 @@ const StudentManagement = () => {
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                      <FaUserGraduate className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    <div className="icon icon-shape bg-theme-secondary shadow text-center border-radius-md">
+                      <FaUserGraduate className="text-white opacity-10 stats-icon" />
                     </div>
                   </div>
                 </div>
@@ -192,8 +222,8 @@ const StudentManagement = () => {
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-gradient-success shadow text-center border-radius-md">
-                      <FaUserGraduate className="text-white opacity-10" style={{ width: '20px', height: '20px' }} />
+                    <div className="icon icon-shape bg-primary shadow text-center border-radius-md">
+                      <FaUserGraduate className="text-white opacity-10 stats-icon" />
                     </div>
                   </div>
                 </div>
@@ -218,6 +248,16 @@ const StudentManagement = () => {
           </div>
         </div>
       </Container>
+
+      {/* Add/Edit Student Modal */}
+      <Modal show={showAddModal} onHide={handleCloseModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>{editingStudent ? 'Edit Student' : 'Add New Student'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <StudentForm onSubmit={handleSubmitStudent} student={editingStudent} />
+        </Modal.Body>
+      </Modal>
     </>
   )
 }

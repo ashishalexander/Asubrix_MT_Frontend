@@ -1,7 +1,7 @@
 import { Form, Button, Card } from 'react-bootstrap';
 import { useState } from 'react';
 
-const PricingPlans = () => {
+const PricingPlans = ({ setActiveStep, setProgress }) => {
   const [validityType, setValidityType] = useState('single');
   const [multiPlans, setMultiPlans] = useState([
     { duration: '', unit: 'days', price: '', discount: 0, isPromoted: false },
@@ -289,12 +289,23 @@ const PricingPlans = () => {
         )}
 
         {/* Action Buttons */}
-        <div className="d-flex justify-content-end gap-3">
-          <Button variant="light" className="px-4">
-            Back
+        <div className="d-flex justify-content-between mt-4">
+          <Button 
+            variant="light" 
+            className="px-4 rounded-pill"
+            onClick={() => setActiveStep(1)}
+          >
+            Previous
           </Button>
-          <Button variant="dark" className="px-4">
-            Save & Continue
+          <Button 
+            variant="light" 
+            className="px-4 rounded-pill bg-theme-secondary text-white"
+            onClick={() => {
+              setProgress(75);
+              setActiveStep(3);
+            }}
+          >
+            Next
           </Button>
         </div>
       </Form>
