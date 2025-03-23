@@ -1,3 +1,9 @@
+/**
+ * Component SCSS:
+ * - Content management styles: src/assets/scss/components/_content-management.scss
+ * - Grid/List view styles: src/assets/scss/components/_general.scss
+ */
+
 import React, { useState } from 'react';
 import { Row, Col, Card, Badge, Dropdown, Form, Button, Modal, Breadcrumb } from 'react-bootstrap';
 import { 

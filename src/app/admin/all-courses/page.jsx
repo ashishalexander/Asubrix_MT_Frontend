@@ -1,3 +1,7 @@
+/**
+ * SCSS file: src/assets/scss/components/admin/courses.scss
+ */
+
 import PageMetaData from '@/components/PageMetaData'
 import { Container } from 'react-bootstrap'
 import CourseGrid from './components/CourseGrid'

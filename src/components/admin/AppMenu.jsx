@@ -1,3 +1,8 @@
+/**
+ * Admin Menu Component SCSS:
+ * src/assets/scss/components/admin/menu.scss
+ */
+
 import { findAllParent, findMenuItem, getAdminMenuItems, getMenuItemFromURL } from '@/helpers/menu';
 import useToggle from '@/hooks/useToggle';
 import clsx from 'clsx';

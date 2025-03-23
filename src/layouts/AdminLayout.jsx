@@ -1,3 +1,9 @@
+/**
+ * Admin Layout SCSS:
+ * src/assets/scss/components/admin/layout.scss
+ * - Includes styles for sidebar, navbar, and overall admin layout structure
+ */
+
 import logoImg from '@/assets/images/logo-light.svg';
 import logoImg2 from '@/assets/images/pymainlogo.webp';
 import AppMenu from '@/components/admin/AppMenu';

@@ -1,3 +1,12 @@
+/**
+ * SCSS files:
+ * Main styles: src/assets/scss/components/_student-management.scss
+ * Shared styles:
+ * - Table: src/assets/scss/components/_tables.scss
+ * - Avatar: src/assets/scss/components/_avatar.scss
+ * - General: src/assets/scss/components/_general.scss
+ */
+
 import React, { useState } from 'react'
 import PageMetaData from '@/components/PageMetaData'
 import StudentTable from './components/StudentTable'

@@ -1,3 +1,9 @@
+/**
+ * Component SCSS:
+ * - Enquiry styles: src/assets/scss/components/_enquiries.scss
+ * - Modal styles: src/assets/scss/components/_general.scss
+ */
+
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 

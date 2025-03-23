@@ -1,3 +1,9 @@
+/**
+ * Component SCSS:
+ * - Banner styles: src/assets/scss/components/_banner-management.scss
+ * - Modal styles: src/assets/scss/components/_general.scss
+ */
+
 import { Button, Form, Modal } from 'react-bootstrap';
 
 const BannerModal = ({ show, onHide, banner = null }) => {

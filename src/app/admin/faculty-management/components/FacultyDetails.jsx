@@ -1,3 +1,9 @@
+/**
+ * Component SCSS:
+ * - Details styles: src/assets/scss/components/_details-page.scss
+ * - Faculty specific styles: src/assets/scss/components/_faculty-management.scss
+ */
+
 import React from 'react';
 import { Container, Row, Col, Card, Button, Table } from 'react-bootstrap';
 import { 

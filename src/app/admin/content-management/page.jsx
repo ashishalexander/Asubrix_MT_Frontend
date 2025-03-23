@@ -1,3 +1,12 @@
+/**
+ * SCSS files:
+ * Main styles: src/assets/scss/components/_content-management.scss
+ * Test styles: src/assets/scss/components/_question-styles.scss
+ * Shared styles:
+ * - General: src/assets/scss/components/_general.scss
+ * - Tables: src/assets/scss/components/_tables.scss
+ */
+
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button, ButtonGroup } from 'react-bootstrap';
 import { FiGrid, FiList, FiSearch, FiFolder } from 'react-icons/fi';

@@ -1,3 +1,17 @@
+/**
+ * Admin pages SCSS files location:
+ * - Dashboard: src/assets/scss/components/admin/dashboard.scss
+ * - Courses: src/assets/scss/components/admin/courses.scss
+ * - Test Management: src/assets/scss/components/admin/content-management.scss
+ * - Banners: src/assets/scss/components/admin/banners.scss
+ * - Student Management: src/assets/scss/components/admin/student-management.scss
+ * - Faculty Management: src/assets/scss/components/admin/faculty-management.scss
+ * - Chat Section: src/assets/scss/components/admin/chat.scss
+ * - Enquiries: src/assets/scss/components/admin/enquiries.scss
+ * - Reports & Analytics: src/assets/scss/components/admin/reports.scss
+ * - Admin Settings: src/assets/scss/components/admin/settings.scss
+ */
+
 import { BsBasket, BsBasketFill, BsCardChecklist, BsCartCheck, BsCartCheckFill, BsCreditCard2Front, BsCreditCard2FrontFill, BsFileCheckFill, BsFileEarmarkPlusFill, BsFolderCheck, BsGear, BsGraphUp, BsGridFill, BsHouse, BsLock, BsPencilSquare, BsPeople, BsQuestionDiamond, BsStar, BsStarFill, BsTrash, BsUiChecksGrid, BsUiRadiosGrid, BsWallet2 } from 'react-icons/bs';
 import { FaBasketballBall, FaChartBar, FaCog, FaEdit, FaFacebook, FaLinkedinIn, FaRegCommentDots, FaRegFileAlt, FaTrashAlt, FaUserCog } from 'react-icons/fa';
 import { FaChartLine, FaUserGraduate, FaUserTie, FaWallet } from 'react-icons/fa6';

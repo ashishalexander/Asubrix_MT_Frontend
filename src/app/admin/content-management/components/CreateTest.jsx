@@ -1,3 +1,9 @@
+/**
+ * Component SCSS:
+ * - Test creation styles: src/assets/scss/components/_question-styles.scss
+ * - Content management styles: src/assets/scss/components/_content-management.scss
+ */
+
 import React, { useState } from 'react';
 import { Row, Col, Form, Button, Nav, Tab, Alert } from 'react-bootstrap';
 import { FiArrowLeft, FiInfo, FiClock, FiSettings, FiList, FiSave, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';

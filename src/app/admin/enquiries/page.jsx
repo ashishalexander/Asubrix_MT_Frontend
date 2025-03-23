@@ -1,3 +1,7 @@
+/**
+ * SCSS file: src/assets/scss/components/_enquiries.scss
+ */
+
 import { supportRequestsData } from '@/assets/data/products';
 import ChoicesFormInput from '@/components/form/ChoicesFormInput';
 import PageMetaData from '@/components/PageMetaData';
