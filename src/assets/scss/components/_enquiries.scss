@@ -47,68 +47,6 @@
   }
 }
 
-// Enquiry detail modal customizations
-.enquiry-detail-modal {
-  .modal-header, .modal-footer {
-    border: none;
-  }
-  
-  .avatar-section {
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    background-color: rgba(var(--bs-light-rgb), 0.5);
-    margin-bottom: 1.5rem;
-  }
-  
-  .enquiry-contact-info {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 1rem;
-    
-    .contact-item {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      
-      .icon-container {
-        margin-right: 0.75rem;
-      }
-    }
-  }
-  
-  .enquiry-message-container {
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    background-color: rgba(var(--bs-light-rgb), 0.5);
-    margin-bottom: 1.5rem;
-    
-    .message-title {
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-    
-    .message-content {
-      color: var(--bs-gray-700);
-    }
-  }
-  
-  .response-form {
-    border: 1px solid var(--bs-border-color);
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    
-    .form-control, .form-select {
-      background-color: var(--bs-light);
-      border: none;
-      
-      &:focus {
-        box-shadow: none;
-        background-color: var(--bs-light);
-      }
-    }
-  }
-}
-
 // Table improvements for enquiry listing
 .enquiries-table {
   th {
@@ -139,26 +77,37 @@
   }
 }
 
-// Search and filter section
-.enquiry-search-container {
-  .form-control {
-    height: 48px;
-    border: none;
-    background-color: var(--bs-light);
+// Search input styles
+.search-input {
+  .input-group {
+    .input-group-text {
+      background-color: var(--bs-white);
+      border-color: var(--bs-gray-200);
+    }
     
-    &:focus {
-      box-shadow: none;
+    .form-control {
+      height: 48px;
+      border-color: var(--bs-gray-200);
+      
+      &:focus {
+        box-shadow: none;
+        border-color: var(--bs-primary);
+      }
     }
   }
+}
+
+// Sort dropdown styles
+.form-select {
+  height: 48px;
+  border-color: var(--bs-gray-200);
+  min-width: 180px;
+  padding: 0.5rem 2.25rem 0.5rem 1rem;
+  background-position: right 0.75rem center;
   
-  .search-button {
-    background: transparent;
-    border: none;
-    color: var(--bs-primary);
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+  &:focus {
+    box-shadow: none;
+    border-color: var(--bs-primary);
   }
 }
 

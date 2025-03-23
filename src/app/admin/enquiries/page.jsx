@@ -3,10 +3,11 @@ import ChoicesFormInput from '@/components/form/ChoicesFormInput';
 import PageMetaData from '@/components/PageMetaData';
 import { colorVariants } from '@/context/constants';
 import { timeSince } from '@/utils/date';
-import { useState, useMemo } from 'react';
-import { Button, Card, CardBody, CardHeader, Col, Pagination, Row, Table } from 'react-bootstrap';
+import { useState, useMemo, useCallback } from 'react';
+import { Button, Card, CardBody, CardHeader, Col, Container, Form, Pagination, Row, Table } from 'react-bootstrap';
 import { FaEnvelope, FaPhone, FaSearch, FaUser } from 'react-icons/fa';
 import EnquiryDetailModal from './components/EnquiryDetailModal';
+import { FiSearch } from 'react-icons/fi';
 
 // Extended sample data for enquiries with more fields
 const enquiriesData = [
@@ -49,7 +50,7 @@ const enquiriesData = [
   }
 ];
 
-const EnquiryRow = ({ id, name, email, phone, message, time, image, status, onViewDetails }) => {
+const EnquiryRow = ({ id, name, message, time, image, status, onViewDetails }) => {
   // Generate consistent avatar color based on name
   const nameHash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const colorIndex = nameHash % colorVariants.length;
@@ -76,8 +77,6 @@ const EnquiryRow = ({ id, name, email, phone, message, time, image, status, onVi
           </div>
         </div>
       </td>
-      <td>{email}</td>
-      <td>{phone}</td>
       <td>
         <div className="enquiry-message">
           {message}
@@ -130,6 +129,9 @@ const EnquiriesPage = () => {
   // Close modal handler
   const handleCloseModal = () => {
     setShowDetailModal(false);
+    setTimeout(() => {
+      setSelectedEnquiry(null);
+    }, 200); // Clear selected enquiry after modal animation
   };
 
   // Filter and paginate data
@@ -222,55 +224,73 @@ const EnquiriesPage = () => {
   return (
     <>
       <PageMetaData title="Enquiries Management" />
-      <Row className="mb-3">
-        <Col xs={12}>
-          <h1 className="h3 mb-2 mb-sm-0">Enquiries Management</h1>
-        </Col>
-      </Row>
 
-      <Card className="shadow border-0">
-        <CardHeader className="bg-transparent border-bottom p-4">
-          <Row className="g-3 align-items-center justify-content-between">
-            <Col md={8}>
-              <div className="d-flex align-items-center enquiry-search-container">
-                <div className="position-relative w-100">
-                  <input 
-                    type="text" 
-                    className="form-control pe-5" 
-                    placeholder="Search enquiries..." 
+      {/* Header Section */}
+      <div className="bg-light py-4 mb-4">
+        <Container fluid>
+          <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div>
+              <h3 className="mb-0 fw-bold">Enquiries Management</h3>
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb mb-0 mt-2">
+                  <li className="breadcrumb-item">
+                    <a href="#" className="text-muted">
+                      Dashboard
+                    </a>
+                  </li>
+                  <li className="breadcrumb-item active text-dark" aria-current="page">
+                    Enquiries
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+
+          {/* Search and Sort Section */}
+          <div className="row g-3 align-items-center">
+            <div className="col-md-8">
+              <div className="search-input">
+                <div className="input-group">
+                  <span className="input-group-text border-end-0">
+                    <FiSearch className="text-muted" />
+                  </span>
+                  <Form.Control
+                    type="text"
+                    placeholder="Search enquiries..."
                     value={searchTerm}
                     onChange={handleSearchChange}
+                    className="border-start-0 ps-0 rounded-end"
                   />
-                  <button className="search-button">
-                    <FaSearch />
-                  </button>
                 </div>
               </div>
-            </Col>
-            <Col md={3}>
-              <ChoicesFormInput 
-                className="form-select border-0 z-index-9 bg-light" 
-                aria-label="Status filter"
-                onChange={handleStatusFilterChange}
-              >
-                <option value="All">All Status</option>
-                <option value="New">New</option>
-                <option value="Pending">Pending</option>
-                <option value="Responded">Responded</option>
-                <option value="Closed">Closed</option>
-              </ChoicesFormInput>
-            </Col>
-          </Row>
-        </CardHeader>
-        
+            </div>
+            <div className="col-md-4">
+              <div className="d-flex align-items-center justify-content-end">
+                <label className="me-2 text-nowrap fw-medium">Sort by:</label>
+                <Form.Select 
+                  onChange={(e) => handleStatusFilterChange(e.target.value)}
+                  className="form-select"
+                >
+                  <option value="All">All Status</option>
+                  <option value="New">New</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Responded">Responded</option>
+                  <option value="Closed">Closed</option>
+                </Form.Select>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* Main Content */}
+      <Card className="shadow border-0">
         <CardBody className="p-4">
           <div className="table-responsive">
             <Table className="table-hover align-middle mb-0 enquiries-table">
               <thead className="table-light">
                 <tr>
                   <th className="avatar-column">Student</th>
-                  <th>Email</th>
-                  <th>Phone</th>
                   <th className="message-column">Message</th>
                   <th className="time-column">Time</th>
                   <th className="status-column">Status</th>
@@ -319,7 +339,7 @@ const EnquiriesPage = () => {
       <EnquiryDetailModal 
         show={showDetailModal} 
         onHide={handleCloseModal} 
-        enquiry={selectedEnquiry} 
+        enquiry={selectedEnquiry}
       />
     </>
   );

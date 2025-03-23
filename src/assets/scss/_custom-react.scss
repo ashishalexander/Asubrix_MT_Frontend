@@ -86,3 +86,53 @@
     background-color: rgba(0, 0, 0, 0.05);
   }
 }
+
+// Custom scrollbar for sidebar
+.sidebar {
+  .overflow-auto {
+    margin-right: -4px;
+    padding-right: 4px;
+    position: relative;
+    z-index: 4;
+    
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: transparent;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+      margin: 1rem 0;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: var(--bs-primary);
+      opacity: 0.8;
+      min-height: 40px;
+      
+      &:hover {
+        background-color: var(--bs-primary);
+        opacity: 1;
+      }
+    }
+    
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: var(--bs-primary) transparent;
+    
+    // Firefox specific margin
+    scrollbar-margin: 1rem 0;
+  }
+
+  // Override any padding from sidebar-admin
+  .sidebar-content {
+    padding: 0 !important;
+  }
+
+  // Settings menu z-index
+  .position-sticky {
+    z-index: 3;
+    background-color: var(--bs-theme-secondary);
+  }
+}

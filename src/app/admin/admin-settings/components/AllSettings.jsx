@@ -23,37 +23,37 @@ const AllSettings = () => {
                 <Nav variant="pills" className="flex-column bg-theme-secondary rounded p-3">
                   <Nav.Item>
                     <Nav.Link eventKey="tab-1">
-                      <FaGlobe className="me-2 text-white" />
+                      <FaGlobe className="me-2" />
                       Website Settings
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-2">
-                      <FaShieldAlt className="me-2 text-white" />
+                      <FaShieldAlt className="me-2" />
                       Terms and Conditions
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-3">
-                      <FaLock className="me-2 text-white" />
+                      <FaLock className="me-2" />
                       Privacy Policy
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-4">
-                      <FaCog className="me-2 text-white" />
+                      <FaCog className="me-2" />
                       Mail Configurations
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-5">
-                      <FaUserLock className="me-2 text-white" />
+                      <FaUserLock className="me-2" />
                       User Roles and Permission
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-6">
-                      <FaSearch className="me-2 text-white" />
+                      <FaSearch className="me-2" />
                       SEO
                     </Nav.Link>
                   </Nav.Item>

@@ -8,7 +8,6 @@ import { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-
 const AllCourses = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState('newest')

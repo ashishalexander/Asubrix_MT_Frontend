@@ -26,7 +26,7 @@ function App() {
     <AppProvidersWrapper>
       <ContactForm show={showContactForm} handleClose={() => setShowContactForm(false)} />
       <AppRouter />
-      {/* <WhatsAppButton /> */}
+      <WhatsAppButton />
     </AppProvidersWrapper>
   );
 }
