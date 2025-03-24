@@ -101,51 +101,70 @@ const BannerSettings = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <Card className="banner-card">
-        <Card.Body>
-          <div className="table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Status</th>
-                  <th>Description</th>
-                  <th>Actions</th>
+      {/* Table Section */}
+      <Card className="border-0">
+        <Card.Body className="p-0">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th className="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredBanners.map((banner) => (
+                <tr key={banner.id}>
+                  <td>{banner.title}</td>
+                  <td>
+                    <span className={`status-badge ${banner.status.toLowerCase()}`}>
+                      {banner.status}
+                    </span>
+                  </td>
+                  <td>{banner.description}</td>
+                  <td>
+                    <div className="d-flex justify-content-end gap-2">
+                      <Button 
+                        variant="light" 
+                        size="sm" 
+                        className="action-btn"
+                        onClick={() => handleViewBanner(banner)}
+                      >
+                        <BsEye />
+                      </Button>
+                      <Button 
+                        variant="light" 
+                        size="sm" 
+                        className="action-btn"
+                        onClick={() => handleEditBanner(banner)}
+                      >
+                        <BsPencilSquare />
+                      </Button>
+                      <Button 
+                        variant="light" 
+                        size="sm" 
+                        className="action-btn text-danger"
+                      >
+                        <BsTrash />
+                      </Button>
+                    </div>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredBanners.map((banner) => (
-                  <tr key={banner.id}>
-                    <td>{banner.title}</td>
-                    <td>
-                      <Badge bg={banner.status === 'Active' ? 'success' : 'secondary'}>{banner.status}</Badge>
-                    </td>
-                    <td>{banner.description}</td>
-                    <td>
-                      <div className="action-buttons">
-                        <Button className="btn-action view-btn" onClick={() => handleViewBanner(banner)}>
-                          <BsEye />
-                        </Button>
-                        <Button className="btn-action edit-btn" onClick={() => handleEditBanner(banner)}>
-                          <BsPencilSquare />
-                        </Button>
-                        <Button className="btn-action delete-btn">
-                          <BsTrash />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </Card.Body>
       </Card>
 
-      <BannerModal show={showModal} onHide={handleCloseModal} banner={selectedBanner} />
+      {/* Banner Modal */}
+      <BannerModal
+        show={showModal}
+        onHide={handleCloseModal}
+        banner={selectedBanner}
+      />
     </>
   )
 }
 
-export default BannerSettings 
+export default BannerSettings

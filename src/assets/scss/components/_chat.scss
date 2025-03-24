@@ -120,7 +120,7 @@
 }
 
 .chat-page {
-  min-height: calc(100vh - 200px);
+  // min-height: calc(100vh - 200px);
   background-color: var(--#{$prefix}gray-100);
 
   .chat-container {

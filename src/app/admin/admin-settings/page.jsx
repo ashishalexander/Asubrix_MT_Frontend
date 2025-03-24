@@ -9,7 +9,7 @@ const AdminSettingsPage = () => {
   return (
     <>
       <PageMetaData title="Admin Settings" />
-      <AllSettings />
+      <AllSettings/>
     </>
   );
 };

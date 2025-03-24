@@ -79,7 +79,7 @@ const Counter = () => {
   const counterData = calculateMetrics();
   
   return (
-    <Row className="g-4 mb-4">
+    <Row className="g-4 mb-4 px-4">
       {counterData.map((item, idx) => (
         <Col md={6} xxl={3} key={idx}>
           <CounterCard {...item} />

@@ -1,11 +1,9 @@
-import React, { useMemo, useState } from 'react';
-import { Card, Form, InputGroup, Table } from 'react-bootstrap';
+import React, { useMemo, useEffect } from 'react';
+import { Card, Table } from 'react-bootstrap';
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table';
-import { FaSearch, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
+import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 
-const CourseReportsTable = () => {
-  const [globalFilter, setGlobalFilter] = useState('');
-
+const CourseReportsTable = ({ searchQuery }) => {
   // Sample data for course reports
   const data = useMemo(
     () => [
@@ -97,7 +95,7 @@ const CourseReportsTable = () => {
     nextPage,
     previousPage,
     setPageSize,
-    setGlobalFilter: setTableGlobalFilter,
+    setGlobalFilter,
     state: { pageIndex, pageSize }
   } = useTable(
     {
@@ -110,27 +108,12 @@ const CourseReportsTable = () => {
     usePagination
   );
 
-  const handleSearchChange = (e) => {
-    const value = e.target.value || '';
-    setGlobalFilter(value);
-    setTableGlobalFilter(value);
-  }
+  useEffect(() => {
+    setGlobalFilter(searchQuery || '');
+  }, [searchQuery, setGlobalFilter]);
 
   return (
     <Card className="shadow-sm border-0">
-      <Card.Header className="bg-white py-3">
-        <InputGroup className="w-50 ms-auto">
-          <InputGroup.Text className="bg-light border-0">
-            <FaSearch className="text-muted" />
-          </InputGroup.Text>
-          <Form.Control
-            value={globalFilter || ''}
-            onChange={handleSearchChange}
-            placeholder="Search courses..."
-            className="border-0 bg-light"
-          />
-        </InputGroup>
-      </Card.Header>
       <Card.Body className="p-0">
         <div className="table-responsive">
           <Table hover className="table table-dark-gray align-middle mb-0" {...getTableProps()}>
@@ -177,82 +160,56 @@ const CourseReportsTable = () => {
             </tbody>
           </Table>
         </div>
-      </Card.Body>
-      <Card.Footer className="bg-white border-0 py-3">
-        <div className="d-flex flex-wrap justify-content-between align-items-center">
-          <div className="d-flex align-items-center">
-            <span className="me-3">
-              Showing {pageIndex * pageSize + 1} to {Math.min((pageIndex + 1) * pageSize, data.length)} of {data.length} entries
-            </span>
+        <div className="d-flex align-items-center justify-content-between px-4 py-3 border-top">
+          <div>
+            <span className="me-2">Show</span>
             <select
-              className="form-select form-select-sm"
               value={pageSize}
-              onChange={e => {
-                setPageSize(Number(e.target.value));
-              }}
-              style={{ width: '80px' }}
+              onChange={e => setPageSize(Number(e.target.value))}
+              className="form-select form-select-sm d-inline-block w-auto"
             >
-              {[5, 10, 25, 50].map(pageSize => (
-                <option key={pageSize} value={pageSize}>
-                  {pageSize}
+              {[5, 10, 20, 30, 40, 50].map(size => (
+                <option key={size} value={size}>
+                  {size}
                 </option>
               ))}
             </select>
+            <span className="ms-2">entries</span>
           </div>
-          <nav>
-            <ul className="pagination pagination-sm mb-0">
-              <li className={`page-item ${!canPreviousPage ? 'disabled' : ''}`}>
-                <button
-                  className="page-link"
-                  onClick={() => gotoPage(0)}
-                >
-                  First
-                </button>
-              </li>
-              <li className={`page-item ${!canPreviousPage ? 'disabled' : ''}`}>
-                <button
-                  className="page-link"
-                  onClick={() => previousPage()}
-                >
-                  Previous
-                </button>
-              </li>
-              {Array.from({ length: Math.min(5, pageCount) }).map((_, i) => {
-                const pageNum = pageIndex - 2 + i < 0 ? i : pageIndex - 2 + i >= pageCount ? pageCount - 5 + i : pageIndex - 2 + i;
-                if (pageNum < 0 || pageNum >= pageCount) return null;
-                return (
-                  <li key={pageNum} className={`page-item ${pageIndex === pageNum ? 'active' : ''}`}>
-                    <button
-                      className="page-link"
-                      onClick={() => gotoPage(pageNum)}
-                    >
-                      {pageNum + 1}
-                    </button>
-                  </li>
-                );
-              })}
-              <li className={`page-item ${!canNextPage ? 'disabled' : ''}`}>
-                <button
-                  className="page-link"
-                  onClick={() => nextPage()}
-                >
-                  Next
-                </button>
-              </li>
-              <li className={`page-item ${!canNextPage ? 'disabled' : ''}`}>
-                <button
-                  className="page-link"
-                  onClick={() => gotoPage(pageCount - 1)}
-                >
-                  Last
-                </button>
-              </li>
-            </ul>
-          </nav>
+          <div className="pagination mb-0">
+            <button
+              className="btn btn-sm btn-light me-2"
+              onClick={() => gotoPage(0)}
+              disabled={!canPreviousPage}
+            >
+              {'<<'}
+            </button>
+            <button
+              className="btn btn-sm btn-light me-2"
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+            >
+              {'<'}
+            </button>
+            <button
+              className="btn btn-sm btn-light me-2"
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+            >
+              {'>'}
+            </button>
+            <button
+              className="btn btn-sm btn-light"
+              onClick={() => gotoPage(pageCount - 1)}
+              disabled={!canNextPage}
+            >
+              {'>>'}
+            </button>
+          </div>
         </div>
-      </Card.Footer>
+      </Card.Body>
     </Card>
   );
 };
 
-export default CourseReportsTable; 
+export default CourseReportsTable;

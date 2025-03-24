@@ -80,16 +80,21 @@ const UserRoles = () => {
       </Card>
 
       {/* Permissions Modal */}
-      <Modal show={showPermissions} onHide={() => setShowPermissions(false)} size="lg">
+      <Modal 
+        show={showPermissions} 
+        onHide={() => setShowPermissions(false)} 
+        size="lg"
+        className="permissions-modal"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Role & Permissions ({selectedRole?.name})</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Table bordered>
+          <Table className="permissions-table">
             <thead>
               <tr>
                 <th>#</th>
-                <th>PAGE</th>
+                <th>MODULE</th>
                 <th>CREATE</th>
                 <th>UPDATE</th>
                 <th>DELETE</th>
@@ -100,7 +105,7 @@ const UserRoles = () => {
               {Object.entries(permissions).map(([page, perms], idx) => (
                 <tr key={page}>
                   <td>{idx + 1}</td>
-                  <td className="text-capitalize">{page}</td>
+                  <td className="module-name text-capitalize">{page}</td>
                   <td>
                     {perms.create !== undefined && (
                       <Form.Check type="checkbox" defaultChecked={perms.create} />
@@ -126,9 +131,9 @@ const UserRoles = () => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowPermissions(false)}>
-            Close
+            Cancel
           </Button>
-          <Button variant="primary">Save Changes</Button>
+          <Button className='bg-primary border-0'>Save Changes</Button>
         </Modal.Footer>
       </Modal>
 

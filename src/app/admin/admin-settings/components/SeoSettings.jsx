@@ -79,7 +79,7 @@ const SeoSettings = () => {
               </Form.Group>
             </Col>
 
-            <Col md={6}>
+            {/* <Col md={6}>
               <Form.Group>
                 <Form.Label>OG Title</Form.Label>
                 <Form.Control
@@ -168,7 +168,7 @@ const SeoSettings = () => {
                   placeholder="Enter robots.txt content"
                 />
               </Form.Group>
-            </Col>
+            </Col> */}
 
             <Col md={12}>
               <div className="text-end">

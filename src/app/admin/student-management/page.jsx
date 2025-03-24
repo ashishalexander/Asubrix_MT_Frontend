@@ -8,12 +8,12 @@
  */
 
 import React, { useState } from 'react'
+import { Container, Form, Button, Modal } from 'react-bootstrap'
+import { FiSearch } from 'react-icons/fi'
+import { FaPlus, FaUserGraduate } from 'react-icons/fa'
 import PageMetaData from '@/components/PageMetaData'
 import StudentTable from './components/StudentTable'
 import StudentForm from './components/StudentForm'
-import { FaUserGraduate, FaPlus } from 'react-icons/fa'
-import { FiSearch } from 'react-icons/fi'
-import { Container, Form, Button, Modal } from 'react-bootstrap'
 
 const dummyStudents = [
   {
@@ -88,8 +88,16 @@ const StudentManagement = () => {
     setStudents(students.map((student) => (student.id === studentId ? { ...student, status: newStatus } : student)))
   }
 
-  const handleAddStudent = () => {
-    setShowAddModal(true)
+  const handleAddStudent = (newStudent) => {
+    if (editingStudent) {
+      // Update existing student
+      setStudents(students.map((student) => (student.id === editingStudent.id ? { ...newStudent, id: student.id } : student)))
+    } else {
+      // Add new student
+      setStudents([...students, { ...newStudent, id: students.length + 1, enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}` }])
+    }
+    setShowAddModal(false)
+    setEditingStudent(null)
   }
 
   const handleCloseModal = () => {
@@ -97,39 +105,14 @@ const StudentManagement = () => {
     setEditingStudent(null)
   }
 
-  const handleSubmitStudent = (studentData) => {
-    if (!studentData) {
-      handleCloseModal()
-      return
-    }
-
-    if (editingStudent) {
-      // Update existing student
-      setStudents(students.map((student) => 
-        student.id === editingStudent.id ? { ...studentData, id: student.id, enrollmentId: student.enrollmentId } : student
-      ))
-    } else {
-      // Add new student
-      const newStudent = {
-        ...studentData,
-        id: students.length + 1,
-        enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}`
-      }
-      setStudents([...students, newStudent])
-    }
-    handleCloseModal()
-  }
-
   return (
-    <>
-      <PageMetaData title="Student Management" />
-      
+    <div className="student-management">
       {/* Header Section */}
-      <div className="bg-light py-4 mb-4">
+      <div className="bg-light p-4 mb-4">
         <Container fluid>
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
             <div>
-              <h3 className="mb-0 fw-bold">Student Management</h3>
+              <h3 className="page-title mb-0">Student Management</h3>
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb mb-0 mt-2">
                   <li className="breadcrumb-item">
@@ -143,12 +126,9 @@ const StudentManagement = () => {
                 </ol>
               </nav>
             </div>
-            <Button 
-              className="btn-add-content d-flex align-items-center" 
-              onClick={handleAddStudent}
-            >
+            <Button className="btn-add-content d-flex align-items-center" onClick={() => setShowAddModal(true)}>
               <FaPlus className="me-2" />
-              Add Student
+              Add New Student
             </Button>
           </div>
 
@@ -165,7 +145,7 @@ const StudentManagement = () => {
                     placeholder="Search students..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="border-start-0 ps-0 rounded-end"
+                    className="border-start-0 ps-0"
                   />
                 </div>
               </div>
@@ -173,14 +153,10 @@ const StudentManagement = () => {
             <div className="col-md-4">
               <div className="d-flex align-items-center justify-content-end">
                 <label className="me-2 text-nowrap fw-medium">Sort by:</label>
-                <Form.Select 
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="form-select"
-                >
+                <Form.Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="form-select">
                   <option value="newest">Newest First</option>
                   <option value="oldest">Oldest First</option>
-                  <option value="name">Student Name</option>
+                  <option value="name">Name</option>
                   <option value="status">Status</option>
                 </Form.Select>
               </div>
@@ -191,20 +167,19 @@ const StudentManagement = () => {
 
       {/* Stats Cards */}
       <Container fluid>
-        <div className="row mb-4">
+        <div className="row mb-4 px-4">
           <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div className="card">
               <div className="card-body p-3">
-                <div className="row">
+                <div className="row align-items-center">
                   <div className="col-8">
                     <div className="numbers">
                       <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Students</p>
-                      <h5 className="font-weight-bolder mb-0">{students.length}</h5>
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-theme-secondary shadow text-center border-radius-md">
-                      <FaUserGraduate className="text-white opacity-10 stats-icon" />
+                    <div className="icon icon-shape border border-2 border-theme-secondary text-center border-radius-md">
+                      <h5 className="font-weight-bolder mb-0 text-theme-secondary">{students.length}</h5>
                     </div>
                   </div>
                 </div>
@@ -214,16 +189,15 @@ const StudentManagement = () => {
           <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div className="card">
               <div className="card-body p-3">
-                <div className="row">
+                <div className="row align-items-center">
                   <div className="col-8">
                     <div className="numbers">
                       <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Students</p>
-                      <h5 className="font-weight-bolder mb-0">{students.filter((s) => s.status === 'active').length}</h5>
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-primary shadow text-center border-radius-md">
-                      <FaUserGraduate className="text-white opacity-10 stats-icon" />
+                    <div className="icon icon-shape border border-2 border-primary text-center border-radius-md">
+                      <h5 className="font-weight-bolder mb-0 text-primary">{students.filter((s) => s.status === 'active').length}</h5>
                     </div>
                   </div>
                 </div>
@@ -255,11 +229,20 @@ const StudentManagement = () => {
           <Modal.Title>{editingStudent ? 'Edit Student' : 'Add New Student'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <StudentForm onSubmit={handleSubmitStudent} student={editingStudent} />
+          <StudentForm onSubmit={handleAddStudent} student={editingStudent} />
         </Modal.Body>
       </Modal>
+    </div>
+  )
+}
+
+const StudentManagementPage = () => {
+  return (
+    <>
+      <PageMetaData title="Student Management" />
+      <StudentManagement />
     </>
   )
 }
 
-export default StudentManagement
+export default StudentManagementPage

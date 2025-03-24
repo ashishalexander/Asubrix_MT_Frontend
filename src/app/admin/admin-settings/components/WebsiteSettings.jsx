@@ -178,26 +178,26 @@ const WebsiteSettings = () => {
 
             <Col md={6}>
               <Form.Group>
-                <Form.Label>Twitter URL</Form.Label>
+                <Form.Label>Youtube URL</Form.Label>
                 <Form.Control
                   type="url"
-                  name="twitterUrl"
-                  value={settings.twitterUrl}
+                  name="youtubeUrl"
+                  value={settings.youtubeUrl}
                   onChange={handleChange}
-                  placeholder="Enter Twitter URL"
+                  placeholder="Enter Youtube URL"
                 />
               </Form.Group>
           </Col>
 
             <Col md={6}>
               <Form.Group>
-                <Form.Label>LinkedIn URL</Form.Label>
+                <Form.Label>Telegram URL</Form.Label>
                 <Form.Control
                   type="url"
-                  name="linkedinUrl"
-                  value={settings.linkedinUrl}
+                  name="telegramUrl"
+                  value={settings.telegramUrl}
                   onChange={handleChange}
-                  placeholder="Enter LinkedIn URL"
+                  placeholder="Enter Telegram URL"
                 />
               </Form.Group>
           </Col>

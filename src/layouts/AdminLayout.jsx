@@ -86,7 +86,7 @@ const AdminLayout = ({ children }) => {
       </nav>
       <div className="page-content">
         <NavbarTopbar />
-        <div className="page-content-wrapper border">{children}</div>
+        <div className="page-content-wrapper border m-0 p-0">{children}</div>
       </div>
     </main>
   );

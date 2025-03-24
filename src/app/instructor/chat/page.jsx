@@ -141,9 +141,9 @@ const InstructorChatPage = () => {
 
   return (
     <div className="chat-page">
-      <Container fluid className="py-4">
+      <Container fluid>
         <Row className="justify-content-center">
-          <Col md={8} lg={6}>
+          <Col md={8} lg={12} className='p-0' >
             <div className="chat-container">
               <div className="chat-header">
                 <div className="d-flex align-items-center">

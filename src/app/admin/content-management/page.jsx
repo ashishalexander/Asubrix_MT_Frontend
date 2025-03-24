@@ -34,7 +34,7 @@ const ContentManagement = () => {
       <PageMetaData title="Test Management" />
 
       {/* Header Section */}
-      <div className="bg-light py-4 mb-4">
+      <div className="bg-light p-4 mb-4">
         <Container fluid>
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
             <div>
@@ -109,7 +109,7 @@ const ContentManagement = () => {
 
       {/* Main Content */}
       <Container fluid>
-        <div className="content-management-content">
+        <div className="content-management-content px-4">
           {!showCreateTest && !showSettings && (
             <TestsPortal
               view={view}

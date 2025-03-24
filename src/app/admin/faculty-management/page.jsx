@@ -101,9 +101,7 @@ const FacultyManagement = () => {
   const handleAddFaculty = (newFaculty) => {
     if (editingFaculty) {
       // Update existing faculty
-      setFaculties(faculties.map((faculty) => 
-        faculty.id === editingFaculty.id ? { ...newFaculty, id: faculty.id } : faculty
-      ))
+      setFaculties(faculties.map((faculty) => (faculty.id === editingFaculty.id ? { ...newFaculty, id: faculty.id } : faculty)))
     } else {
       // Add new faculty
       setFaculties([...faculties, { ...newFaculty, id: faculties.length + 1 }])
@@ -120,7 +118,7 @@ const FacultyManagement = () => {
   return (
     <div className="faculty-management">
       {/* Header Section */}
-      <div className="bg-light py-4 mb-4">
+      <div className="bg-light p-4 mb-4">
         <Container fluid>
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
             <div>
@@ -179,20 +177,19 @@ const FacultyManagement = () => {
 
       {/* Stats Cards */}
       <Container fluid>
-        <div className="row mb-4">
+        <div className="row mb-4 px-4">
           <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div className="card">
               <div className="card-body p-3">
-                <div className="row">
+                <div className="row align-items-center">
                   <div className="col-8">
                     <div className="numbers">
                       <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Faculty</p>
-                      <h5 className="font-weight-bolder mb-0">{faculties.length}</h5>
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-theme-secondary shadow text-center border-radius-md">
-                      <FaUserTie className="text-white opacity-10 stats-icon" />
+                    <div className="icon icon-shape border border-2 border-theme-secondary  text-center border-radius-md">
+                      <h5 className="font-weight-bolder mb-0 text-theme-secondary">{faculties.length}</h5>
                     </div>
                   </div>
                 </div>
@@ -202,16 +199,15 @@ const FacultyManagement = () => {
           <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
             <div className="card">
               <div className="card-body p-3">
-                <div className="row">
+                <div className="row align-items-center">
                   <div className="col-8">
                     <div className="numbers">
                       <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Faculty</p>
-                      <h5 className="font-weight-bolder mb-0">{faculties.filter((f) => f.status === 'active').length}</h5>
                     </div>
                   </div>
                   <div className="col-4 text-end">
-                    <div className="icon icon-shape bg-primary shadow text-center border-radius-md">
-                      <FaUserTie className="text-white opacity-10 stats-icon" />
+                    <div className="icon icon-shape border border-2 border-primary text-center border-radius-md">
+                      <h5 className="font-weight-bolder mb-0 text-primary">{faculties.filter((f) => f.status === 'active').length}</h5>
                     </div>
                   </div>
                 </div>

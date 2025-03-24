@@ -13,13 +13,13 @@ const About = () => {
 
         {/* First Section */}
         <Row className="align-items-center mb-5">
-          <Col lg={6} className="position-relative mb-4 mb-lg-0">
-            <div className="text-center">
+          <Col lg={6} className="position-relative mb-4 mb-lg-0 d-flex align-items-center">
+            <div className="text-center w-100" style={{ maxHeight: '400px' }}>
               <img
                 src={about6}
                 className="rounded img-fluid shadow"
                 alt="Students learning together"
-                style={{ maxWidth: '80%', height: 'auto' }}
+                style={{ width: '100%', height: '400px', objectFit: 'cover' }}
               />
             </div>
           </Col>
@@ -65,13 +65,13 @@ const About = () => {
               </p>
             </div>
           </Col>
-          <Col lg={6} className="position-relative mb-4 mb-lg-0 order-1 order-lg-2">
-            <div className="text-center">
+          <Col lg={6} className="position-relative mb-4 mb-lg-0 order-1 order-lg-2 d-flex align-items-center">
+            <div className="text-center w-100" style={{ maxHeight: '400px' }}>
               <img
                 src={about6}
                 className="rounded img-fluid shadow"
                 alt="Our campus environment"
-                style={{ maxWidth: '80%', height: 'auto' }}
+                style={{ width: '100%', height: '400px', objectFit: 'cover' }}
               />
             </div>
           </Col>

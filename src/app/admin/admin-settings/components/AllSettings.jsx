@@ -13,11 +13,11 @@ const AllSettings = () => {
   return (
     <>
       <Row>
-        <Col xs={12} className="mb-3">
+        <Col xs={12} className="mb-3 p-4">
           <h1 className="h3 mb-2 mb-sm-0">Admin Settings</h1>
         </Col>
       </Row>
-      <Row className="g-4">
+      <Row className="g-4 px-4">
         <Col xs={12}>
           <Tab.Container defaultActiveKey="tab-1">
             <Row>
@@ -32,7 +32,7 @@ const AllSettings = () => {
                   <Nav.Item>
                     <Nav.Link eventKey="tab-2">
                       <FaShieldAlt className="me-2" />
-                      Terms and Conditions
+                      Terms & Conditions
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
@@ -50,7 +50,7 @@ const AllSettings = () => {
                   <Nav.Item>
                     <Nav.Link eventKey="tab-5">
                       <FaUserLock className="me-2" />
-                      User Roles and Permission
+                      User Roles & Permission
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>

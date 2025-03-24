@@ -1,100 +1,73 @@
-import { Form, Button, Modal } from 'react-bootstrap';
-import { useState } from 'react';
-import { courseCategories } from '@/assets/data/products';
-import { FaCloudUploadAlt } from 'react-icons/fa';
+import { Form, Button, Modal } from 'react-bootstrap'
+import { useState } from 'react'
+import { courseCategories } from '@/assets/data/products'
+import { FaCloudUploadAlt } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 const BasicInfo = ({ setActiveStep, setProgress }) => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [thumbnail, setThumbnail] = useState(null);
-  const [showNewCategoryModal, setShowNewCategoryModal] = useState(false);
-  const [newCategory, setNewCategory] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [thumbnail, setThumbnail] = useState(null)
+  const [showNewCategoryModal, setShowNewCategoryModal] = useState(false)
+  const [newCategory, setNewCategory] = useState('')
+  const navigate = useNavigate()
 
   const handleCategoryChange = (e) => {
-    const value = e.target.value;
-    setSelectedCategories(prev => 
-      prev.includes(value)
-        ? prev.filter(cat => cat !== value)
-        : [...prev, value]
-    );
-  };
+    const value = e.target.value
+    setSelectedCategories((prev) => (prev.includes(value) ? prev.filter((cat) => cat !== value) : [...prev, value]))
+  }
 
   const handleThumbnailChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]
     if (file) {
-      setThumbnail(URL.createObjectURL(file));
+      setThumbnail(URL.createObjectURL(file))
     }
-  };
+  }
 
   const handleNewCategory = () => {
     // Here you would typically make an API call to save the new category
     // For now, we'll just close the modal
-    setShowNewCategoryModal(false);
-    setNewCategory('');
-  };
+    setShowNewCategoryModal(false)
+    setNewCategory('')
+  }
 
   return (
     <div>
       <h4 className="mb-4">Basic Information</h4>
-      
+
       <Form>
         {/* Course Name */}
         <Form.Group className="mb-4">
           <Form.Label className="fw-medium">Course Name</Form.Label>
-          <Form.Control 
-            type="text" 
-            placeholder="Enter course name"
-            className="form-control-lg bg-light border-0"
-          />
+          <Form.Control type="text" placeholder="Enter course name" className="form-control-lg bg-light border-0" />
         </Form.Group>
 
         {/* Course Description */}
         <Form.Group className="mb-4">
           <Form.Label className="fw-medium">Course Description</Form.Label>
-          <Form.Control 
-            as="textarea" 
-            rows={5}
-            placeholder="Enter course description"
-            className="bg-light border-0"
-          />
+          <Form.Control as="textarea" rows={5} placeholder="Enter course description" className="bg-light border-0" />
         </Form.Group>
 
         {/* Thumbnail */}
         <Form.Group className="mb-4">
           <Form.Label className="fw-medium">Course Thumbnail</Form.Label>
           <div className="position-relative">
-            <div 
+            <div
               className={`upload-box bg-light rounded-3 p-4 text-center ${thumbnail ? 'has-image' : ''}`}
               style={{
                 border: '2px dashed #dee2e6',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
-              onClick={() => document.getElementById('thumbnail-input').click()}
-            >
+              onClick={() => document.getElementById('thumbnail-input').click()}>
               {thumbnail ? (
-                <img 
-                  src={thumbnail} 
-                  alt="Thumbnail Preview" 
-                  className="img-fluid rounded-3"
-                  style={{ maxHeight: '200px' }}
-                />
+                <img src={thumbnail} alt="Thumbnail Preview" className="img-fluid rounded-3" style={{ maxHeight: '200px' }} />
               ) : (
                 <div className="py-4">
                   <FaCloudUploadAlt className="display-4 text-muted mb-2" />
-                  <p className="mb-0 text-muted">
-                    Drag & drop or click to upload course thumbnail
-                  </p>
-                  <small className="text-muted d-block mt-2">
-                    Supported formats: jpg, jpeg, png (Max size: 2MB)
-                  </small>
+                  <p className="mb-0 text-muted">Drag & drop or click to upload course thumbnail</p>
+                  <small className="text-muted d-block mt-2">Supported formats: jpg, jpeg, png (Max size: 2MB)</small>
                 </div>
               )}
-              <Form.Control
-                type="file"
-                id="thumbnail-input"
-                className="d-none"
-                accept="image/*"
-                onChange={handleThumbnailChange}
-              />
+              <Form.Control type="file" id="thumbnail-input" className="d-none" accept="image/*" onChange={handleThumbnailChange} />
             </div>
           </div>
         </Form.Group>
@@ -103,11 +76,7 @@ const BasicInfo = ({ setActiveStep, setProgress }) => {
         <Form.Group className="mb-4">
           <div className="d-flex justify-content-between align-items-center mb-2">
             <Form.Label className="fw-medium mb-0">Categories</Form.Label>
-            <Button 
-              variant="outline-primary" 
-              size="sm"
-              onClick={() => setShowNewCategoryModal(true)}
-            >
+            <Button variant="outline-primary" size="sm" onClick={() => setShowNewCategoryModal(true)}>
               Create New Category
             </Button>
           </div>
@@ -123,10 +92,7 @@ const BasicInfo = ({ setActiveStep, setProgress }) => {
                     checked={selectedCategories.includes(category.id)}
                     onChange={handleCategoryChange}
                   />
-                  <label 
-                    className="form-check-label" 
-                    htmlFor={`category-${category.id}`}
-                  >
+                  <label className="form-check-label" htmlFor={`category-${category.id}`}>
                     {category.title}
                   </label>
                 </div>
@@ -164,27 +130,36 @@ const BasicInfo = ({ setActiveStep, setProgress }) => {
 
         {/* Action Buttons */}
         <div className="d-flex justify-content-between mt-4">
-          <Button 
-            variant="light" 
-            className="px-4 rounded-pill"
-            disabled
-          >
+          <Button variant="light" className="px-4 border-theme-secondary text-theme-secondary" disabled>
             Previous
           </Button>
-          <Button 
-            variant="light" 
-            className="px-4 rounded-pill bg-theme-secondary text-white"
-            onClick={() => {
-              setProgress(45);
-              setActiveStep(2);
-            }}
-          >
-            Next
-          </Button>
+
+          <div className="d-flex gap-3">
+            <Button
+              variant="light"
+              className="px-4 border-theme-secondary text-theme-secondary"
+              onClick={() => {
+                if (window.confirm('Are you sure you want to cancel? Unsaved changes will be lost.')) {
+                  navigate('/admin/all-courses')
+                }
+              }}>
+              Cancel
+            </Button>
+
+            <Button
+              variant="light"
+              className="px-4 bg-theme-secondary text-white"
+              onClick={() => {
+                setProgress(45)
+                setActiveStep(2)
+              }}>
+              Next
+            </Button>
+          </div>
         </div>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default BasicInfo; 
+export default BasicInfo

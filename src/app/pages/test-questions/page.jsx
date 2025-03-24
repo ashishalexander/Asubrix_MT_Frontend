@@ -1,19 +1,29 @@
 // App.jsx
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Modal, Badge, Card } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { InfoCircleFill, Stopwatch, CheckCircleFill, ArrowLeft, ArrowRight, HouseFill, ExclamationTriangleFill, TrophyFill } from 'react-bootstrap-icons';
-import QuestionNavigator from './components/QuestionNavigator';
-import QuestionPanel from './components/QuestionPanel';
-import InfoSidebar from './components/InfoSidebar';
-// import './App.scss';
+import React, { useState, useEffect } from 'react'
+import { Container, Row, Col, Button, Modal, Badge, Card } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import {
+  InfoCircleFill,
+  Stopwatch,
+  CheckCircleFill,
+  ArrowLeft,
+  ArrowRight,
+  HouseFill,
+  ExclamationTriangleFill,
+  TrophyFill,
+} from 'react-bootstrap-icons'
+import QuestionNavigator from './components/QuestionNavigator'
+import QuestionPanel from './components/QuestionPanel'
+import InfoSidebar from './components/InfoSidebar'
+import { XCircleFill } from 'react-bootstrap-icons'
 
 function TestQuestions() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [showInfoPanel, setShowInfoPanel] = useState(true);
-  const [showInstructions, setShowInstructions] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [showInfoPanel, setShowInfoPanel] = useState(true)
+  const [showInstructions, setShowInstructions] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [showResults, setShowResults] = useState(false)
+  const [showExitConfirmation, setShowExitConfirmation] = useState(false)
   const [testResults, setTestResults] = useState({
     totalQuestions: 0,
     correctAnswers: 0,
@@ -21,165 +31,161 @@ function TestQuestions() {
     unanswered: 0,
     score: 0,
     timeTaken: '',
-  });
-  
+  })
+
   // Timer state
-  const [timeRemaining, setTimeRemaining] = useState(3600); // 60 minutes in seconds
-  const [timerActive, setTimerActive] = useState(true);
-  const [timerWarning, setTimerWarning] = useState(false);
-  const [startTime] = useState(Date.now());
-  
+  const [timeRemaining, setTimeRemaining] = useState(3600) // 60 minutes in seconds
+  const [timerActive, setTimerActive] = useState(true)
+  const [timerWarning, setTimerWarning] = useState(false)
+  const [startTime] = useState(Date.now())
+
   // Test info
-  const testName = "General Knowledge Assessment";
-  
+  const testName = 'General Knowledge Assessment'
+
   // Instructions content
   const instructions = [
-    "Read each question carefully before answering.",
-    "You can mark questions for review to come back to them later.",
-    "Once you submit the test, you cannot change your answers.",
-    "Each question carries equal marks.",
-    "There is no negative marking for wrong answers.",
-    "You can use the navigation panel to move between questions."
-  ];
-  
+    'Read each question carefully before answering.',
+    'You can mark questions for review to come back to them later.',
+    'Once you submit the test, you cannot change your answers.',
+    'Each question carries equal marks.',
+    'There is no negative marking for wrong answers.',
+    'You can use the navigation panel to move between questions.',
+  ]
+
   // Sample questions for the test
   const [questions, setQuestions] = useState([
     {
       id: 1,
-      question: "What is the capital of France?",
-      options: ["London", "Berlin", "Paris", "Madrid"],
+      question: 'What is the capital of France?',
+      options: ['London', 'Berlin', 'Paris', 'Madrid'],
       selectedOption: null,
       markedForReview: false,
-      correctOption: 2 // Paris
+      correctOption: 2, // Paris
     },
     {
       id: 2,
-      question: "Which planet is known as the Red Planet?",
-      options: ["Venus", "Mars", "Jupiter", "Mercury"],
+      question: 'Which planet is known as the Red Planet?',
+      options: ['Venus', 'Mars', 'Jupiter', 'Mercury'],
       selectedOption: null,
       markedForReview: false,
-      correctOption: 1 // Mars
+      correctOption: 1, // Mars
     },
     {
       id: 3,
-      question: "What is the largest ocean on Earth?",
-      options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+      question: 'What is the largest ocean on Earth?',
+      options: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
       selectedOption: null,
       markedForReview: false,
-      correctOption: 3 // Pacific Ocean
+      correctOption: 3, // Pacific Ocean
     },
     {
       id: 4,
-      question: "What is the chemical symbol for gold?",
-      options: ["Go", "Gl", "Au", "Ag"],
+      question: 'What is the chemical symbol for gold?',
+      options: ['Go', 'Gl', 'Au', 'Ag'],
       selectedOption: null,
       markedForReview: false,
-      correctOption: 2 // Au
+      correctOption: 2, // Au
     },
     {
       id: 5,
-      question: "Which of these is not a programming language?",
-      options: ["Java", "Python", "Banana", "JavaScript"],
+      question: 'Which of these is not a programming language?',
+      options: ['Java', 'Python', 'Banana', 'JavaScript'],
       selectedOption: null,
       markedForReview: false,
-      correctOption: 2 // Banana
-    }
-  ]);
+      correctOption: 2, // Banana
+    },
+  ])
 
   // Calculate test stats
-  const answeredCount = questions.filter(q => q.selectedOption !== null).length;
-  const markedCount = questions.filter(q => q.markedForReview).length;
+  const answeredCount = questions.filter((q) => q.selectedOption !== null).length
+  const markedCount = questions.filter((q) => q.markedForReview).length
 
   // Timer effect
   useEffect(() => {
-    let interval;
-    
+    let interval
+
     if (timerActive && timeRemaining > 0 && !showResults) {
       interval = setInterval(() => {
-        setTimeRemaining(prevTime => prevTime - 1);
-      }, 1000);
-      
+        setTimeRemaining((prevTime) => prevTime - 1)
+      }, 1000)
+
       // Set warning when less than 5 minutes remaining
       if (timeRemaining <= 300 && !timerWarning) {
-        setTimerWarning(true);
+        setTimerWarning(true)
       }
     } else if (timeRemaining === 0 && !showResults) {
-      handleSubmitConfirm();
+      handleSubmitConfirm()
     }
-    
-    return () => clearInterval(interval);
-  }, [timerActive, timeRemaining, showResults]);
-  
+
+    return () => clearInterval(interval)
+  }, [timerActive, timeRemaining, showResults])
+
   const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
-  
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = seconds % 60
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
+  }
+
   const formatDuration = (milliseconds) => {
-    const seconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    
-    const remainingMinutes = minutes % 60;
-    const remainingSeconds = seconds % 60;
-    
+    const seconds = Math.floor(milliseconds / 1000)
+    const minutes = Math.floor(seconds / 60)
+    const hours = Math.floor(minutes / 60)
+
+    const remainingMinutes = minutes % 60
+    const remainingSeconds = seconds % 60
+
     if (hours > 0) {
-      return `${hours}h ${remainingMinutes}m ${remainingSeconds}s`;
+      return `${hours}h ${remainingMinutes}m ${remainingSeconds}s`
     } else {
-      return `${minutes}m ${remainingSeconds}s`;
+      return `${minutes}m ${remainingSeconds}s`
     }
-  };
+  }
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
-  };
+  }
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      setCurrentQuestionIndex(currentQuestionIndex - 1)
     }
-  };
+  }
 
   const handleOptionSelect = (optionIndex) => {
-    const updatedQuestions = [...questions];
-    updatedQuestions[currentQuestionIndex].selectedOption = optionIndex;
-    setQuestions(updatedQuestions);
-  };
+    const updatedQuestions = [...questions]
+    updatedQuestions[currentQuestionIndex].selectedOption = optionIndex
+    setQuestions(updatedQuestions)
+  }
 
   const handleMarkForReview = () => {
-    const updatedQuestions = [...questions];
-    updatedQuestions[currentQuestionIndex].markedForReview = !updatedQuestions[currentQuestionIndex].markedForReview;
-    setQuestions(updatedQuestions);
-  };
+    const updatedQuestions = [...questions]
+    updatedQuestions[currentQuestionIndex].markedForReview = !updatedQuestions[currentQuestionIndex].markedForReview
+    setQuestions(updatedQuestions)
+  }
 
   const handleSubmitConfirm = () => {
-    setShowConfirmation(true);
-  };
-  
+    setShowConfirmation(true)
+  }
+
   const handleSubmitTest = () => {
     // Close confirmation modal
-    setShowConfirmation(false);
-    
+    setShowConfirmation(false)
+
     // Stop the timer
-    setTimerActive(false);
-    
+    setTimerActive(false)
+
     // Calculate results
-    const totalQuestions = questions.length;
-    const correctAnswers = questions.filter(q => 
-      q.selectedOption !== null && q.selectedOption === q.correctOption
-    ).length;
-    const incorrectAnswers = questions.filter(q => 
-      q.selectedOption !== null && q.selectedOption !== q.correctOption
-    ).length;
-    const unanswered = questions.filter(q => q.selectedOption === null).length;
-    const score = Math.round((correctAnswers / totalQuestions) * 100);
-    
+    const totalQuestions = questions.length
+    const correctAnswers = questions.filter((q) => q.selectedOption !== null && q.selectedOption === q.correctOption).length
+    const incorrectAnswers = questions.filter((q) => q.selectedOption !== null && q.selectedOption !== q.correctOption).length
+    const unanswered = questions.filter((q) => q.selectedOption === null).length
+    const score = Math.round((correctAnswers / totalQuestions) * 100)
+
     // Calculate time taken
-    const timeTaken = formatDuration(Date.now() - startTime);
-    
+    const timeTaken = formatDuration(Date.now() - startTime)
+
     // Set results
     setTestResults({
       totalQuestions,
@@ -188,16 +194,24 @@ function TestQuestions() {
       unanswered,
       score,
       timeTaken,
-    });
-    
+    })
+
     // Show results page
-    setShowResults(true);
-  };
-  
+    setShowResults(true)
+  }
+
   const handleBackToHome = () => {
     // This would typically navigate to your home page
-    window.location.href = "/demos/academy/home";
-  };
+    window.location.href = '/demos/academy/home'
+  }
+
+  const handleExitTest = () => {
+    setShowExitConfirmation(true)
+  }
+
+  const handleConfirmExit = () => {
+    window.location.href = '/pages/free-test/free-test-details'
+  }
 
   // If showing results page
   if (showResults) {
@@ -212,17 +226,17 @@ function TestQuestions() {
                     <TrophyFill size={36} className="trophy-icon" />
                     <h1>Test Results</h1>
                   </div>
-                  
+
                   <div className="results-content p-4">
                     <h2 className="test-name mb-4">{testName}</h2>
-                    
+
                     <div className="score-container mb-4">
                       <div className="score-circle">
                         <div className="score-value">{testResults.score}%</div>
                       </div>
                       <div className="score-label">Your Score</div>
                     </div>
-                    
+
                     <div className="results-details">
                       <div className="result-item">
                         <div className="result-label">Total Questions</div>
@@ -245,14 +259,9 @@ function TestQuestions() {
                         <div className="result-value">{testResults.timeTaken}</div>
                       </div>
                     </div>
-                    
+
                     <div className="mt-4 text-center">
-                      <Button 
-                        variant="primary" 
-                        size="lg" 
-                        className="back-home-btn"
-                        onClick={handleBackToHome}
-                      >
+                      <Button variant="primary" size="lg" className="back-home-btn" onClick={handleBackToHome}>
                         <HouseFill size={20} className="me-2" />
                         Back to Home
                       </Button>
@@ -264,7 +273,7 @@ function TestQuestions() {
           </Row>
         </Container>
       </div>
-    );
+    )
   }
 
   return (
@@ -275,109 +284,87 @@ function TestQuestions() {
             <div>
               <h1 className="test-title">{testName}</h1>
               <div className="mt-2">
-                <Badge bg="success" className="me-2">{answeredCount} Answered</Badge>
-                {markedCount > 0 && <Badge bg="warning" text="dark">{markedCount} Marked for Review</Badge>}
+                <Badge bg="success" className="me-2">
+                  {answeredCount} Answered
+                </Badge>
+                {markedCount > 0 && (
+                  <Badge bg="warning" text="dark">
+                    {markedCount} Marked for Review
+                  </Badge>
+                )}
               </div>
             </div>
-            
-            <div className="d-flex align-items-center">
-              <div 
-                className="instructions-btn me-4"
-                onClick={() => setShowInstructions(true)}
-              >
+
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="instructions-btn me-2" onClick={() => setShowInstructions(true)}>
                 <InfoCircleFill size={20} className="info-icon" />
-                <span>Test Instructions</span>
+                <span className="ms-1">Test Instructions</span>
               </div>
-              
-              <div className={`test-timer ${timerWarning ? 'text-danger' : ''}`}>
+
+              <div className="test-timer ms-2">
                 <Stopwatch size={20} className="timer-icon" />
-                <span>{formatTime(timeRemaining)}</span>
+                <span className="ms-1">{formatTime(timeRemaining)}</span>
               </div>
-              
-              <Button 
-                variant="outline-primary"
-                className="ms-3 d-md-none d-flex align-items-center" 
-                onClick={() => setShowInfoPanel(!showInfoPanel)}
-              >
-                <InfoCircleFill size={18} className="me-2" />
+
+              <Button variant="outline-danger" className="mb-0 ms-2 d-flex align-items-center" onClick={handleExitTest}>
+                <XCircleFill size={20} className="me-2" />
+                Exit Test
+              </Button>
+
+              <Button variant="outline-primary" className="ms-2 d-md-none d-flex align-items-center" onClick={() => setShowInfoPanel(!showInfoPanel)}>
+                <InfoCircleFill size={18} className="me-1" />
                 Info
               </Button>
             </div>
           </div>
-          
+
           <Row className="mb-4">
             <Col xs={12}>
-              <QuestionNavigator 
-                questions={questions} 
+              <QuestionNavigator
+                questions={questions}
                 currentQuestionIndex={currentQuestionIndex}
                 setCurrentQuestionIndex={setCurrentQuestionIndex}
               />
             </Col>
           </Row>
-          
+
           <Row className="mb-4">
             <Col xs={12}>
-              <QuestionPanel 
-                question={questions[currentQuestionIndex]}
-                onOptionSelect={handleOptionSelect}
-                onMarkForReview={handleMarkForReview}
-              />
+              <QuestionPanel question={questions[currentQuestionIndex]} onOptionSelect={handleOptionSelect} onMarkForReview={handleMarkForReview} />
             </Col>
           </Row>
         </Container>
       </div>
-      
+
       {/* Sticky Navigation Footer */}
       <div className={`navigation-footer ${showInfoPanel ? 'with-sidebar' : ''}`}>
         <div className="navigation-container">
-          <Button 
-            variant="outline-primary" 
-            onClick={handlePreviousQuestion} 
-            disabled={currentQuestionIndex === 0}
-            className="nav-btn"
-          >
+          <Button variant="outline-primary" onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0} className="nav-btn">
             <ArrowLeft className="me-2" /> Previous
           </Button>
-          
-         
-          
-          <Button 
-            variant="success" 
-            className="nav-btn submit-btn"
-            onClick={handleSubmitConfirm}
-          >
+
+          <Button variant="success" className="nav-btn submit-btn" onClick={handleSubmitConfirm}>
             Submit Test <CheckCircleFill size={16} className="ms-2" />
           </Button>
-          
-          <Button 
-            variant="outline-primary" 
-            onClick={handleNextQuestion} 
-            disabled={currentQuestionIndex === questions.length - 1}
-            className="nav-btn"
-          >
+
+          <Button variant="outline-primary" onClick={handleNextQuestion} disabled={currentQuestionIndex === questions.length - 1} className="nav-btn">
             Next <ArrowRight className="ms-2" />
           </Button>
         </div>
       </div>
-      
-      <InfoSidebar 
-        isOpen={showInfoPanel} 
-        toggleSidebar={() => setShowInfoPanel(!showInfoPanel)} 
+
+      <InfoSidebar
+        isOpen={showInfoPanel}
+        toggleSidebar={() => setShowInfoPanel(!showInfoPanel)}
         testName={testName}
         totalQuestions={questions.length}
         answeredQuestions={answeredCount}
         markedQuestions={markedCount}
         timeRemaining={formatTime(timeRemaining)}
       />
-      
+
       {/* Instructions Modal */}
-      <Modal 
-        show={showInstructions} 
-        onHide={() => setShowInstructions(false)}
-        centered
-        className="instructions-modal"
-        size="lg"
-      >
+      <Modal show={showInstructions} onHide={() => setShowInstructions(false)} centered className="instructions-modal" size="lg">
         <Modal.Header closeButton>
           <Modal.Title>
             <InfoCircleFill size={20} className="me-2 text-primary" />
@@ -398,14 +385,9 @@ function TestQuestions() {
           </Button>
         </Modal.Footer>
       </Modal>
-      
+
       {/* Confirmation Modal */}
-      <Modal
-        show={showConfirmation}
-        onHide={() => setShowConfirmation(false)}
-        centered
-        className="confirmation-modal"
-      >
+      <Modal show={showConfirmation} onHide={() => setShowConfirmation(false)} centered className="confirmation-modal">
         <Modal.Header>
           <Modal.Title className="d-flex align-items-center">
             <ExclamationTriangleFill size={24} className="me-2 text-warning" />
@@ -416,7 +398,7 @@ function TestQuestions() {
           <p className="confirmation-message">
             Are you sure you want to submit your test? Once submitted, you will not be able to change your answers.
           </p>
-          
+
           <div className="test-summary">
             <h6>Test Summary</h6>
             <div className="summary-item">
@@ -446,8 +428,31 @@ function TestQuestions() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Exit Confirmation Modal */}
+      <Modal show={showExitConfirmation} onHide={() => setShowExitConfirmation(false)} centered className="confirmation-modal">
+        <Modal.Header>
+          <Modal.Title className="d-flex align-items-center">
+            <ExclamationTriangleFill size={24} className="me-2 text-warning" />
+            Exit Test
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="confirmation-message">
+            Are you sure you want to exit the test? Your progress will be lost.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowExitConfirmation(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleConfirmExit}>
+            Exit Test
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
-  );
+  )
 }
 
-export default TestQuestions;
+export default TestQuestions

@@ -247,7 +247,7 @@ const EnquiriesPage = () => {
       <PageMetaData title="Enquiries Management" />
 
       {/* Header Section */}
-      <div className="bg-light py-4 mb-4">
+      <div className="bg-light p-4 mb-4">
         <Container fluid>
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
             <div>
@@ -304,7 +304,7 @@ const EnquiriesPage = () => {
       </div>
 
       {/* Main Content */}
-      <Card className="shadow border-0">
+      <Card className="shadow border-0 m-4">
         <CardBody className="p-4">
           <div className="table-responsive">
             <Table className="table-hover align-middle mb-0 enquiries-table">

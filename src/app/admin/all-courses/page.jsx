@@ -28,7 +28,7 @@ const AllCourses = () => {
       <PageMetaData title="Manage Courses" />
 
       {/* Header Section */}
-      <div className="bg-light py-4 mb-4">
+      <div className="bg-light p-4 mb-4">
         <Container fluid>
           <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
             <div>
@@ -69,7 +69,7 @@ const AllCourses = () => {
       </div>
 
       <Container fluid>
-        <div className="row g-4">
+        <div className="row g-4 p-4">
           {/* Filters Section */}
           <div className="col-lg-3">
             <div className="card border-0 shadow-sm">
