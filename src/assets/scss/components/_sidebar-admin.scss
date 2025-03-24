@@ -7,6 +7,128 @@
   position: relative;
   padding: 0;
 
+  &.navbar-expand-xl {
+    width: 16.25rem;
+    
+    .sidebar-content {
+      width: 16.25rem;
+      height: 100%;
+      position: relative;
+    }
+
+    // Sidebar menu container
+    .sidebar-menu-container {
+      flex-grow: 1;
+      overflow: auto;
+      min-height: 0;
+      margin-bottom: 60px;
+      height: calc(100vh - 60px);
+
+      // Custom scrollbar styling
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--#{$prefix}primary);
+        border-radius: 4px;
+        
+        &:hover {
+          background-color: var(--#{$prefix}primary-hover);
+        }
+      }
+
+      // Firefox scrollbar
+      scrollbar-width: thin;
+      scrollbar-color: var(--#{$prefix}primary) transparent;
+    }
+
+    // Dropdown menu scrollbar
+    .nav.flex-column {
+      max-height: calc(100vh - 200px);
+      overflow-y: auto;
+
+      // Custom scrollbar styling
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--#{$prefix}primary);
+        border-radius: 4px;
+        
+        &:hover {
+          background-color: var(--#{$prefix}primary-hover);
+        }
+      }
+
+      // Firefox scrollbar
+      scrollbar-width: thin;
+      scrollbar-color: var(--#{$prefix}primary) transparent;
+    }
+
+    // Admin settings styles
+    .admin-settings-wrapper {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 16.25rem;
+      background: var(--#{$prefix}theme-secondary);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1040;
+    }
+
+    .admin-settings-menu {
+      padding: 0.75rem 1rem;
+      width: 100%;
+      z-index: 1030;
+      background: var(--#{$prefix}theme-secondary);
+      box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    @include media-breakpoint-down(xl) {
+      .admin-settings-wrapper {
+        width: 16.25rem;
+      }
+    }
+  }
+
+  // Sidebar menu container
+  .sidebar-menu-container {
+    flex-grow: 1;
+    overflow: auto;
+    min-height: 0;
+    margin-bottom: 60px;
+  }
+
+  // Admin settings styles
+  .admin-settings-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: inherit;
+    background: var(--#{$prefix}theme-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1040;
+  }
+
+  .admin-settings-menu {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    z-index: 1030;
+    background: var(--#{$prefix}theme-secondary);
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.2);
+  }
+
   &.navbar-expand {
     @each $breakpoint in map-keys($grid-breakpoints) {
       $next: breakpoint-next($breakpoint, $grid-breakpoints);
@@ -14,7 +136,6 @@
 
       // Styling for navbar-expand
       &#{$infix} {
-
         // Navbar styling for all screen sizes
         .navbar-brand-item {
           height: 50px;
@@ -25,6 +146,17 @@
           padding: 0 1rem 1rem;
           width: 16.25rem;
           height: 100%;
+        }
+
+        // Mobile specific styles
+        @include media-breakpoint-down($next) {
+          .admin-settings-wrapper {
+            width: 100%; // Full width for mobile
+          }
+
+          .sidebar-offcanvas {
+            width: 16.25rem !important; // Force sidebar width in mobile
+          }
         }
 
         .offcanvas {

@@ -105,7 +105,6 @@ const StudentDeleteAccount = lazy(() => import('@/app/student/delete-account/pag
 //Admin
 const AdminDashboard = lazy(() => import('@/app/admin/dashboard/page'));
 const AllCourses = lazy(() => import('@/app/admin/all-courses/page'));
-const BannersPage = lazy(() => import('@/app/admin/banners/page'));
 const CourseCategory = lazy(() => import('@/app/admin/course-category/page'));
 const CourseDetail = lazy(() => import('@/app/admin/course-detail/page'));
 const EditCourse = lazy(() => import('@/app/admin/edit-course/page'));
@@ -476,10 +475,6 @@ export const adminRoutes = [{
   path: '/admin/content-management',
   name: 'Content Management',
   element: <ContentManagement />,
-}, {
-  path: '/admin/banners',
-  name: 'Banners',
-  element: <BannersPage />,
 }, {
   path: '/admin/edit-course',
   name: 'Create Course',

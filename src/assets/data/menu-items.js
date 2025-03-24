@@ -846,11 +846,6 @@ export const ADMIN_MENU_ITEMS = [{
   icon: FaRegFileAlt,
   url: '/admin/content-management'
 }, {
-  key: 'banners',
-  label: 'Banners',
-  icon: BsUiRadiosGrid,
-  url: '/admin/banners'
-}, {
   key: 'student-management',
   label: 'Student Management',
   icon: FaUserGraduate,

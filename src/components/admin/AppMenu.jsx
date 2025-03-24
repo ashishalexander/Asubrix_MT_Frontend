@@ -21,12 +21,17 @@ const MenuItemWithChildren = ({
     toggle
   } = useToggle();
   const Icon = item.icon;
-  return <div className={itemClassName}>
+  return <div className={`${itemClassName}`} style={{ position: 'relative' }}>
       <div className={linkClassName} data-bs-toggle="collapse" role="button" aria-expanded={isOpen} onClick={toggle}>
         {Icon && <Icon className="me-2" />} {item.label}
       </div>
 
-      <Collapse in={isOpen} className="nav flex-column">
+      <Collapse in={isOpen} className="nav flex-column" style={{ 
+        position: 'relative',
+        zIndex: 1030,
+        background: '#1a2942',
+        marginBottom: item.key === 'reports' ? '70px' : '10px' // Extra margin for reports dropdown
+      }}>
         <div>
           {(item.children ?? []).map((child, index) => <Fragment key={index + child.key + index}>
               {child.children ? <MenuItemWithChildren item={child} activeMenuItems={activeMenuItems} itemClassName={itemClassName} linkClassName={clsx('nav-link', {

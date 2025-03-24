@@ -61,8 +61,7 @@
       color: var(--bs-gray-600);
 
       &:hover {
-        background: var(--bs-gray-100);
-        color: var(--bs-primary);
+        background: transparent;
       }
 
       &.view-btn:hover {

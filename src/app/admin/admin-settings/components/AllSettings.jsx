@@ -1,11 +1,13 @@
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
 import { FaCog, FaGlobe, FaLock, FaSearch, FaShieldAlt, FaUserLock } from 'react-icons/fa';
+import { BsUiRadiosGrid } from 'react-icons/bs';
 import WebsiteSettings from './WebsiteSettings';
 import TermsConditions from './TermsConditions';
 import PrivacyPolicy from './PrivacyPolicy';
 import MailConfig from './MailConfig';
 import UserRoles from './UserRoles';
 import SeoSettings from './SeoSettings';
+import BannerSettings from './BannerSettings';
 
 const AllSettings = () => {
   return (
@@ -57,6 +59,12 @@ const AllSettings = () => {
                       SEO
                     </Nav.Link>
                   </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="tab-7">
+                      <BsUiRadiosGrid className="me-2" />
+                      Banners
+                    </Nav.Link>
+                  </Nav.Item>
                 </Nav>
               </Col>
               <Col xl={9}>
@@ -78,6 +86,9 @@ const AllSettings = () => {
                   </Tab.Pane>
                   <Tab.Pane eventKey="tab-6">
                     <SeoSettings />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="tab-7">
+                    <BannerSettings />
                   </Tab.Pane>
                 </Tab.Content>
               </Col>

@@ -23,7 +23,7 @@ const AdminLayout = ({ children }) => {
   const { removeSession } = useAuthContext();
 
   const SettingsMenu = () => (
-    <div className="px-3 py-3 border-top w-100 position-sticky bottom-0 bg-theme-secondary">
+    <div className="admin-settings-menu">
       <div className="d-flex align-items-center justify-content-between text-primary-hover">
         <OverlayTrigger overlay={<Tooltip id="tooltip-settings">Settings</Tooltip>}>
           <Link className="h5 mb-0 text-white" to="/admin/admin-settings">
@@ -54,13 +54,15 @@ const AdminLayout = ({ children }) => {
         </div>
         
         {width >= 1200 ? (
-          <div className="sidebar-content d-flex flex-column bg-theme-secondary h-100">
-            <div className="flex-grow-1 overflow-auto" style={{ minHeight: 0 }}>
-              <div className="pb-5 px-3">
+          <div className="sidebar-content d-flex flex-column bg-theme-secondary">
+            <div className="sidebar-menu-container">
+              <div className="px-3">
                 <AppMenu />
               </div>
             </div>
-            <SettingsMenu />
+            <div className="admin-settings-wrapper">
+              <SettingsMenu />
+            </div>
           </div>
         ) : (
           <Offcanvas 
@@ -70,12 +72,14 @@ const AdminLayout = ({ children }) => {
             onHide={appMenuControl.toggle}
           >
             <OffcanvasBody className="d-flex flex-column bg-theme-secondary p-0">
-              <div className="flex-grow-1 overflow-auto" style={{ minHeight: 0 }}>
-                <div className="pb-5 px-3">
+              <div className="sidebar-menu-container">
+                <div className="px-3">
                   <AppMenu />
                 </div>
               </div>
-              <SettingsMenu />
+              <div className="admin-settings-wrapper">
+                <SettingsMenu />
+              </div>
             </OffcanvasBody>
           </Offcanvas>
         )}
