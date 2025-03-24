@@ -45,6 +45,7 @@ const CreateTest = ({ onClose, onSave }) => {
   });
 
   const [selectedLanguage, setSelectedLanguage] = useState('both');
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleInputChange = (field, value) => {
     setTestData(prev => ({
@@ -69,6 +70,16 @@ const CreateTest = ({ onClose, onSave }) => {
 
   const toggleQuestionForm = () => {
     setShowQuestionForm(!showQuestionForm);
+    if (!showQuestionForm) {
+      setIsEditing(false);
+      setCurrentQuestion({
+        questionEn: '',
+        questionTa: '',
+        optionsEn: ['', '', '', ''],
+        optionsTa: ['', '', '', ''],
+        correctAnswer: 0
+      });
+    }
   };
 
   const handleAddQuestion = () => {
@@ -99,6 +110,7 @@ const CreateTest = ({ onClose, onSave }) => {
         correctAnswer: 0
       });
       setShowQuestionForm(false);
+      setIsEditing(false);
     }
   };
 
@@ -111,6 +123,8 @@ const CreateTest = ({ onClose, onSave }) => {
 
   const handleEditQuestion = (index) => {
     setCurrentQuestion(testData.sections[index]);
+    setShowQuestionForm(true);
+    setIsEditing(true);
     handleDeleteQuestion(index);
   };
 
@@ -408,7 +422,7 @@ const CreateTest = ({ onClose, onSave }) => {
                           onClick={handleAddQuestion}
                           className="mt-2"
                         >
-                          <FiPlus className="me-1" /> Add Question
+                          <FiPlus className="me-1" /> {isEditing ? 'Update' : 'Save'}
                         </Button>
                       </Form>
                     </div>
