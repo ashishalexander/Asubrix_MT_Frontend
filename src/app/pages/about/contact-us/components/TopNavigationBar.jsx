@@ -106,7 +106,7 @@ const TopNavigationBar = () => {
               <div>
                 <ul className="navbar-nav navbar-nav-scroll ms-auto">
                   <NavItem>
-                    <Link className="nav-link" to="/demos/academy/home">
+                    <Link className="nav-link" to="/academy/home">
                       Home
                     </Link>
                   </NavItem>

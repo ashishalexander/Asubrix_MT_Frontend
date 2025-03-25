@@ -6,7 +6,7 @@ import ContentManagement from '@/app/admin/content-management/page';
 // Demos Pages
 const DemosDefault = lazy(() => import('@/app/demos/default/home/page'));
 const Eduction = lazy(() => import('@/app/demos/education/home/page'));
-const Academy = lazy(() => import('@/app/demos/academy/home/page'));
+const Academy = lazy(() => import('@/app/academy/home/page'));
 const Course = lazy(() => import('@/app/demos/course/home/page'));
 const University = lazy(() => import('@/app/demos/university/home/page'));
 const Kindergarten = lazy(() => import('@/app/demos/kindergarten/home/page'));
@@ -128,10 +128,14 @@ const ReportsPage = lazy(() => import('@/app/admin/reports/page'));
 export const initialRoutes = [{
   path: '/',
   name: 'root',
-  element: <Navigate to="/demos/academy/home" />
+  element: <Navigate to="/academy/home" />
 }];
 
 export const demosRoutes = [{
+  path: '/academy/home',
+  name: 'Home Academy',
+  element: <Academy />
+}, {
   path: '/demos/default/home',
   name: 'Demos',
   element: <DemosDefault />
@@ -139,10 +143,6 @@ export const demosRoutes = [{
   path: '/demos/education/home',
   name: 'Home Eduction',
   element: <Eduction />
-}, {
-  path: '/demos/academy/home',
-  name: 'Home Academy',
-  element: <Academy />
 }, {
   path: '/demos/course/home',
   name: 'Home Course',

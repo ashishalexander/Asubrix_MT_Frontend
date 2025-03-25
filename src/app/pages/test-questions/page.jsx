@@ -202,7 +202,7 @@ function TestQuestions() {
 
   const handleBackToHome = () => {
     // This would typically navigate to your home page
-    window.location.href = '/demos/academy/home'
+    window.location.href = '/academy/home'
   }
 
   const handleExitTest = () => {

@@ -292,7 +292,7 @@ export const APP_MENU_ITEMS = [{
   }, {
     key: 'academy',
     label: 'Home Academy',
-    url: '/demos/academy/home',
+    url: '/academy/home',
     parentKey: 'demos'
   }, {
     key: 'course-home',

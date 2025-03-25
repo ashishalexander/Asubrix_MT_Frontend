@@ -3,7 +3,7 @@ export const footerLinks = [{
   title: 'Quick links',
   items: [{
     name: 'Home',
-    link: '/demos/academy/home'
+    link: '/academy/home'
   }, {
     name: 'About',
     link: '/pages/about/about-us'
