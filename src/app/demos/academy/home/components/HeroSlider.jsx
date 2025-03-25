@@ -12,20 +12,31 @@ const HeroSlider = () => {
     mouseDrag: true,
     autoplayButton: false,
     autoplayButtonOutput: false,
-    nested: 'inner',
     controlsText: [renderToString(<FaChevronLeft size={16} />), renderToString(<FaChevronRight size={16} />)],
     autoplay: false,
     controls: true,
-    edgePadding: 2,
+    edgePadding: 0,
     items: 1,
-    nav: false
+    nav: false,
+    loop: true,
+    speed: 1000,
+    responsive: {
+      320: {
+        items: 1,
+        controls: true
+      },
+      768: {
+        items: 1,
+        controls: true
+      }
+    }
   };
 
   return (
     <section className="pt-0">
       <Row className="mx-0">
         <Col xs={12} className="p-0">
-          <div className="tiny-slider arrow-round arrow-blur arrow-hover rounded-0 overflow-hidden">
+          <div className="tiny-slider hero-slider arrow-round arrow-blur arrow-hover rounded-0 overflow-hidden">
             <TinySlider settings={courseSliderSettings} className="tiny-slider-inner">
               {/* First Banner */}
               <Card className="overflow-hidden h-500px h-md-600px text-start rounded-0" style={{

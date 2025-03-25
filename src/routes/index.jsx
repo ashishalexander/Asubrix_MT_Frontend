@@ -128,7 +128,7 @@ const ReportsPage = lazy(() => import('@/app/admin/reports/page'));
 export const initialRoutes = [{
   path: '/',
   name: 'root',
-  element: <Navigate to="/demos/default/home" />
+  element: <Navigate to="/demos/academy/home" />
 }];
 
 export const demosRoutes = [{

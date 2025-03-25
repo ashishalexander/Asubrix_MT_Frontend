@@ -214,4 +214,12 @@
       }
     }
   }
-} 
+
+  // Course slider styles
+  .course-slider {
+    .slick-prev,
+    .slick-next {
+      display: none !important;
+    }
+  }
+}

@@ -60,7 +60,7 @@ const CourseDetails = () => {
         </Row>
 
         {/* Navigation Tabs */}
-        <Nav variant="tabs" activeKey={activeTab} onSelect={(key) => setActiveTab(key || 'description')}>
+        <Nav variant="tabs" className="mt-5" activeKey={activeTab} onSelect={(key) => setActiveTab(key || 'description')}>
           <Nav.Item>
             <Nav.Link eventKey="description">Description</Nav.Link>
           </Nav.Item>

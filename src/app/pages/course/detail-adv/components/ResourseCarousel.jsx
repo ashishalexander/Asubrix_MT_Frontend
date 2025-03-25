@@ -17,15 +17,16 @@ const ResourceCarousel = () => {
   };
 
   return (
-    <div className="resource-carousel-container container-fluid position-relative mb-4">
-      <div className="row justify-content-center">
-        <div className="col-lg-10">
+    <div className="resource-carousel-container">
+      <div className="row">
+        <div className="col-12">
           <Carousel
             activeIndex={index}
             onSelect={handleSelect}
             indicators={true}
-            controls={false} // Disable default controls
+            controls={false}
             className="custom-carousel"
+            arrows={false}
           >
             {resources.map((image, idx) => (
               <Carousel.Item key={idx}>

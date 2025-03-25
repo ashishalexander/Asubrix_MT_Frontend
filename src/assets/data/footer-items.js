@@ -43,10 +43,12 @@ export const footerLinks = [{
   items: [{
     name: 'Contact',
     link: '/pages/about/contact-us'
-  }, {
+  }, 
+  {
     name: 'FAQ',
-    link: '#'
-  }]
+    link: '/faq'
+  }
+]
 }];
 export const footerLinks2 = [{
   name: 'About',
