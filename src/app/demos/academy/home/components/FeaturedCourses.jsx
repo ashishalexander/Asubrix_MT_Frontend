@@ -2,7 +2,7 @@ import { currency } from '@/context/constants'
 import { getAllCourses } from '@/helpers/data'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
-import { Card, CardBody, CardTitle, Col, Container, Row } from 'react-bootstrap'
+import { Card, CardBody, CardTitle, Col, Container, Row, Button } from 'react-bootstrap'
 import { FaRegBookmark, FaRegClock, FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa'
 import { useFetchData } from '@/hooks/useFetchData'
 import thumbnailPlaceholder from '@/assets/images/bg/thumbnail-placeholder.webp'
@@ -34,48 +34,21 @@ const CourseCard = ({ course }) => {
         <CardTitle>
           <Link to={'/pages/course/detail-adv'}>{title}</Link>
         </CardTitle>
-        {/* <ul className="list-inline">
-          <li className="list-inline-item h6 fw-light mb-0">{rating.star}</li>
-          {Array(Math.floor(rating.star))
-            .fill(0)
-            .map((_star, idx) => (
-              <li key={idx} className="list-inline-item me-1 small">
-                <FaStar size={14} className="text-warning" />
-              </li>
-            ))}
-          {!Number.isInteger(rating.star) && (
-            <li className="list-inline-item me-1 small">
-              <FaStarHalfAlt size={14} className="text-warning" />
-            </li>
-          )}
-          {rating.star < 5 &&
-            Array(5 - Math.ceil(rating.star))
-              .fill(0)
-              .map((_star, idx) => (
-                <li key={idx} className="list-inline-item me-1 small">
-                  <FaRegStar size={14} className="text-warning" />
-                </li>
-              ))}
-          <li className="list-inline-item ms-2 text-reset">({rating.review})</li>
-        </ul> */}
 
-        <div className="text-danger  mb-2">
+        <div className="text-danger mb-2">
           <span className="me-1">🔥</span>
           <span>Extra 5% coupon discount</span>
         </div>
         <hr />
-        <div className="d-flex justify-content-between align-items-center mb-2">
+        <div className="d-flex justify-content-between align-items-center mb-3">
           <h4 className="text-success mb-0">
             ₹{price}
             <span className="text-muted ms-2 h5">
               <del>₹{price + 100}</del>
             </span>
           </h4>
-          {/* <span className="h6 fw-light mb-0 me-3">
-            <FaRegClock className="text-danger me-2" />
-            {duration}
-          </span> */}
         </div>
+        <Button className="btn btn-primary w-100">Buy Now</Button>
       </CardBody>
     </Card>
   )
@@ -97,8 +70,8 @@ const FeaturedCourses = () => {
           </Col>
         </Row>
         <Row className="g-4">
-          {trendingCourses?.slice(0, 4).map((course, idx) => (
-            <Col sm={6} md={6} lg={3} key={idx}>
+          {trendingCourses?.slice(0, 3).map((course, idx) => (
+            <Col sm={12} md={4} key={idx}>
               <CourseCard course={course} />
             </Col>
           ))}

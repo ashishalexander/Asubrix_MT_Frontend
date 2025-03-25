@@ -8,7 +8,7 @@ import thumbnailPlaceholder from '@/assets/images/bg/thumbnail-placeholder.webp'
 const enrolledCoursesData = [
   {
     id: 1,
-    title: 'Complete Web Development Bootcamp',
+    title: 'Complete Web Development',
     image: thumbnailPlaceholder,
     progress: 75,
     instructor: 'John Doe',
@@ -43,7 +43,7 @@ const enrolledCoursesData = [
 
 const CourseCard = ({ course }) => {
   return (
-    <Card className="shadow-hover overflow-hidden bg-transparent border border-2">
+    <Card className="shadow-hover overflow-hidden bg-transparent border-2">
       <div className="position-relative">
         <img
           className="card-img-top"
@@ -73,14 +73,25 @@ const CourseCard = ({ course }) => {
         </div>
 
         <hr />
-        <div className="d-flex justify-content-end align-items-center">
-          <Link 
-            to={`/student/course-resume?id=${course.id}`}
-            className="btn btn-sm btn-primary"
-          >
-            Continue Learning
-          </Link>
+        <div className="d-flex align-items-center mb-3">
+          <div className="progress w-100" style={{ height: '8px' }}>
+            <div 
+              className="progress-bar bg-success" 
+              role="progressbar" 
+              style={{ width: `${course.progress}%` }} 
+              aria-valuenow={course.progress} 
+              aria-valuemin="0" 
+              aria-valuemax="100"
+            />
+          </div>
+          <span className="ms-2 small">{course.progress}%</span>
         </div>
+        <Link 
+          to={`/student/course-resume?id=${course.id}`}
+          className="btn btn-primary w-100"
+        >
+          Continue Learning
+        </Link>
       </CardBody>
     </Card>
   )
@@ -103,7 +114,7 @@ const EnrolledCourses = () => {
         </Row>
         <Row className="g-4">
           {enrolledCoursesData.map((course) => (
-            <Col sm={6} md={6} lg={3} key={course.id}>
+            <Col sm={12} md={4} key={course.id}>
               <CourseCard course={course} />
             </Col>
           ))}
@@ -113,4 +124,4 @@ const EnrolledCourses = () => {
   );
 };
 
-export default EnrolledCourses; 
+export default EnrolledCourses;
