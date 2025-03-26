@@ -4,7 +4,6 @@ import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 
 const CourseReportsTable = ({ searchQuery }) => {
-  // Sample data for course reports
   const data = useMemo(
     () => [
       {
@@ -13,7 +12,6 @@ const CourseReportsTable = ({ searchQuery }) => {
         category: 'Web Development',
         enrolledStudents: '150',
         completionRate: '85%',
-        averageRating: '4.5',
         revenue: '$15,000'
       },
       {
@@ -22,7 +20,6 @@ const CourseReportsTable = ({ searchQuery }) => {
         category: 'Programming',
         enrolledStudents: '200',
         completionRate: '78%',
-        averageRating: '4.2',
         revenue: '$18,000'
       },
       {
@@ -31,7 +28,6 @@ const CourseReportsTable = ({ searchQuery }) => {
         category: 'Data Science',
         enrolledStudents: '175',
         completionRate: '82%',
-        averageRating: '4.7',
         revenue: '$20,000'
       },
       {
@@ -40,7 +36,6 @@ const CourseReportsTable = ({ searchQuery }) => {
         category: 'Web Development',
         enrolledStudents: '220',
         completionRate: '90%',
-        averageRating: '4.8',
         revenue: '$22,000'
       }
     ],
@@ -68,10 +63,6 @@ const CourseReportsTable = ({ searchQuery }) => {
       {
         Header: 'Completion Rate',
         accessor: 'completionRate',
-      },
-      {
-        Header: 'Average Rating',
-        accessor: 'averageRating',
       },
       {
         Header: 'Revenue',

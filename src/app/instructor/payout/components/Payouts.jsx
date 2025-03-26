@@ -1,11 +1,10 @@
 import ChoicesFormInput from '@/components/form/ChoicesFormInput';
 import { Card, CardBody, CardHeader, Col, FormControl, Row } from 'react-bootstrap';
-import { BsFillInfoCircleFill } from 'react-icons/bs';
 import { FaAngleLeft, FaAngleRight, FaSearch } from 'react-icons/fa';
 const Payouts = () => {
   return <Card className="bg-transparent border rounded-3">
       <CardHeader className="bg-transparent border-bottom">
-        <h3 className="mb-0">Payouts</h3>
+        <h3 className="mb-0">Payment History</h3>
       </CardHeader>
       <CardBody>
         <Row className="g-3 align-items-center justify-content-between mb-4">
@@ -21,7 +20,6 @@ const Payouts = () => {
             <form>
               <ChoicesFormInput className="form-select js-choice border-0 z-index-9 bg-transparent" aria-label=".form-select-sm">
                 <option>Sort by</option>
-                {/* <option>Free</option> */}
                 <option>Newest</option>
                 <option>Oldest</option>
               </ChoicesFormInput>
@@ -33,7 +31,7 @@ const Payouts = () => {
             <thead>
               <tr>
                 <th scope="col" className="border-0 rounded-start">
-                  Payout
+                  Transaction ID
                 </th>
                 <th scope="col" className="border-0">
                   Amount
@@ -50,15 +48,11 @@ const Payouts = () => {
               <tr>
                 <td>
                   <h6 className="mt-2 mt-lg-0 mb-0">
-                    <a href="#">Successful payout #102356</a>
+                    <a href="#">#102356</a>
                   </h6>
                 </td>
                 <td>
                 ₹3,999
-                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
-                    &nbsp;
-                    <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
                     <li>
                       <div className="d-flex justify-content-between">
@@ -90,15 +84,11 @@ const Payouts = () => {
               <tr>
                 <td>
                   <h6 className="mt-2 mt-lg-0 mb-0">
-                    <a href="#">Successful payout #102589</a>
+                    <a href="#">#102589</a>
                   </h6>
                 </td>
                 <td>
                 ₹4,875
-                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare1" data-bs-toggle="dropdown" aria-expanded="false">
-                    &nbsp;
-                    <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare1">
                     <li>
                       <div className="d-flex justify-content-between">
@@ -130,15 +120,11 @@ const Payouts = () => {
               <tr>
                 <td>
                   <h6 className="mt-2 mt-lg-0 mb-0">
-                    <a href="#">Successful payout #108645</a>
+                    <a href="#">#108645</a>
                   </h6>
                 </td>
                 <td>
                 ₹1,800
-                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare2" data-bs-toggle="dropdown" aria-expanded="false">
-                    &nbsp;
-                    <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare2">
                     <li>
                       <div className="d-flex justify-content-between">
@@ -170,15 +156,11 @@ const Payouts = () => {
               <tr>
                 <td>
                   <h6 className="mt-2 mt-lg-0 mb-0">
-                    <a href="#">Successful payout #108645</a>
+                    <a href="#">#108645</a>
                   </h6>
                 </td>
                 <td>
                 ₹6,800
-                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare3" data-bs-toggle="dropdown" aria-expanded="false">
-                    &nbsp;
-                    <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare3">
                     <li>
                       <div className="d-flex justify-content-between">
@@ -210,15 +192,11 @@ const Payouts = () => {
               <tr>
                 <td>
                   <h6 className="mt-2 mt-lg-0 mb-0">
-                    <a href="#">Successful payout #108645</a>
+                    <a href="#">#108645</a>
                   </h6>
                 </td>
                 <td>
                 ₹3,576
-                  {/* <a href="#" className="h6 mb-0" role="button" id="dropdownShare4" data-bs-toggle="dropdown" aria-expanded="false">
-                    &nbsp;
-                    <BsFillInfoCircleFill className="bi bi-info-circle-fill" />
-                  </a> */}
                   <ul className="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare4">
                     <li>
                       <div className="d-flex justify-content-between">

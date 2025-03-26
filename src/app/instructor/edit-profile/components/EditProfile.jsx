@@ -18,11 +18,13 @@ const EditProfile = () => {
     handleSubmit
   } = useForm({
     resolver: yupResolver(contactFormSchema),
-    defaultValues: {
-      email: 'example@gmail.com',
-      phoneNo: 1234567890,
-      location: 'California'
-    }
+    // defaultValues: {
+    //   email: 'example@gmail.com',
+    //   phoneNo: 1234567890,
+    //   location: 'California',
+    //   firstName: 'Lori',
+    //   lastName: 'Stevens'
+    // }
   });
   return <Card className="bg-transparent border rounded-3">
       <CardHeader className="bg-transparent border-bottom">
@@ -49,21 +51,10 @@ const EditProfile = () => {
           </Col>
 
 
-          <Col xs={6}>
-            <label className="form-label">First name</label>
-            <div className="input-group">
-              <input type="text" className="form-control" defaultValue="Lori" placeholder="First name" />
-            </div>
-          </Col>
+         
+          <TextFormInput name="firstName" label="First name" control={control} containerClassName="col-md-6" />
+          <TextFormInput name="lastName" label="Last name" control={control} containerClassName="col-md-6" />
 
-          <Col xs={6}>
-            <label className="form-label">Last name</label>
-            <div className="input-group">
-              <input type="text" className="form-control" defaultValue="Stevens" placeholder="Last name" />
-            </div>
-          </Col>
-
-          
           <TextFormInput name="email" label="Email id" control={control} containerClassName="col-md-6" />
           <TextFormInput name="phoneNo" label="Phone number" control={control} containerClassName="col-md-6" />
           <Col xs={12}>

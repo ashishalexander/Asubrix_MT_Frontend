@@ -1,7 +1,7 @@
-import React, { useMemo, useEffect } from 'react';
-import { Card, Table } from 'react-bootstrap';
-import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table';
-import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
+import React, { useEffect, useMemo } from 'react'
+import { Card, Table } from 'react-bootstrap'
+import { FaSort, FaSortDown, FaSortUp } from 'react-icons/fa'
+import { useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table'
 
 const PaymentReportsTable = ({ searchQuery }) => {
   // Sample data for payment reports
@@ -15,7 +15,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$89.99',
         gross: '$89.99',
         platformFee: '$8.99',
-        net: '$81.00'
+        net: '$81.00',
       },
       {
         id: 'ORD-2023-0002',
@@ -25,7 +25,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$94.99',
         gross: '$94.99',
         platformFee: '$9.50',
-        net: '$85.49'
+        net: '$85.49',
       },
       {
         id: 'ORD-2023-0003',
@@ -35,7 +35,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$79.99',
         gross: '$79.99',
         platformFee: '$8.00',
-        net: '$71.99'
+        net: '$71.99',
       },
       {
         id: 'ORD-2023-0004',
@@ -45,7 +45,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$129.99',
         gross: '$129.99',
         platformFee: '$13.00',
-        net: '$116.99'
+        net: '$116.99',
       },
       {
         id: 'ORD-2023-0005',
@@ -55,7 +55,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$74.99',
         gross: '$74.99',
         platformFee: '$7.50',
-        net: '$67.49'
+        net: '$67.49',
       },
       {
         id: 'ORD-2023-0006',
@@ -65,7 +65,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$59.99',
         gross: '$59.99',
         platformFee: '$6.00',
-        net: '$53.99'
+        net: '$53.99',
       },
       {
         id: 'ORD-2023-0007',
@@ -75,7 +75,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$119.99',
         gross: '$119.99',
         platformFee: '$12.00',
-        net: '$107.99'
+        net: '$107.99',
       },
       {
         id: 'ORD-2023-0008',
@@ -85,7 +85,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$99.99',
         gross: '$99.99',
         platformFee: '$10.00',
-        net: '$89.99'
+        net: '$89.99',
       },
       {
         id: 'ORD-2023-0009',
@@ -95,7 +95,7 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$89.99',
         gross: '$89.99',
         platformFee: '$8.99',
-        net: '$81.00'
+        net: '$81.00',
       },
       {
         id: 'ORD-2023-0010',
@@ -105,11 +105,11 @@ const PaymentReportsTable = ({ searchQuery }) => {
         amount: '$94.99',
         gross: '$94.99',
         platformFee: '$9.50',
-        net: '$85.49'
-      }
+        net: '$85.49',
+      },
     ],
-    []
-  );
+    [],
+  )
 
   const columns = useMemo(
     () => [
@@ -126,24 +126,24 @@ const PaymentReportsTable = ({ searchQuery }) => {
         accessor: 'course',
       },
       {
-        Header: 'Amount',
-        accessor: 'amount',
-      },
-      {
-        Header: 'Payment Method',
+        Header: 'Phone',
         accessor: 'phone',
       },
       {
-        Header: 'Status',
-        accessor: 'net',
+        Header: 'Gross',
+        accessor: 'gross',
       },
       {
-        Header: 'Date',
-        accessor: 'gross',
-      }
+        Header: 'Platform Fee',
+        accessor: 'platformFee',
+      },
+      {
+        Header: 'Net',
+        accessor: 'net',
+      },
     ],
-    []
-  );
+    [],
+  )
 
   const {
     getTableProps,
@@ -160,21 +160,21 @@ const PaymentReportsTable = ({ searchQuery }) => {
     previousPage,
     setPageSize,
     setGlobalFilter,
-    state: { pageIndex, pageSize }
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 5 }
+      initialState: { pageIndex: 0, pageSize: 5 },
     },
     useGlobalFilter,
     useSortBy,
-    usePagination
-  );
+    usePagination,
+  )
 
   useEffect(() => {
-    setGlobalFilter(searchQuery || '');
-  }, [searchQuery, setGlobalFilter]);
+    setGlobalFilter(searchQuery || '')
+  }, [searchQuery, setGlobalFilter])
 
   return (
     <Card className="shadow-sm border-0">
@@ -182,13 +182,10 @@ const PaymentReportsTable = ({ searchQuery }) => {
         <div className="table-responsive">
           <Table hover className="table table-dark-gray align-middle mb-0" {...getTableProps()}>
             <thead>
-              {headerGroups.map(headerGroup => (
+              {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
-                    <th 
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                      className="py-3 px-4 text-nowrap"
-                    >
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())} className="py-3 px-4 text-nowrap">
                       <div className="d-flex align-items-center">
                         {column.render('Header')}
                         <span className="ms-1">
@@ -209,17 +206,17 @@ const PaymentReportsTable = ({ searchQuery }) => {
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {page.map(row => {
-                prepareRow(row);
+              {page.map((row) => {
+                prepareRow(row)
                 return (
                   <tr {...row.getRowProps()}>
-                    {row.cells.map(cell => (
+                    {row.cells.map((cell) => (
                       <td {...cell.getCellProps()} className="py-3 px-4">
                         {cell.render('Cell')}
                       </td>
                     ))}
                   </tr>
-                );
+                )
               })}
             </tbody>
           </Table>
@@ -229,10 +226,9 @@ const PaymentReportsTable = ({ searchQuery }) => {
             <span className="me-2">Show</span>
             <select
               value={pageSize}
-              onChange={e => setPageSize(Number(e.target.value))}
-              className="form-select form-select-sm d-inline-block w-auto"
-            >
-              {[5, 10, 20, 30, 40, 50].map(size => (
+              onChange={(e) => setPageSize(Number(e.target.value))}
+              className="form-select form-select-sm d-inline-block w-auto">
+              {[5, 10, 20, 30, 40, 50].map((size) => (
                 <option key={size} value={size}>
                   {size}
                 </option>
@@ -241,39 +237,23 @@ const PaymentReportsTable = ({ searchQuery }) => {
             <span className="ms-2">entries</span>
           </div>
           <div className="pagination mb-0">
-            <button
-              className="btn btn-sm btn-light me-2"
-              onClick={() => gotoPage(0)}
-              disabled={!canPreviousPage}
-            >
+            <button className="btn btn-sm btn-light me-2" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
               {'<<'}
             </button>
-            <button
-              className="btn btn-sm btn-light me-2"
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
-            >
+            <button className="btn btn-sm btn-light me-2" onClick={() => previousPage()} disabled={!canPreviousPage}>
               {'<'}
             </button>
-            <button
-              className="btn btn-sm btn-light me-2"
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
-            >
+            <button className="btn btn-sm btn-light me-2" onClick={() => nextPage()} disabled={!canNextPage}>
               {'>'}
             </button>
-            <button
-              className="btn btn-sm btn-light"
-              onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
-            >
+            <button className="btn btn-sm btn-light" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
               {'>>'}
             </button>
           </div>
         </div>
       </Card.Body>
     </Card>
-  );
-};
+  )
+}
 
-export default PaymentReportsTable;
+export default PaymentReportsTable

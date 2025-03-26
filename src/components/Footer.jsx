@@ -1,15 +1,13 @@
-import { Link } from 'react-router-dom'
-import { Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'react-bootstrap'
-import { FaChevronUp, FaFacebookF, FaYoutube, FaInstagram, FaTelegramPlane, FaTwitter } from 'react-icons/fa'
-import { currentYear, developedBy, developedByLink } from '@/context/constants'
-import clsx from 'clsx'
-import logo from '@/assets/images/logo.svg'
-import logoLight from '@/assets/images/logo-light.svg'
-import pylogo from '@/assets/images/puthuyougam_logo.png';
-import googlePlay from '@/assets/images/client/google-play.svg'
-import playStore from '@/assets/images/client/app-store.svg'
 import { footerLinks } from '@/assets/data/footer-items'
-import '@/assets/scss/style.scss'; 
+import playStore from '@/assets/images/client/app-store.svg'
+import googlePlay from '@/assets/images/client/google-play.svg'
+import pylogo from '@/assets/images/puthuyougam_logo.png'
+import '@/assets/scss/style.scss'
+import { currentYear } from '@/context/constants'
+import clsx from 'clsx'
+import { Col, Container, Row } from 'react-bootstrap'
+import { FaFacebookF, FaInstagram, FaTelegramPlane, FaYoutube } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 const Footer = ({ className }) => {
   return (
     <footer className={clsx('pt-5', className)}>
@@ -21,7 +19,8 @@ const Footer = ({ className }) => {
               {/* <img className="dark-mode-item h-40px" width={189} height={40} src={pymainlogo} alt="logo" /> */}
             </Link>
             <p className="my-3">
-            Pudhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations  </p>
+              Pudhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations{' '}
+            </p>
             <ul className="list-inline mb-0 mt-3">
               <li className="list-inline-item">
                 <a
@@ -81,7 +80,7 @@ const Footer = ({ className }) => {
           </Col>
           <Col lg={3}>
             <h5 className="mb-2 mb-md-4">Contact</h5>
-            <p className="mb-2">4, Hari Garderns, Ramanuja Nagar, Uppilipayam Post, Coimbatore - 641 015 Contact Number : 9488722512,  6381048227</p>
+            <p className="mb-2">4, Hari Garderns, Ramanuja Nagar, Uppilipayam Post, Coimbatore - 641 015 Contact Number : 9488722512, 6381048227</p>
             <p className="mb-0">
               Email:<span className="h6 fw-light ms-2">official@pudhuyugamacademy.in </span>
             </p>
