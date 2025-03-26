@@ -44,10 +44,10 @@ const FreeTestsList = () => {
             <p>Total ({filteredTests.length})</p>
           </Col>
           <Col sm={4}>
-            <form className="border rounded p-2">
+            <form className="border rounded">
               <div className="input-group input-borderless">
                 <input
-                  className="form-control me-1"
+                  className="form-control me-1 border-0"
                   type="search"
                   placeholder="Search"
                   value={searchQuery}

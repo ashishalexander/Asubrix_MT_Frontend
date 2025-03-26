@@ -1,11 +1,38 @@
+import React, { useState, useRef } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import { Dropdown, Form, InputGroup } from 'react-bootstrap'
-import { FaFileExport, FaFilter, FaSearch } from 'react-icons/fa'
+import { Overlay, Popover } from 'react-bootstrap'
+import { 
+  FaFileExport, 
+  FaCalendar, 
+  FaSearch, 
+  FaFilter, 
+  FaFileDownload 
+} from 'react-icons/fa'
 import * as XLSX from 'xlsx'
+import styles from './CourseReportsHeader.module.scss'
 
-// New Header Component
-const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFilterChange, onSortChange }) => {
+const CourseReportsHeader = ({ 
+  searchQuery, 
+  setSearchQuery, 
+  tableData, 
+  onDateFilterChange, 
+  onSortChange 
+}) => {
+  // State for date range
+  const [dateRange, setDateRange] = useState([null, null])
+  const [startDate, endDate] = dateRange
+  const [showDatePicker, setShowDatePicker] = useState(false)
+  const dateFilterRef = useRef(null)
+
+  // State for dropdowns
+  const [showSortDropdown, setShowSortDropdown] = useState(false)
+  const [showExportDropdown, setShowExportDropdown] = useState(false)
+  const sortDropdownRef = useRef(null)
+  const exportDropdownRef = useRef(null)
+
   // Export function to handle Excel and PDF exports
   const handleExport = (format) => {
     if (format === 'excel') {
@@ -21,59 +48,163 @@ const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFil
       })
       doc.save('course_reports.pdf')
     }
+    setShowExportDropdown(false)
+  }
+
+  // Handle custom date range selection
+  const handleDateRangeSelect = () => {
+    if (startDate && endDate) {
+      onDateFilterChange('custom', startDate, endDate)
+      setShowDatePicker(false)
+    }
   }
 
   return (
-    <div className="mb-4 mt-5">
-      <div className="d-flex align-items-center justify-content-between mb-3">
-        {/* Search Input */}
-        <InputGroup className="w-50 search-input">
-          <InputGroup.Text className="bg-light border-0">
-            <FaSearch className="text-muted" />
-          </InputGroup.Text>
-          <Form.Control
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search courses..."
-            className="border-0 bg-light"
-          />
-        </InputGroup>
+    <div className={styles.headerContainer}>
+      {/* Search Input */}
+      <div className={styles.searchWrapper}>
+        <FaSearch className={styles.searchIcon} />
+        <input
+          type="text"
+          className={`form-control ${styles.searchInput}`}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search courses..."
+        />
+      </div>
 
-        <div className="d-flex justify-content-between align-items-center">
-          {/* Date Filter Dropdown */}
-          <Dropdown className="me-2">
-            <Dropdown.Toggle variant="outline-secondary" id="date-filter-dropdown">
-              <FaFilter className="me-2" /> Date Filter
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => onDateFilterChange('last7days')}>Last 7 Days</Dropdown.Item>
-              <Dropdown.Item onClick={() => onDateFilterChange('lastMonth')}>Last Month</Dropdown.Item>
-              <Dropdown.Item onClick={() => onDateFilterChange('lastQuarter')}>Last Quarter</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+      {/* Action Buttons */}
+      <div className={styles.actionButtons}>
+        {/* Date Filter Button */}
+        <button 
+          ref={dateFilterRef}
+          className={styles.actionButton}
+          onClick={() => setShowDatePicker(!showDatePicker)}
+        >
+          <FaCalendar /> Date Filter
+        </button>
+        <Overlay
+          show={showDatePicker}
+          target={dateFilterRef.current}
+          placement="bottom"
+          containerPadding={20}
+        >
+          <Popover id="date-filter-popover" className={styles.datePickerPopover}>
+            <Popover.Body>
+              <DatePicker
+                selectsRange={true}
+                startDate={startDate}
+                endDate={endDate}
+                onChange={(update) => setDateRange(update)}
+                isClearable={true}
+                inline
+                placeholderText="Select date range"
+                dateFormat="MM/dd/yyyy"
+              />
+              <div className="d-flex justify-content-between mt-2">
+                <button 
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => setShowDatePicker(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="btn btn-primary btn-sm"
+                  onClick={handleDateRangeSelect}
+                  disabled={!startDate || !endDate}
+                >
+                  Apply
+                </button>
+              </div>
+            </Popover.Body>
+          </Popover>
+        </Overlay>
 
-          {/* Sort Dropdown */}
-          <Dropdown className="me-2">
-            <Dropdown.Toggle variant="outline-secondary" id="sort-dropdown">
-              Sort By
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => onSortChange('courseName')}>Course Name</Dropdown.Item>
-              <Dropdown.Item onClick={() => onSortChange('enrollments')}>Enrollments</Dropdown.Item>
-              <Dropdown.Item onClick={() => onSortChange('completionRate')}>Completion Rate</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+        {/* Sort Button */}
+        <div className="position-relative">
+          <button 
+            ref={sortDropdownRef}
+            className={styles.actionButton}
+            onClick={() => setShowSortDropdown(!showSortDropdown)}
+          >
+            <FaFilter /> Sort By
+          </button>
+          <Overlay
+            show={showSortDropdown}
+            target={sortDropdownRef.current}
+            placement="bottom"
+            containerPadding={20}
+          >
+            <Popover id="sort-dropdown-popover">
+              <Popover.Body>
+                <div className="d-flex flex-column">
+                  <button 
+                    className="dropdown-item" 
+                    onClick={() => {
+                      onSortChange('courseName')
+                      setShowSortDropdown(false)
+                    }}
+                  >
+                    Course Name
+                  </button>
+                  <button 
+                    className="dropdown-item" 
+                    onClick={() => {
+                      onSortChange('enrollments')
+                      setShowSortDropdown(false)
+                    }}
+                  >
+                    Enrollments
+                  </button>
+                  <button 
+                    className="dropdown-item" 
+                    onClick={() => {
+                      onSortChange('completionRate')
+                      setShowSortDropdown(false)
+                    }}
+                  >
+                    Completion Rate
+                  </button>
+                </div>
+              </Popover.Body>
+            </Popover>
+          </Overlay>
+        </div>
 
-          {/* Export Dropdown */}
-          <Dropdown>
-            <Dropdown.Toggle variant="outline-secondary" id="export-dropdown">
-              <FaFileExport className="me-2" /> Export
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleExport('excel')}>Export to Excel</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleExport('pdf')}>Export to PDF</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+        {/* Export Button */}
+        <div className="position-relative">
+          <button 
+            ref={exportDropdownRef}
+            className={styles.actionButton}
+            onClick={() => setShowExportDropdown(!showExportDropdown)}
+          >
+            <FaFileDownload /> Export
+          </button>
+          <Overlay
+            show={showExportDropdown}
+            target={exportDropdownRef.current}
+            placement="bottom"
+            containerPadding={20}
+          >
+            <Popover id="export-dropdown-popover">
+              <Popover.Body>
+                <div className="d-flex flex-column">
+                  <button 
+                    className="dropdown-item" 
+                    onClick={() => handleExport('excel')}
+                  >
+                    Export to Excel
+                  </button>
+                  <button 
+                    className="dropdown-item" 
+                    onClick={() => handleExport('pdf')}
+                  >
+                    Export to PDF
+                  </button>
+                </div>
+              </Popover.Body>
+            </Popover>
+          </Overlay>
         </div>
       </div>
     </div>
