@@ -4,19 +4,20 @@
  * - Content management styles: src/assets/scss/components/_content-management.scss
  */
 
-import React, { useState } from 'react';
-import { Row, Col, Form, Button, Nav, Tab, Alert } from 'react-bootstrap';
-import { FiArrowLeft, FiInfo, FiClock, FiSettings, FiList, FiSave, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
+import React, { useState } from 'react'
+import { Alert, Button, Col, Form, Nav, Row, Tab } from 'react-bootstrap'
+import { CiTrash } from 'react-icons/ci'
+import { FiArrowLeft, FiArrowRight, FiEdit2, FiInfo, FiList, FiPlus, FiSave, FiSettings, FiTrash2 } from 'react-icons/fi'
 
 const CreateTest = ({ onClose, onSave }) => {
-  const [activeTab, setActiveTab] = useState('basic');
-  const [showQuestionForm, setShowQuestionForm] = useState(false);
+  const [activeTab, setActiveTab] = useState('basic')
+  const [showQuestionForm, setShowQuestionForm] = useState(false)
   const [testData, setTestData] = useState({
     title: '',
     description: '',
     duration: {
       hours: '1',
-      minutes: '30'
+      minutes: '30',
     },
     category: '',
     passingScore: '60',
@@ -27,106 +28,123 @@ const CreateTest = ({ onClose, onSave }) => {
       showResults: true,
       allowReview: true,
       requireProctoring: false,
-      timeLimit: true
-    }
-  });
+      timeLimit: true,
+    },
+  })
 
   const [currentSection, setCurrentSection] = useState({
     title: '',
-    questions: []
-  });
+    questions: [],
+  })
 
   const [currentQuestion, setCurrentQuestion] = useState({
     questionEn: '',
     questionTa: '',
-    optionsEn: ['', '', '', ''],
-    optionsTa: ['', '', '', ''],
-    correctAnswer: 0
-  });
+    optionsEn: ['', ''],
+    optionsTa: ['', ''],
+    correctAnswer: 0,
+  })
 
-  const [selectedLanguage, setSelectedLanguage] = useState('both');
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false)
+  const [optionsCount, setOptionsCount] = useState(2)
 
   const handleInputChange = (field, value) => {
-    setTestData(prev => ({
+    setTestData((prev) => ({
       ...prev,
-      [field]: value
-    }));
-  };
+      [field]: value,
+    }))
+  }
 
   const handleSettingsChange = (field, value) => {
-    setTestData(prev => ({
+    setTestData((prev) => ({
       ...prev,
       settings: {
         ...prev.settings,
-        [field]: value
-      }
-    }));
-  };
+        [field]: value,
+      },
+    }))
+  }
 
   const handleSave = () => {
-    onSave(testData);
-  };
+    onSave(testData)
+  }
 
   const toggleQuestionForm = () => {
-    setShowQuestionForm(!showQuestionForm);
+    setShowQuestionForm(!showQuestionForm)
     if (!showQuestionForm) {
-      setIsEditing(false);
+      setIsEditing(false)
       setCurrentQuestion({
         questionEn: '',
         questionTa: '',
-        optionsEn: ['', '', '', ''],
-        optionsTa: ['', '', '', ''],
-        correctAnswer: 0
-      });
+        optionsEn: ['', ''],
+        optionsTa: ['', ''],
+        correctAnswer: 0,
+      })
+      setOptionsCount(2)
     }
-  };
+  }
 
   const handleAddQuestion = () => {
-    const isValid = 
-      (selectedLanguage === 'english' && currentQuestion.questionEn) ||
-      (selectedLanguage === 'tamil' && currentQuestion.questionTa) ||
-      (selectedLanguage === 'both' && currentQuestion.questionEn && currentQuestion.questionTa);
-
-    if (isValid) {
-      let questionData = {
-        ...currentQuestion,
-        questionEn: selectedLanguage === 'tamil' ? '' : currentQuestion.questionEn,
-        questionTa: selectedLanguage === 'english' ? '' : currentQuestion.questionTa,
-        optionsEn: selectedLanguage === 'tamil' ? ['', '', '', ''] : currentQuestion.optionsEn,
-        optionsTa: selectedLanguage === 'english' ? ['', '', '', ''] : currentQuestion.optionsTa,
-      };
-
-      setTestData(prev => ({
+    // Validate that both English and Tamil questions are filled
+    if (currentQuestion.questionEn && currentQuestion.questionTa) {
+      setTestData((prev) => ({
         ...prev,
-        sections: [...prev.sections, questionData]
-      }));
+        sections: [...prev.sections, currentQuestion],
+      }))
 
+      // Reset form
       setCurrentQuestion({
         questionEn: '',
         questionTa: '',
-        optionsEn: ['', '', '', ''],
-        optionsTa: ['', '', '', ''],
-        correctAnswer: 0
-      });
-      setShowQuestionForm(false);
-      setIsEditing(false);
+        optionsEn: ['', ''],
+        optionsTa: ['', ''],
+        correctAnswer: 0,
+      })
+      setShowQuestionForm(false)
+      setIsEditing(false)
+      setOptionsCount(2)
+    } else {
+      // Optional: Add error handling if questions are not filled
+      alert('Please fill in both English and Tamil questions')
     }
-  };
+  }
 
   const handleDeleteQuestion = (index) => {
-    setTestData(prev => ({
+    setTestData((prev) => ({
       ...prev,
-      sections: prev.sections.filter((_, i) => i !== index)
-    }));
-  };
+      sections: prev.sections.filter((_, i) => i !== index),
+    }))
+  }
 
   const handleEditQuestion = (index) => {
-    setCurrentQuestion(testData.sections[index]);
-    setShowQuestionForm(true);
-    setIsEditing(true);
-    handleDeleteQuestion(index);
-  };
+    const questionToEdit = testData.sections[index]
+    setCurrentQuestion(questionToEdit)
+    setShowQuestionForm(true)
+    setIsEditing(true)
+    setOptionsCount(questionToEdit.optionsEn.length)
+    handleDeleteQuestion(index)
+  }
+
+  const handleDeleteOption = (index) => {
+    if (index >= 2) {
+      // Only allow deleting options added after the first two
+      setCurrentQuestion((prev) => {
+        const newOptionsEn = prev.optionsEn.filter((_, i) => i !== index)
+        const newOptionsTa = prev.optionsTa.filter((_, i) => i !== index)
+
+        // Adjust correct answer if needed
+        const newCorrectAnswer = prev.correctAnswer >= index ? Math.max(0, prev.correctAnswer - 1) : prev.correctAnswer
+
+        return {
+          ...prev,
+          optionsEn: newOptionsEn,
+          optionsTa: newOptionsTa,
+          correctAnswer: newCorrectAnswer,
+        }
+      })
+      setOptionsCount((prev) => prev - 1)
+    }
+  }
 
   return (
     <div className="content-management-form p-0">
@@ -134,23 +152,12 @@ const CreateTest = ({ onClose, onSave }) => {
       <div className="border-bottom p-4 bg-light">
         <div className="d-flex justify-content-between align-items-center">
           <div>
-            <Button 
-              variant="link" 
-              className="p-0 text-body mb-2 d-flex align-items-center"
-              onClick={onClose}
-            >
+            <Button variant="link" className="p-0 text-body mb-2 d-flex align-items-center" onClick={onClose}>
               <FiArrowLeft className="me-2" /> Back to Test Management
             </Button>
             <h4 className="mb-1">Create New Test</h4>
             <p className="text-muted mb-0">Configure your test settings and content</p>
           </div>
-          <Button
-            variant="primary"
-            onClick={handleSave}
-            className="d-flex align-items-center"
-          >
-            <FiSave className="me-2" /> Save Test
-          </Button>
         </div>
       </div>
 
@@ -159,29 +166,17 @@ const CreateTest = ({ onClose, onSave }) => {
           <Col lg={3}>
             <Nav variant="pills" className="flex-column nav-pills-custom">
               <Nav.Item>
-                <Nav.Link
-                  active={activeTab === 'basic'}
-                  onClick={() => setActiveTab('basic')}
-                  className="mb-2"
-                >
+                <Nav.Link active={activeTab === 'basic'} onClick={() => setActiveTab('basic')} className="mb-2">
                   <FiInfo className="me-2" /> Basic Information
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link
-                  active={activeTab === 'sections'}
-                  onClick={() => setActiveTab('sections')}
-                  className="mb-2"
-                >
+                <Nav.Link active={activeTab === 'sections'} onClick={() => setActiveTab('sections')} className="mb-2">
                   <FiList className="me-2" /> Test Sections
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link
-                  active={activeTab === 'settings'}
-                  onClick={() => setActiveTab('settings')}
-                  className="mb-2"
-                >
+                <Nav.Link active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} className="mb-2">
                   <FiSettings className="me-2" /> Test Settings
                 </Nav.Link>
               </Nav.Item>
@@ -219,10 +214,7 @@ const CreateTest = ({ onClose, onSave }) => {
                       <Col md={6}>
                         <Form.Group className="mb-3">
                           <Form.Label>Category</Form.Label>
-                          <Form.Select
-                            value={testData.category}
-                            onChange={(e) => handleInputChange('category', e.target.value)}
-                          >
+                          <Form.Select value={testData.category} onChange={(e) => handleInputChange('category', e.target.value)}>
                             <option value="">Select category</option>
                             <option value="mathematics">Mathematics</option>
                             <option value="science">Science</option>
@@ -280,6 +272,11 @@ const CreateTest = ({ onClose, onSave }) => {
                       />
                     </Form.Group>
                   </Form>
+                  <div className="mt-4 d-flex justify-content-end">
+                    <Button variant="primary" onClick={() => setActiveTab('sections')} className="d-flex align-items-center">
+                      Save & Continue <FiArrowRight className="ms-2" />
+                    </Button>
+                  </div>
                 </div>
               </Tab.Pane>
 
@@ -287,11 +284,7 @@ const CreateTest = ({ onClose, onSave }) => {
                 <div className="bg-white rounded p-4 shadow-sm">
                   <div className="d-flex justify-content-between align-items-center mb-4">
                     <h5 className="mb-0">Test Sections</h5>
-                    <Button 
-                      variant="primary" 
-                      onClick={toggleQuestionForm}
-                      className="d-flex align-items-center"
-                    >
+                    <Button variant="primary" onClick={toggleQuestionForm} className="d-flex align-items-center">
                       <FiPlus className="me-2" /> Create Questions
                     </Button>
                   </div>
@@ -300,128 +293,122 @@ const CreateTest = ({ onClose, onSave }) => {
                     <div className="question-form mb-4">
                       <div className="d-flex justify-content-between align-items-center mb-3">
                         <h6 className="mb-0">Add New Question</h6>
-                        <Button 
-                          variant="outline-secondary" 
-                          size="sm"
-                          onClick={toggleQuestionForm}
-                        >
+                        <Button variant="outline-secondary" size="sm" onClick={toggleQuestionForm}>
                           Cancel
                         </Button>
                       </div>
                       <Form>
-                        <Form.Group className="mb-3">
-                          <Form.Label>Select Language</Form.Label>
-                          <Form.Select
-                            value={selectedLanguage}
-                            onChange={(e) => setSelectedLanguage(e.target.value)}
-                          >
-                            <option value="both">English/Tamil</option>
-                            <option value="english">English</option>
-                            <option value="tamil">Tamil</option>
-                          </Form.Select>
-                        </Form.Group>
-
                         <Row className="mb-3">
-                          {(selectedLanguage === 'both' || selectedLanguage === 'english') && (
-                            <Col md={selectedLanguage === 'both' ? 6 : 12}>
-                              <Form.Group>
-                                <Form.Label>Question (English)</Form.Label>
-                                <Form.Control
-                                  as="textarea"
-                                  rows={2}
-                                  value={currentQuestion.questionEn}
-                                  onChange={(e) => setCurrentQuestion(prev => ({
+                          <Col md={6}>
+                            <Form.Group>
+                              <Form.Label>Question (English)</Form.Label>
+                              <Form.Control
+                                as="textarea"
+                                rows={2}
+                                value={currentQuestion.questionEn}
+                                onChange={(e) =>
+                                  setCurrentQuestion((prev) => ({
                                     ...prev,
-                                    questionEn: e.target.value
-                                  }))}
-                                  placeholder="Enter question in English"
-                                />
-                              </Form.Group>
-                            </Col>
-                          )}
-                          {(selectedLanguage === 'both' || selectedLanguage === 'tamil') && (
-                            <Col md={selectedLanguage === 'both' ? 6 : 12}>
-                              <Form.Group>
-                                <Form.Label>Question (Tamil)</Form.Label>
-                                <Form.Control
-                                  as="textarea"
-                                  rows={2}
-                                  value={currentQuestion.questionTa}
-                                  onChange={(e) => setCurrentQuestion(prev => ({
+                                    questionEn: e.target.value,
+                                  }))
+                                }
+                                placeholder="Enter question in English"
+                                required
+                              />
+                            </Form.Group>
+                          </Col>
+                          <Col md={6}>
+                            <Form.Group>
+                              <Form.Label>Question (Tamil)</Form.Label>
+                              <Form.Control
+                                as="textarea"
+                                rows={2}
+                                value={currentQuestion.questionTa}
+                                onChange={(e) =>
+                                  setCurrentQuestion((prev) => ({
                                     ...prev,
-                                    questionTa: e.target.value
-                                  }))}
-                                  placeholder="Enter question in Tamil"
-                                />
-                              </Form.Group>
-                            </Col>
-                          )}
+                                    questionTa: e.target.value,
+                                  }))
+                                }
+                                placeholder="Enter question in Tamil"
+                                required
+                              />
+                            </Form.Group>
+                          </Col>
                         </Row>
 
-                        {[0, 1, 2, 3].map((index) => (
+                        {Array.from({ length: optionsCount }).map((_, index) => (
                           <Row key={index} className="mb-3">
-                            {(selectedLanguage === 'both' || selectedLanguage === 'english') && (
-                              <Col md={selectedLanguage === 'both' ? 5 : 10}>
-                                <Form.Group>
-                                  <Form.Label>Option {index + 1} (English)</Form.Label>
-                                  <Form.Control
-                                    type="text"
-                                    value={currentQuestion.optionsEn[index]}
-                                    onChange={(e) => {
-                                      const newOptionsEn = [...currentQuestion.optionsEn];
-                                      newOptionsEn[index] = e.target.value;
-                                      setCurrentQuestion(prev => ({
-                                        ...prev,
-                                        optionsEn: newOptionsEn
-                                      }));
-                                    }}
-                                    placeholder={`Enter option ${index + 1} in English`}
-                                  />
-                                </Form.Group>
-                              </Col>
-                            )}
-                            {(selectedLanguage === 'both' || selectedLanguage === 'tamil') && (
-                              <Col md={selectedLanguage === 'both' ? 5 : 10}>
-                                <Form.Group>
-                                  <Form.Label>Option {index + 1} (Tamil)</Form.Label>
-                                  <Form.Control
-                                    type="text"
-                                    value={currentQuestion.optionsTa[index]}
-                                    onChange={(e) => {
-                                      const newOptionsTa = [...currentQuestion.optionsTa];
-                                      newOptionsTa[index] = e.target.value;
-                                      setCurrentQuestion(prev => ({
-                                        ...prev,
-                                        optionsTa: newOptionsTa
-                                      }));
-                                    }}
-                                    placeholder={`Enter option ${index + 1} in Tamil`}
-                                  />
-                                </Form.Group>
-                              </Col>
-                            )}
-                            <Col md={2}>
+                            <Col md={5}>
+                              <Form.Group>
+                                <Form.Label>Option {index + 1} (English)</Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={currentQuestion.optionsEn[index]}
+                                  onChange={(e) => {
+                                    const newOptionsEn = [...currentQuestion.optionsEn]
+                                    newOptionsEn[index] = e.target.value
+                                    setCurrentQuestion((prev) => ({
+                                      ...prev,
+                                      optionsEn: newOptionsEn,
+                                    }))
+                                  }}
+                                  placeholder={`Enter option ${index + 1} in English`}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col md={5}>
+                              <Form.Group>
+                                <Form.Label>Option {index + 1} (Tamil)</Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={currentQuestion.optionsTa[index]}
+                                  onChange={(e) => {
+                                    const newOptionsTa = [...currentQuestion.optionsTa]
+                                    newOptionsTa[index] = e.target.value
+                                    setCurrentQuestion((prev) => ({
+                                      ...prev,
+                                      optionsTa: newOptionsTa,
+                                    }))
+                                  }}
+                                  placeholder={`Enter option ${index + 1} in Tamil`}
+                                />
+                              </Form.Group>
+                            </Col>
+                            <Col md={1} className="d-flex align-items-end ps-0">
                               <Form.Group>
                                 <Form.Label>Correct?</Form.Label>
                                 <Form.Check
                                   type="radio"
                                   name="correctAnswer"
                                   checked={currentQuestion.correctAnswer === index}
-                                  onChange={() => setCurrentQuestion(prev => ({
-                                    ...prev,
-                                    correctAnswer: index
-                                  }))}
+                                  onChange={() =>
+                                    setCurrentQuestion((prev) => ({
+                                      ...prev,
+                                      correctAnswer: index,
+                                    }))
+                                  }
                                 />
                               </Form.Group>
                             </Col>
+                            {index >= 2 && (
+                              <Col md={1} className="d-flex align-items-end ps-0">
+                                <button type="button" className="btn btn-link text-danger p-0 ms-2" onClick={() => handleDeleteOption(index)}>
+                                  <CiTrash size={24} />
+                                </button>
+                              </Col>
+                            )}
                           </Row>
                         ))}
-
                         <Button
-                          variant="primary"
-                          onClick={handleAddQuestion}
+                          variant="outline-secondary"
+                          size="sm"
+                          onClick={() => setOptionsCount((prev) => Math.min(prev + 1, 6))}
                           className="mt-2"
-                        >
+                          disabled={optionsCount >= 6}>
+                          <FiPlus className="me-2" /> Add Another Option
+                        </Button>
+                        <Button variant="primary" size="sm" onClick={handleAddQuestion} className="mt-2 mx-2">
                           <FiPlus className="me-1" /> {isEditing ? 'Update' : 'Save'}
                         </Button>
                       </Form>
@@ -430,9 +417,7 @@ const CreateTest = ({ onClose, onSave }) => {
 
                   <div className="questions-list mt-4">
                     {testData.sections.length === 0 ? (
-                      <Alert variant="info">
-                        No questions added yet. Click "Create Questions" to add your first question.
-                      </Alert>
+                      <Alert variant="info">No questions added yet. Click "Create Questions" to add your first question.</Alert>
                     ) : (
                       testData.sections.map((question, index) => (
                         <div key={index} className="question-item border rounded p-3 mb-3">
@@ -443,19 +428,10 @@ const CreateTest = ({ onClose, onSave }) => {
                               <p className="mb-2 text-muted">{question.questionTa}</p>
                             </div>
                             <div>
-                              <Button
-                                variant="outline-primary"
-                                size="sm"
-                                className="me-2"
-                                onClick={() => handleEditQuestion(index)}
-                              >
+                              <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleEditQuestion(index)}>
                                 <FiEdit2 />
                               </Button>
-                              <Button
-                                variant="outline-danger"
-                                size="sm"
-                                onClick={() => handleDeleteQuestion(index)}
-                              >
+                              <Button variant="outline-danger" size="sm" onClick={() => handleDeleteQuestion(index)}>
                                 <FiTrash2 />
                               </Button>
                             </div>
@@ -472,6 +448,11 @@ const CreateTest = ({ onClose, onSave }) => {
                       ))
                     )}
                   </div>
+                  <div className="mt-4 d-flex justify-content-end">
+                    <Button variant="primary" onClick={() => setActiveTab('settings')} className="d-flex align-items-center">
+                      Save & Continue <FiArrowRight className="ms-2" />
+                    </Button>
+                  </div>
                 </div>
               </Tab.Pane>
 
@@ -487,7 +468,7 @@ const CreateTest = ({ onClose, onSave }) => {
                       onChange={(e) => handleSettingsChange('shuffleQuestions', e.target.checked)}
                       className="mb-3"
                     />
-                    
+
                     <Form.Check
                       type="switch"
                       id="show-results"
@@ -496,7 +477,7 @@ const CreateTest = ({ onClose, onSave }) => {
                       onChange={(e) => handleSettingsChange('showResults', e.target.checked)}
                       className="mb-3"
                     />
-                    
+
                     <Form.Check
                       type="switch"
                       id="allow-review"
@@ -505,8 +486,7 @@ const CreateTest = ({ onClose, onSave }) => {
                       onChange={(e) => handleSettingsChange('allowReview', e.target.checked)}
                       className="mb-3"
                     />
-                    
-                    
+
                     <Form.Check
                       type="switch"
                       id="time-limit"
@@ -516,6 +496,11 @@ const CreateTest = ({ onClose, onSave }) => {
                       className="mb-3"
                     />
                   </Form>
+                  <div className="mt-4 d-flex justify-content-end">
+                    <Button variant="primary" onClick={handleSave} className="d-flex align-items-center">
+                      <FiSave className="me-2" /> Save Test
+                    </Button>
+                  </div>
                 </div>
               </Tab.Pane>
             </Tab.Content>
@@ -523,7 +508,7 @@ const CreateTest = ({ onClose, onSave }) => {
         </Row>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateTest; 
+export default CreateTest

@@ -134,7 +134,7 @@ export const initialRoutes = [{
 export const demosRoutes = [{
   path: '/academy/home',
   name: 'Home Academy',
-  element: <Academy />
+  element: <Academy /> 
 }, {
   path: '/demos/default/home',
   name: 'Demos',

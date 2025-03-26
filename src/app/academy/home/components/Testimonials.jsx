@@ -4,6 +4,7 @@ import { useFetchData } from '@/hooks/useFetchData';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { renderToString } from 'react-dom/server';
 import { FaArrowLeft, FaArrowRight, FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
+
 const StudentsCard = ({
   avatar,
   name,
@@ -38,16 +39,18 @@ const StudentsCard = ({
       <h6 className="fw-normal mb-0">&quot;{description}&quot;</h6>
     </Card>;
 };
+
 const courseSliderSettings = {
-  arrowKeys: true,
+  arrowKeys: false,
   mouseDrag: true,
   gutter: 20,
   autoplayButton: false,
   autoplayButtonOutput: false,
   nested: 'inner',
-  controlsText: [renderToString(<FaArrowLeft size={16} />), renderToString(<FaArrowRight size={16} />)],
   autoplay: true,
-  controls: true,
+  autoplayTimeout: 5000,
+  speed: 800,
+  controls: false,
   edgePadding: 2,
   items: 5,
   nav: false,
@@ -69,6 +72,7 @@ const courseSliderSettings = {
     }
   }
 };
+
 const Testimonials = () => {
   const allReviews = useFetchData(getAllStudentsReviews);
   return <section className="">
@@ -92,4 +96,5 @@ const Testimonials = () => {
       </Container>
     </section>;
 };
+
 export default Testimonials;

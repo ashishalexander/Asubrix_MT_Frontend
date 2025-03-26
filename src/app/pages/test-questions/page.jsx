@@ -306,11 +306,13 @@ function TestQuestions() {
                 <span className="ms-1">{formatTime(timeRemaining)}</span>
               </div>
 
-              <Button variant="outline-danger" className="mb-0 ms-2 d-flex align-items-center" onClick={handleExitTest}>
+              {/* Exit test button */}
+              <Button  className="mb-0 ms-2 d-flex align-items-center bg-danger border-0" onClick={handleExitTest}>
                 <XCircleFill size={20} className="me-2" />
                 Exit Test
               </Button>
 
+              {/* Info button */}
               <Button variant="outline-primary" className="ms-2 d-md-none d-flex align-items-center" onClick={() => setShowInfoPanel(!showInfoPanel)}>
                 <InfoCircleFill size={18} className="me-1" />
                 Info
@@ -433,7 +435,7 @@ function TestQuestions() {
       <Modal show={showExitConfirmation} onHide={() => setShowExitConfirmation(false)} centered className="confirmation-modal">
         <Modal.Header>
           <Modal.Title className="d-flex align-items-center">
-            <ExclamationTriangleFill size={24} className="me-2 text-warning" />
+            <ExclamationTriangleFill size={20} className="me-2 text-warning" />
             Exit Test
           </Modal.Title>
         </Modal.Header>

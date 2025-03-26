@@ -215,13 +215,13 @@ const Development = () => {
 
 
 
-const PopularCourse = ({ title, image }) => {
+const PopularCourse = ({ title, image, description }) => {
   return (
     <Row className="g-4">
       <Col lg={6}>
         <h3>{title}</h3>
         <p className="mb-3">
-          Handsome met debating sir dwelling age material. As style lived he worse dried. Offered related so visitors we private removed.
+          {description}
         </p>
         <div className="d-flex align-items-center mb-3">
           <h2 className="me-3 mb-0">4.0</h2>
@@ -252,7 +252,7 @@ const PopularCourse = ({ title, image }) => {
           </div>
         </div>
         <div className="mt-3">
-          <Button className='bg-theme-secondary border-none' href='/pages/course/detail-adv'>Buy course</Button>
+          <Button className='bg-theme-secondary border-0' href='/pages/course/detail-adv'>Buy course</Button>
         </div>
       </Col>
       <Col lg={6}>
@@ -306,19 +306,19 @@ const PopularCourses = () => {
           </Nav>
           <TabContent className="mb-0" id="course-pills-tabContent">
             <TabPane className="fade" eventKey="design">
-            <PopularCourse title="Test Series" image={about15} />
+            <PopularCourse title="Test Series" description="lorem ipsum dolor sit amet" image={about15} />
             </TabPane>
             <TabPane className="fade" eventKey="development">
-            <PopularCourse title="TNPSC" image={about15} />
+            <PopularCourse title="TNPSC" description="lorem ipsum dolor sit amet" image={about15} />
             </TabPane>
             <TabPane className="fade" eventKey="data-science">
-              <PopularCourse title="UPSC - CSE" image={about15} />
+              <PopularCourse title="UPSC - CSE" description="lorem ipsum dolor sit amet" image={about15} />
             </TabPane>
             <TabPane className="fade" eventKey="marketing">
-              <PopularCourse title="Bank Exam" image={about12} />
+              <PopularCourse title="Bank Exam" description="lorem ipsum dolor sit amet" image={about12} />
             </TabPane>
             <TabPane className="fade" eventKey="finance">
-              <PopularCourse title="Railways Exam" image={about11} />
+              <PopularCourse title="Railways Exam" description="lorem ipsum dolor sit amet" image={about11} />
             </TabPane>
           </TabContent>
         </TabContainer>
