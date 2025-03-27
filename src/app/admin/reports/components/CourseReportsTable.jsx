@@ -104,7 +104,7 @@ const CourseReportsTable = ({ searchQuery }) => {
   }, [searchQuery, setGlobalFilter]);
 
   return (
-    <Card className="shadow-sm border-0">
+    <Card className="shadow-sm border-0 mt-5">
       <Card.Body className="p-0">
         <div className="table-responsive">
           <Table hover className="table table-dark-gray align-middle mb-0" {...getTableProps()}>

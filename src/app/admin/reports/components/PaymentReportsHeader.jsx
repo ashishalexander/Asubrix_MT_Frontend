@@ -1,14 +1,26 @@
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
-import React, { useRef, useState } from 'react'
-import { Overlay, Popover } from 'react-bootstrap'
+import React, { useState, useRef } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { FaCalendar, FaFileDownload, FaFilter, FaSearch } from 'react-icons/fa'
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+import { Overlay, Popover } from 'react-bootstrap'
+import { 
+  FaFileExport, 
+  FaCalendar, 
+  FaSearch, 
+  FaFilter, 
+  FaFileDownload 
+} from 'react-icons/fa'
 import * as XLSX from 'xlsx'
-import styles from './CourseReportsHeader.module.scss'
+import styles from './PaymentReportsHeader.module.scss'
 
-const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFilterChange, onSortChange }) => {
+const PaymentReportsHeader = ({ 
+  searchQuery, 
+  setSearchQuery, 
+  tableData, 
+  onDateFilterChange, 
+  onSortChange 
+}) => {
   // State for date range
   const [dateRange, setDateRange] = useState([null, null])
   const [startDate, endDate] = dateRange
@@ -26,15 +38,15 @@ const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFil
     if (format === 'excel') {
       const worksheet = XLSX.utils.json_to_sheet(tableData)
       const workbook = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Course Reports')
-      XLSX.writeFile(workbook, 'course_reports.xlsx')
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Payment Reports')
+      XLSX.writeFile(workbook, 'payment_reports.xlsx')
     } else if (format === 'pdf') {
       const doc = new jsPDF()
       doc.autoTable({
         head: [Object.keys(tableData[0])],
         body: tableData.map((row) => Object.values(row)),
       })
-      doc.save('course_reports.pdf')
+      doc.save('payment_reports.pdf')
     }
     setShowExportDropdown(false)
   }
@@ -57,17 +69,26 @@ const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFil
           className={`form-control ${styles.searchInput}`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search courses..."
+          placeholder="Search payments..."
         />
       </div>
 
       {/* Action Buttons */}
       <div className={styles.actionButtons}>
         {/* Date Filter Button */}
-        <button ref={dateFilterRef} className={styles.actionButton} onClick={() => setShowDatePicker(!showDatePicker)}>
+        <button 
+          ref={dateFilterRef}
+          className={styles.actionButton}
+          onClick={() => setShowDatePicker(!showDatePicker)}
+        >
           <FaCalendar /> Date Filter
         </button>
-        <Overlay show={showDatePicker} target={dateFilterRef.current} placement="bottom" containerPadding={20}>
+        <Overlay
+          show={showDatePicker}
+          target={dateFilterRef.current}
+          placement="bottom"
+          containerPadding={20}
+        >
           <Popover id="date-filter-popover" className={styles.datePickerPopover}>
             <Popover.Body>
               <DatePicker
@@ -81,10 +102,17 @@ const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFil
                 dateFormat="MM/dd/yyyy"
               />
               <div className="d-flex justify-content-between mt-2">
-                <button className="btn btn-secondary btn-sm" onClick={() => setShowDatePicker(false)}>
+                <button 
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => setShowDatePicker(false)}
+                >
                   Cancel
                 </button>
-                <button className="btn btn-primary btn-sm" onClick={handleDateRangeSelect} disabled={!startDate || !endDate}>
+                <button 
+                  className="btn btn-primary btn-sm"
+                  onClick={handleDateRangeSelect}
+                  disabled={!startDate || !endDate}
+                >
                   Apply
                 </button>
               </div>
@@ -94,36 +122,48 @@ const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFil
 
         {/* Sort Button */}
         <div className="position-relative">
-          <button ref={sortDropdownRef} className={styles.actionButton} onClick={() => setShowSortDropdown(!showSortDropdown)}>
+          <button 
+            ref={sortDropdownRef}
+            className={styles.actionButton}
+            onClick={() => setShowSortDropdown(!showSortDropdown)}
+          >
             <FaFilter /> Sort By
           </button>
-          <Overlay show={showSortDropdown} target={sortDropdownRef.current} placement="bottom" containerPadding={20}>
+          <Overlay
+            show={showSortDropdown}
+            target={sortDropdownRef.current}
+            placement="bottom"
+            containerPadding={20}
+          >
             <Popover id="sort-dropdown-popover">
               <Popover.Body>
                 <div className="d-flex flex-column">
-                  <button
-                    className="dropdown-item"
+                  <button 
+                    className="dropdown-item" 
                     onClick={() => {
-                      onSortChange('courseName')
+                      onSortChange('netAmount')
                       setShowSortDropdown(false)
-                    }}>
-                    Course Name
+                    }}
+                  >
+                    Net Amount
                   </button>
-                  <button
-                    className="dropdown-item"
+                  <button 
+                    className="dropdown-item" 
                     onClick={() => {
-                      onSortChange('enrollments')
+                      onSortChange('grossAmount')
                       setShowSortDropdown(false)
-                    }}>
-                    Enrollments
+                    }}
+                  >
+                    Gross Amount
                   </button>
-                  <button
-                    className="dropdown-item"
+                  <button 
+                    className="dropdown-item" 
                     onClick={() => {
-                      onSortChange('completionRate')
+                      onSortChange('platformFee')
                       setShowSortDropdown(false)
-                    }}>
-                    Completion Rate
+                    }}
+                  >
+                    Platform Fee
                   </button>
                 </div>
               </Popover.Body>
@@ -133,17 +173,32 @@ const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFil
 
         {/* Export Button */}
         <div className="position-relative">
-          <button ref={exportDropdownRef} className={styles.actionButton} onClick={() => setShowExportDropdown(!showExportDropdown)}>
+          <button 
+            ref={exportDropdownRef}
+            className={styles.actionButton}
+            onClick={() => setShowExportDropdown(!showExportDropdown)}
+          >
             <FaFileDownload /> Export
           </button>
-          <Overlay show={showExportDropdown} target={exportDropdownRef.current} placement="bottom" containerPadding={20}>
+          <Overlay
+            show={showExportDropdown}
+            target={exportDropdownRef.current}
+            placement="bottom"
+            containerPadding={20}
+          >
             <Popover id="export-dropdown-popover">
               <Popover.Body>
                 <div className="d-flex flex-column">
-                  <button className="dropdown-item" onClick={() => handleExport('excel')}>
+                  <button 
+                    className="dropdown-item" 
+                    onClick={() => handleExport('excel')}
+                  >
                     Export to Excel
                   </button>
-                  <button className="dropdown-item" onClick={() => handleExport('pdf')}>
+                  <button 
+                    className="dropdown-item" 
+                    onClick={() => handleExport('pdf')}
+                  >
                     Export to PDF
                   </button>
                 </div>
@@ -156,4 +211,4 @@ const CourseReportsHeader = ({ searchQuery, setSearchQuery, tableData, onDateFil
   )
 }
 
-export default CourseReportsHeader
+export default PaymentReportsHeader

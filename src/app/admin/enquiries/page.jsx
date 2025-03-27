@@ -3,15 +3,14 @@
  */
 
 import { supportRequestsData } from '@/assets/data/products';
-import ChoicesFormInput from '@/components/form/ChoicesFormInput';
 import PageMetaData from '@/components/PageMetaData';
 import { colorVariants } from '@/context/constants';
 import { timeSince } from '@/utils/date';
-import { useState, useMemo, useCallback } from 'react';
-import { Button, Card, CardBody, CardHeader, Col, Container, Form, Pagination, Row, Table } from 'react-bootstrap';
-import { FaEnvelope, FaPhone, FaSearch, FaUser } from 'react-icons/fa';
-import EnquiryDetailModal from './components/EnquiryDetailModal';
+import { useMemo, useState } from 'react';
+import { Button, Card, CardBody, Container, Form, Pagination, Table } from 'react-bootstrap';
+import { FaSearch } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
+import EnquiryDetailModal from './components/EnquiryDetailModal';
 
 // Extended sample data for enquiries with more fields
 const enquiriesData = [

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Card, Table, Button, Modal, Form } from 'react-bootstrap';
-import { FaEdit, FaTrash, FaKey } from 'react-icons/fa';
+import { useState } from 'react'
+import { Button, Card, Form, Modal, Table } from 'react-bootstrap'
+import { FaEdit, FaKey, FaTrash } from 'react-icons/fa'
 
 const UserRoles = () => {
   const [roles, setRoles] = useState([
@@ -10,24 +10,67 @@ const UserRoles = () => {
     { id: 4, name: 'POS Operator', members: 0 },
     { id: 5, name: 'Staff', members: 0 },
     { id: 6, name: 'Admin', members: 1 },
-    { id: 7, name: 'Teacher', members: 0 }
-  ]);
+    { id: 7, name: 'Teacher', members: 0 },
+  ])
 
-  const [showPermissions, setShowPermissions] = useState(false);
-  const [showAddRole, setShowAddRole] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(null);
+  const [showPermissions, setShowPermissions] = useState(false)
+  const [showAddRole, setShowAddRole] = useState(false)
+  const [showEditRole, setShowEditRole] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [selectedRole, setSelectedRole] = useState(null)
+  const [editedRoleName, setEditedRoleName] = useState('')
+  const [newRoleName, setNewRoleName] = useState('')
+  const [roleToDelete, setRoleToDelete] = useState(null)
+
   const [permissions, setPermissions] = useState({
     dashboard: { view: true },
     courses: { create: true, update: true, delete: true, view: true },
     students: { create: true, update: true, delete: true, view: true },
     faculty: { create: true, update: true, delete: true, view: true },
-    content: { create: true, update: true, delete: true, view: true }
-  });
+    content: { create: true, update: true, delete: true, view: true },
+  })
+
+  const handleEditClick = (role) => {
+    setSelectedRole(role)
+    setEditedRoleName(role.name)
+    setShowEditRole(true)
+  }
+
+  const handleSaveEdit = () => {
+    setRoles(roles.map((role) => (role.id === selectedRole.id ? { ...role, name: editedRoleName } : role)))
+    setShowEditRole(false)
+  }
 
   const handleShowPermissions = (role) => {
-    setSelectedRole(role);
-    setShowPermissions(true);
-  };
+    setSelectedRole(role)
+    setShowPermissions(true)
+  }
+
+  const handleAddRole = () => {
+    if (newRoleName.trim()) {
+      const newRole = {
+        id: roles.length > 0 ? Math.max(...roles.map(r => r.id)) + 1 : 1,
+        name: newRoleName,
+        members: 0
+      }
+      setRoles([...roles, newRole])
+      setNewRoleName('')
+      setShowAddRole(false)
+    }
+  }
+
+  const handleDeleteConfirmation = (role) => {
+    setRoleToDelete(role)
+    setShowDeleteConfirm(true)
+  }
+
+  const handleDeleteRole = () => {
+    if (roleToDelete && roleToDelete.name !== 'Super Admin') {
+      setRoles(roles.filter(role => role.id !== roleToDelete.id))
+      setShowDeleteConfirm(false)
+      setRoleToDelete(null)
+    }
+  }
 
   return (
     <>
@@ -54,19 +97,14 @@ const UserRoles = () => {
                     <td>{role.name}</td>
                     <td>({role.members}) Members</td>
                     <td className="text-end">
-                      <Button 
-                        variant="outline-primary" 
-                        size="sm" 
-                        className="me-2"
-                        onClick={() => handleShowPermissions(role)}
-                      >
+                      <Button variant="outline-primary" size="sm" className="me-2" onClick={() => handleShowPermissions(role)}>
                         <FaKey /> Permissions
                       </Button>
-                      <Button variant="outline-success" size="sm" className="me-2">
+                      <Button variant="outline-success" size="sm" className="me-2" onClick={() => handleEditClick(role)}>
                         <FaEdit /> Edit
                       </Button>
                       {role.name !== 'Super Admin' && (
-                        <Button variant="outline-danger" size="sm">
+                        <Button variant="outline-danger" size="sm" onClick={() => handleDeleteConfirmation(role)}>
                           <FaTrash /> Delete
                         </Button>
                       )}
@@ -80,12 +118,7 @@ const UserRoles = () => {
       </Card>
 
       {/* Permissions Modal */}
-      <Modal 
-        show={showPermissions} 
-        onHide={() => setShowPermissions(false)} 
-        size="lg"
-        className="permissions-modal"
-      >
+      <Modal centered show={showPermissions} onHide={() => setShowPermissions(false)} size="lg" className="permissions-modal">
         <Modal.Header closeButton>
           <Modal.Title>Role & Permissions ({selectedRole?.name})</Modal.Title>
         </Modal.Header>
@@ -106,21 +139,9 @@ const UserRoles = () => {
                 <tr key={page}>
                   <td>{idx + 1}</td>
                   <td className="module-name text-capitalize">{page}</td>
-                  <td>
-                    {perms.create !== undefined && (
-                      <Form.Check type="checkbox" defaultChecked={perms.create} />
-                    )}
-                  </td>
-                  <td>
-                    {perms.update !== undefined && (
-                      <Form.Check type="checkbox" defaultChecked={perms.update} />
-                    )}
-                  </td>
-                  <td>
-                    {perms.delete !== undefined && (
-                      <Form.Check type="checkbox" defaultChecked={perms.delete} />
-                    )}
-                  </td>
+                  <td>{perms.create !== undefined && <Form.Check type="checkbox" defaultChecked={perms.create} />}</td>
+                  <td>{perms.update !== undefined && <Form.Check type="checkbox" defaultChecked={perms.update} />}</td>
+                  <td>{perms.delete !== undefined && <Form.Check type="checkbox" defaultChecked={perms.delete} />}</td>
                   <td>
                     <Form.Check type="checkbox" defaultChecked={perms.view} />
                   </td>
@@ -133,30 +154,75 @@ const UserRoles = () => {
           <Button variant="secondary" onClick={() => setShowPermissions(false)}>
             Cancel
           </Button>
-          <Button className='bg-primary border-0'>Save Changes</Button>
+          <Button className="bg-primary border-0">Save Changes</Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Edit role modal */}
+      <Modal centered show={showEditRole} onHide={() => setShowEditRole(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Role</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group>
+            <Form.Label>Role Name</Form.Label>
+            <Form.Control type="text" value={editedRoleName} onChange={(e) => setEditedRoleName(e.target.value)} />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowEditRole(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSaveEdit}>
+            Save Changes
+          </Button>
         </Modal.Footer>
       </Modal>
 
       {/* Add Role Modal */}
-      <Modal show={showAddRole} onHide={() => setShowAddRole(false)}>
+      <Modal centered show={showAddRole} onHide={() => setShowAddRole(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Role</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group>
             <Form.Label>Role Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter role name" />
+            <Form.Control 
+              type="text" 
+              placeholder="Enter role name" 
+              value={newRoleName}
+              onChange={(e) => setNewRoleName(e.target.value)}
+            />
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowAddRole(false)}>
             Cancel
           </Button>
-          <Button variant="primary">Add Role</Button>
+          <Button variant="primary" onClick={handleAddRole}>Add Role</Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal centered show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete the role <strong>{roleToDelete?.name}</strong>?
+          <p className="text-muted mt-2">This action cannot be undone.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteConfirm(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDeleteRole}>
+            Confirm Delete
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default UserRoles; 
+export default UserRoles

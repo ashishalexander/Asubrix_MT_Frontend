@@ -1,11 +1,13 @@
 import { Container } from 'react-bootstrap'
 import TopNavigationBar from '@/components/TopNavigationBar'
 import Footer from '@/components/Footer'
+import HeroImage from './components/HeroImage'
 
 const PrivacyPolicy = () => {
   return (
     <>
       <TopNavigationBar />
+      <HeroImage/>
       <Container className="my-5">
         <h3 className="mb-4">Privacy Policy</h3>
         <p>Last updated: March 13, 2025</p>

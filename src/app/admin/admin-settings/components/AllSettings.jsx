@@ -1,13 +1,14 @@
-import { Col, Nav, Row, Tab } from 'react-bootstrap';
-import { FaCog, FaGlobe, FaLock, FaSearch, FaShieldAlt, FaUserLock } from 'react-icons/fa';
-import { BsUiRadiosGrid } from 'react-icons/bs';
-import WebsiteSettings from './WebsiteSettings';
-import TermsConditions from './TermsConditions';
-import PrivacyPolicy from './PrivacyPolicy';
-import MailConfig from './MailConfig';
-import UserRoles from './UserRoles';
-import SeoSettings from './SeoSettings';
-import BannerSettings from './BannerSettings';
+import { Col, Nav, Row, Tab } from 'react-bootstrap'
+import { FaCog, FaGlobe, FaLock, FaSearch, FaShieldAlt, FaUserLock, FaImages } from 'react-icons/fa'
+import { BsUiRadiosGrid } from 'react-icons/bs'
+import WebsiteSettings from './WebsiteSettings'
+import TermsConditions from './TermsConditions'
+import PrivacyPolicy from './PrivacyPolicy'
+import MailConfig from './MailConfig'
+import UserRoles from './UserRoles'
+import SeoSettings from './SeoSettings'
+import BannerSettings from './BannerSettings'
+import GallerySettings from './GallerySettings'
 
 const AllSettings = () => {
   return (
@@ -27,6 +28,18 @@ const AllSettings = () => {
                     <Nav.Link eventKey="tab-1">
                       <FaGlobe className="me-2" />
                       Website Settings
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="tab-7">
+                      <BsUiRadiosGrid className="me-2" />
+                      Banners
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link eventKey="tab-8">
+                      <FaImages className="me-2" />
+                      Gallery
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
@@ -50,19 +63,13 @@ const AllSettings = () => {
                   <Nav.Item>
                     <Nav.Link eventKey="tab-5">
                       <FaUserLock className="me-2" />
-                      User Roles & Permission
+                      Roles & Permission
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tab-6">
                       <FaSearch className="me-2" />
                       SEO
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="tab-7">
-                      <BsUiRadiosGrid className="me-2" />
-                      Banners
                     </Nav.Link>
                   </Nav.Item>
                 </Nav>
@@ -90,6 +97,9 @@ const AllSettings = () => {
                   <Tab.Pane eventKey="tab-7">
                     <BannerSettings />
                   </Tab.Pane>
+                  <Tab.Pane eventKey="tab-8">
+                    <GallerySettings />
+                  </Tab.Pane>
                 </Tab.Content>
               </Col>
             </Row>
@@ -97,7 +107,7 @@ const AllSettings = () => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default AllSettings;
+export default AllSettings

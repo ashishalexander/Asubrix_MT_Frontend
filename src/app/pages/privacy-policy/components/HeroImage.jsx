@@ -20,7 +20,7 @@ const HeroImage = () => {
         <Row className="py-0 py-md-5 align-items-center text-center text-sm-start">
           <Col sm={10} lg={8} xl={6} className="all-text-white my-5 mt-md-0">
             <div className="py-0 py-md-5 my-5">
-              <h1 className="text-white display-5">Gallery</h1>
+              <h1 className="text-white display-5">Privacy Policy</h1>
             </div>
           </Col>
         </Row>

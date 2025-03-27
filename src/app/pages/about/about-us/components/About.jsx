@@ -1,29 +1,23 @@
-import { Col, Container, Row } from 'react-bootstrap'
 import about6 from '@/assets/images/about/06.jpg'
+import { Col, Container, Row } from 'react-bootstrap'
 
 const About = () => {
   return (
     <section className="py-5">
       <Container>
-        {/* <Row className="mb-4">
-          <Col lg={8}>
-            <h2>About</h2>
-          </Col>
-        </Row> */}
-
         {/* First Section */}
-        <Row className="align-items-center mb-5">
-          <Col lg={6} className="position-relative mb-4 mb-lg-0 d-flex align-items-center">
-            <div className="text-center w-100" style={{ maxHeight: '400px' }}>
+        <Row className="align-items-stretch mb-5">
+          <Col lg={6} className="d-flex align-items-center mb-4 mb-lg-0">
+            <div className="text-center w-100">
               <img
                 src={about6}
-                className="rounded img-fluid shadow"
+                className="rounded img-fluid shadow object-cover"
                 alt="Students learning together"
-                style={{ width: '100%', height: '400px', objectFit: 'cover' }}
+                style={{ height: '400px', width: '100%' }}
               />
             </div>
           </Col>
-          <Col lg={6}>
+          <Col lg={6} className="d-flex align-items-center">
             <div className="ps-lg-4">
               <h2 className="mb-4">35,000+ happy students joined with us to achieve their goals</h2>
               <p className="mb-4">
@@ -42,8 +36,8 @@ const About = () => {
         </Row>
 
         {/* Second Section */}
-        <Row className="align-items-center">
-          <Col lg={6} className="order-2 order-lg-1">
+        <Row className="align-items-stretch">
+          <Col lg={6} className="order-2 order-lg-1 d-flex align-items-center">
             <div className="pe-lg-4">
               <h2 className="mb-4">Our Vision</h2>
               <p className="mb-4">
@@ -65,13 +59,13 @@ const About = () => {
               </p>
             </div>
           </Col>
-          <Col lg={6} className="position-relative mb-4 mb-lg-0 order-1 order-lg-2 d-flex align-items-center">
-            <div className="text-center w-100" style={{ maxHeight: '400px' }}>
+          <Col lg={6} className="order-1 order-lg-2 d-flex align-items-center mb-4 mb-lg-0">
+            <div className="text-center w-100">
               <img
                 src={about6}
-                className="rounded img-fluid shadow"
+                className="rounded img-fluid shadow object-cover"
                 alt="Our campus environment"
-                style={{ width: '100%', height: '400px', objectFit: 'cover' }}
+                style={{ height: '400px', width: '100%' }}
               />
             </div>
           </Col>
