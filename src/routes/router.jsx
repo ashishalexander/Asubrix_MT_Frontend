@@ -160,7 +160,7 @@ const AppRouter = props => {
       ))}
 
       {/* Catch all route - 404 */}
-      <Route path="*" element={<Navigate to="/demos/default/home" replace />} />
+      <Route path="*" element={<Navigate to="/academy/home" replace />} />
     </Routes>
   );
 };
