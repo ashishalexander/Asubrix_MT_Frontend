@@ -123,7 +123,7 @@ const TopNavigationBar = () => {
                 </Col> */}
                 <ul className="navbar-nav navbar-nav-scroll ms-auto">
                   {[
-                    { label: 'Home', path: '/home' },
+                    { label: 'Home', path: '/' },
                     { label: 'About', path: '/about-us' },
                     { label: 'Our Team', path: '/our-team' },
                     { label: 'Courses', path: '/courses' },
