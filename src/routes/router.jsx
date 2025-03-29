@@ -44,13 +44,16 @@ const AppRouter = props => {
   
   return (
     <Routes>
-      {/* Initial Routes */}
-      {(initialRoutes || []).map((route, idx) => (
+      {/* Academy component at root path */}
+      <Route path="/" element={<OtherLayout {...props}>{demosRoutes.find(route => route.path === '/home').element}</OtherLayout>} />
+
+      {/* Initial Routes (except root) */}
+      {(initialRoutes || []).filter(route => route.path !== '/').map((route, idx) => (
         <Route key={idx + route.name} path={route.path} element={route.element} />
       ))}
 
-      {/* Demo Routes */}
-      {(demosRoutes || []).map((route, idx) => (
+      {/* Demo Routes (except /home since we're using it at root) */}
+      {(demosRoutes || []).filter(route => route.path !== '/home').map((route, idx) => (
         <Route key={idx + route.name} path={route.path} element={<OtherLayout {...props}>{route.element}</OtherLayout>} />
       ))}
 
@@ -84,8 +87,8 @@ const AppRouter = props => {
         <Route key={idx + route.name} path={route.path} element={<AdminLayout {...props}>{route.element}</AdminLayout>} />
       ))}
 
-      {/* Catch all route - 404 */}
-      <Route path="*" element={<Navigate to="/home" replace />} />
+      {/* Catch all route - redirect to root */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

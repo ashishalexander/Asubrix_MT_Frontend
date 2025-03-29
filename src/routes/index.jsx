@@ -126,11 +126,11 @@ const ReportsPage = lazy(() => import('@/app/admin/reports/page'))
 
 //other
 export const initialRoutes = [
-  {
-    path: '/',
-    name: 'root',
-    element: <Navigate to="/home" />,
-  },
+  // {
+  //   path: '/',
+  //   name: 'root',
+  //   element: <Navigate to="/home" />,
+  // },
 ]
 
 export const demosRoutes = [
@@ -203,7 +203,7 @@ const pagesRoutes = [
   },
   // course listing page route
   {
-    path: '/pages/courses',
+    path: '/courses',
     name: 'Course Grid Minimal',
     element: <Grid2 />,
   },
@@ -244,13 +244,13 @@ const pagesRoutes = [
   },
   // about-us page route
   {
-    path: '/pages/about-us',
+    path: '/about-us',
     name: 'About Us',
     element: <AboutUs />,
   },
   // contact-us page route
   {
-    path: '/pages/contact-us',
+    path: '/contact-us',
     name: 'Contact Us',
     element: <ContactUs />,
   },
@@ -274,44 +274,44 @@ const pagesRoutes = [
     name: 'Pricing',
     element: <Pricing />,
   },
-  // Instructors(team) listing, privacy-policy, terms-conditions, gallery, free-test, details, questions route
+  // our-team listing, privacy-policy, terms-conditions, gallery, free-test, details, questions route
   {
-    path: '/pages/instructors',
+    path: '/our-team',
     name: 'Instructor List',
     element: <InstructorList />,
   },
   {
-    path: '/pages/privacy-policy',
+    path: '/privacy-policy',
     name: 'Privacy Policy',
     element: <PrivacyPolicy />,
   },
   {
-    path: '/pages/blog',
+    path: '/blogs',
     name: 'Blog Page',
     element: <BlogPage />,
   },
   {
-    path: '/pages/terms-conditions',
+    path: '/terms-conditions',
     name: 'Terms And Conditions',
     element: <TermsAndConditions />,
   },
   {
-    path: '/pages/gallery',
+    path: '/gallery',
     name: 'Gallery',
     element: <Gallery />,
   },
   {
-    path: '/pages/free-test',
+    path: '/free-test',
     name: 'Free Test',
     element: <FreeTest />,
   },
   {
-    path: '/pages/free-test/free-test-details',
+    path: '/free-test/free-test-details',
     name: 'Free Test Details',
     element: <TestDetails />,
   },
   {
-    path: '/pages/test-questions',
+    path: '/test-questions',
     name: 'Test Questions',
     element: <TestQuestion />,
   },
@@ -577,7 +577,7 @@ export const adminRoutes = [
     element: <AllCourses />,
   },
   {
-    path: '/admin/content-management',
+    path: '/admin/test-management',
     name: 'Content Management',
     element: <ContentManagement />,
   },

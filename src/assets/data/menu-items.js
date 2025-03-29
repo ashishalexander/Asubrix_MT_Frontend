@@ -126,7 +126,7 @@ export const INSTRUCTOR_MENU_ITEMS = [
     key: 'profile',
     label: 'Dashboard',
     icon: BsPencilSquare,
-    url: '/instructor/edit-profile',
+    url: '/student/dashboard',
     parentKey: 'instructor'
   },
   {
@@ -844,7 +844,7 @@ export const ADMIN_MENU_ITEMS = [{
   key: 'contents',
   label: 'Test Management',
   icon: FaRegFileAlt,
-  url: '/admin/content-management'
+  url: '/admin/test-management'
 }, {
   key: 'student-management',
   label: 'Student Management',
