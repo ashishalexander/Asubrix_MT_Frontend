@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import './components/BlogManagement.scss'
-import TopNavigationBar from '@/components/TopNavigationBar'
-import Footer from '@/components/Footer'
+import { Container, Button, Form, Modal } from 'react-bootstrap'
+import { FaPlus, FaEye  } from 'react-icons/fa'
+import { FiSearch } from 'react-icons/fi'
+import { BsFileEarmarkRichtext, BsFileEarmarkBreak  } from "react-icons/bs";
+
+
 
 const BlogManagement = () => {
   // State for blog posts
   const [blogPosts, setBlogPosts] = useState([])
-  
+
   // State for the form
   const [formData, setFormData] = useState({
     id: '',
@@ -17,19 +21,25 @@ const BlogManagement = () => {
     content: '',
     imageUrl: '',
     tags: '',
-    isPublished: true
+    isPublished: true,
   })
-  
+
   // State for editing mode
   const [editMode, setEditMode] = useState(false)
-  
+
   // State for showing confirmation dialog
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [postToDelete, setPostToDelete] = useState(null)
-  
-  // Mock function to load posts (in a real app, this would fetch from an API)
+
+  // State for modal
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState('newest')
+  const [showOnlyPublished, setShowOnlyPublished] = useState(false)
+
+  // Mock function to load posts
   useEffect(() => {
-    // Sample blog data (same as in your Blog.js file)
+    // Sample blog data
     const initialBlogPosts = [
       {
         id: 1,
@@ -42,7 +52,7 @@ const BlogManagement = () => {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.',
         imageUrl: 'https://www.adverity.com/hubfs/6%20Key%20Digital%20Marketing%20Metrics%20for%202025%20blog%20hero.png',
         tags: ['React', 'JavaScript', 'Web Development'],
-        isPublished: true
+        isPublished: true,
       },
       {
         id: 2,
@@ -55,7 +65,7 @@ const BlogManagement = () => {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.',
         imageUrl: 'https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?cs=srgb&dl=pexels-pixabay-261662.jpg&fm=jpg',
         tags: ['SCSS', 'CSS', 'Styling', 'React'],
-        isPublished: true
+        isPublished: true,
       },
       {
         id: 3,
@@ -68,7 +78,7 @@ const BlogManagement = () => {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.',
         imageUrl: 'https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?cs=srgb&dl=pexels-pixabay-261662.jpg&fm=jpg',
         tags: ['React', 'State Management', 'Redux', 'Context API'],
-        isPublished: true
+        isPublished: true,
       },
       {
         id: 4,
@@ -81,7 +91,7 @@ const BlogManagement = () => {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.',
         imageUrl: 'https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?cs=srgb&dl=pexels-pixabay-261662.jpg&fm=jpg',
         tags: ['React', 'Accessibility', 'a11y', 'Web Development'],
-        isPublished: true
+        isPublished: true,
       },
       {
         id: 5,
@@ -94,51 +104,51 @@ const BlogManagement = () => {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.',
         imageUrl: 'https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?cs=srgb&dl=pexels-pixabay-261662.jpg&fm=jpg',
         tags: ['React', 'Performance', 'Optimization', 'JavaScript'],
-        isPublished: true
+        isPublished: true,
       },
     ]
-    
+
     setBlogPosts(initialBlogPosts)
   }, [])
-  
+
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
-    
+
     if (name === 'tags') {
       // Handle tags as a comma-separated string
       setFormData({
         ...formData,
-        [name]: value
+        [name]: value,
       })
     } else {
       setFormData({
         ...formData,
-        [name]: type === 'checkbox' ? checked : value
+        [name]: type === 'checkbox' ? checked : value,
       })
     }
   }
-  
+
   // Handle form submission for creating or updating a post
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+
     // Format the tags from comma-separated string to array
-    const formattedTags = formData.tags.split(',').map(tag => tag.trim())
-    
+    const formattedTags = formData.tags.split(',').map((tag) => tag.trim())
+
     // Get today's date if no date is provided
-    const submitDate = formData.date || new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-    
+    const submitDate =
+      formData.date ||
+      new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+
     if (editMode) {
       // Update existing post
-      const updatedPosts = blogPosts.map(post => 
-        post.id === parseInt(formData.id) ? 
-        { ...formData, date: submitDate, tags: formattedTags, id: parseInt(formData.id) } : 
-        post
+      const updatedPosts = blogPosts.map((post) =>
+        post.id === parseInt(formData.id) ? { ...formData, date: submitDate, tags: formattedTags, id: parseInt(formData.id) } : post,
       )
       setBlogPosts(updatedPosts)
     } else {
@@ -147,46 +157,42 @@ const BlogManagement = () => {
         ...formData,
         id: Date.now(), // Generate a unique ID
         date: submitDate,
-        tags: formattedTags
+        tags: formattedTags,
       }
       setBlogPosts([...blogPosts, newPost])
     }
-    
-    // Reset form
+
+    // Reset form and close modal
     resetForm()
+    setShowAddModal(false)
   }
-  
+
   // Handle edit button click
   const handleEdit = (post) => {
     setEditMode(true)
     setFormData({
       ...post,
-      tags: post.tags.join(', ')
+      tags: post.tags.join(', '),
     })
-    
-    // Scroll to form
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })
+    setShowAddModal(true)
   }
-  
+
   // Handle delete confirmation
   const confirmDelete = (post) => {
     setPostToDelete(post)
     setShowDeleteConfirm(true)
   }
-  
+
   // Handle actual deletion
   const handleDelete = () => {
     if (postToDelete) {
-      const filteredPosts = blogPosts.filter(post => post.id !== postToDelete.id)
+      const filteredPosts = blogPosts.filter((post) => post.id !== postToDelete.id)
       setBlogPosts(filteredPosts)
       setShowDeleteConfirm(false)
       setPostToDelete(null)
     }
   }
-  
+
   // Reset form fields and state
   const resetForm = () => {
     setFormData({
@@ -198,315 +204,339 @@ const BlogManagement = () => {
       content: '',
       imageUrl: '',
       tags: '',
-      isPublished: true
+      isPublished: true,
     })
     setEditMode(false)
   }
-  
+
+  // Handle closing modal
+  const handleCloseModal = () => {
+    setShowAddModal(false)
+    resetForm()
+  }
+
   // Handle changing post publish status
   const togglePublishStatus = (id) => {
-    const updatedPosts = blogPosts.map(post => 
-      post.id === id ? { ...post, isPublished: !post.isPublished } : post
-    )
+    const updatedPosts = blogPosts.map((post) => (post.id === id ? { ...post, isPublished: !post.isPublished } : post))
     setBlogPosts(updatedPosts)
   }
-  
+
+  // Filter posts based on search query and published status
+  const filteredPosts = blogPosts.filter((post) => {
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+
+    return (!showOnlyPublished || post.isPublished) && matchesSearch
+  })
+
+  // Sort posts
+  const sortedPosts = [...filteredPosts].sort((a, b) => {
+    switch (sortBy) {
+      case 'newest':
+        return new Date(b.date) - new Date(a.date)
+      case 'oldest':
+        return new Date(a.date) - new Date(b.date)
+      case 'name':
+        return a.title.localeCompare(b.title)
+      case 'status':
+        return (b.isPublished ? 1 : 0) - (a.isPublished ? 1 : 0)
+      default:
+        return 0
+    }
+  })
+
   return (
     <>
-      <div className="blog-management container py-5">
-        <div className="row mb-4">
-          <div className="col-12">
-            <h1 className="display-4 fw-bold">Blog Management</h1>
-            <p className="lead">Create, edit, and manage your blog posts</p>
-          </div>
-        </div>
-        
-        <div className="row">
-          <div className="col-lg-8 mb-4">
-            <div className="card">
-              <div className="card-header bg-primary text-white">
-                <h5 className="mb-0">{editMode ? 'Edit Post' : 'Create New Post'}</h5>
+      <div>
+        {/* Header Section */}
+        <div className="bg-light p-4 mb-4 rounded">
+          <Container fluid>
+            <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
+              <div>
+                <h3 className="page-title mb-0">Blog Management</h3>
+                <nav aria-label="breadcrumb">
+                  <ol className="breadcrumb mb-0 mt-2">
+                    <li className="breadcrumb-item">
+                      <a href="#" className="text-muted">
+                        Dashboard
+                      </a>
+                    </li>
+                    <li className="breadcrumb-item active text-dark" aria-current="page">
+                      Blog
+                    </li>
+                  </ol>
+                </nav>
               </div>
-              <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <input type="hidden" name="id" value={formData.id} />
-                  
-                  <div className="mb-3">
-                    <label htmlFor="title" className="form-label">Title</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="title" 
-                      name="title"
-                      value={formData.title}
-                      onChange={handleInputChange}
-                      required
+              <Button variant="primary" className="d-flex align-items-center" onClick={() => setShowAddModal(true)}>
+                <FaPlus className="me-2" />
+                Add New Blog
+              </Button>
+            </div>
+
+            {/* Search and Sort Section */}
+            <div className="row g-3 align-items-center">
+              <div className="col-md-8">
+                <div className="search-input">
+                  <div className="input-group">
+                    <span className="input-group-text border-end-0 bg-white">
+                      <FiSearch className="text-muted" />
+                    </span>
+                    <Form.Control
+                      type="text"
+                      placeholder="Search blogs..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="border-start-0 ps-0"
                     />
                   </div>
-                  
-                  <div className="mb-3">
-                    <label htmlFor="author" className="form-label">Author</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="author" 
-                      name="author"
-                      value={formData.author}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="mb-3">
-                    <label htmlFor="date" className="form-label">Date (Leave blank for today's date)</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="date" 
-                      name="date"
-                      value={formData.date}
-                      onChange={handleInputChange}
-                      placeholder="March 29, 2025"
-                    />
-                  </div>
-                  
-                  <div className="mb-3">
-                    <label htmlFor="imageUrl" className="form-label">Image URL</label>
-                    <input 
-                      type="url" 
-                      className="form-control" 
-                      id="imageUrl" 
-                      name="imageUrl"
-                      value={formData.imageUrl}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    {formData.imageUrl && (
-                      <div className="mt-2">
-                        <img 
-                          src={formData.imageUrl} 
-                          alt="Post preview" 
-                          className="img-thumbnail" 
-                          style={{ maxHeight: '100px' }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="mb-3">
-                    <label htmlFor="excerpt" className="form-label">Excerpt</label>
-                    <textarea 
-                      className="form-control" 
-                      id="excerpt" 
-                      name="excerpt"
-                      value={formData.excerpt}
-                      onChange={handleInputChange}
-                      rows="2"
-                      required
-                    ></textarea>
-                  </div>
-                  
-                  <div className="mb-3">
-                    <label htmlFor="content" className="form-label">Content</label>
-                    <textarea 
-                      className="form-control" 
-                      id="content" 
-                      name="content"
-                      value={formData.content}
-                      onChange={handleInputChange}
-                      rows="6"
-                      required
-                    ></textarea>
-                  </div>
-                  
-                  <div className="mb-3">
-                    <label htmlFor="tags" className="form-label">Tags (comma separated)</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
-                      id="tags" 
-                      name="tags"
-                      value={formData.tags}
-                      onChange={handleInputChange}
-                      placeholder="React, JavaScript, Web Development"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="mb-3 form-check">
-                    <input 
-                      type="checkbox" 
-                      className="form-check-input" 
-                      id="isPublished" 
-                      name="isPublished"
-                      checked={formData.isPublished}
-                      onChange={handleInputChange}
-                    />
-                    <label className="form-check-label" htmlFor="isPublished">Publish immediately</label>
-                  </div>
-                  
-                  <div className="d-flex">
-                    <button type="submit" className="btn btn-primary">
-                      {editMode ? 'Update Post' : 'Add Post'}
-                    </button>
-                    {editMode && (
-                      <button 
-                        type="button" 
-                        className="btn btn-secondary ms-2" 
-                        onClick={resetForm}
-                      >
-                        Cancel Edit
-                      </button>
-                    )}
-                  </div>
-                </form>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="d-flex align-items-center justify-content-end">
+                  <label className="me-2 text-nowrap fw-medium">Sort by:</label>
+                  <Form.Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="form-select">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="name">Name</option>
+                    <option value="status">Status</option>
+                  </Form.Select>
+                </div>
               </div>
             </div>
-          </div>
-          
-          <div className="col-lg-4 mb-4">
-            <div className="card">
-              <div className="card-header bg-secondary text-white">
-                <h5 className="mb-0">Statistics</h5>
+          </Container>
+        </div>
+
+        <div className='blog-management container py-5'>
+          {/* Blog Statistics */}
+          <div className="row mb-4">
+            <div className="col-md-4 mb-3">
+              <div className="card bg-white shadow-sm h-100">
+                <div className="card-body d-flex align-items-center">
+                  <div className="p-3">
+                    <FaEye/>
+                  </div>
+                  <div>
+                    <h6 className="text-muted mb-1">Total Posts</h6>
+                    <h3 className="mb-0">{blogPosts.length}</h3>
+                  </div>
+                </div>
               </div>
-              <div className="card-body">
-                <div className="stats-item mb-3">
-                  <h6>Total Posts</h6>
-                  <p className="fs-3 fw-bold">{blogPosts.length}</p>
+            </div>
+            <div className="col-md-4 mb-3">
+              <div className="card bg-white shadow-sm h-100">
+                <div className="card-body d-flex align-items-center">
+                  <div className="p-3">
+                    <BsFileEarmarkRichtext/>
+                  </div>
+                  <div>
+                    <h6 className="text-muted mb-1">Published Posts</h6>
+                    <h3 className="mb-0">{blogPosts.filter((post) => post.isPublished).length}</h3>
+                  </div>
                 </div>
-                <div className="stats-item mb-3">
-                  <h6>Published Posts</h6>
-                  <p className="fs-3 fw-bold">{blogPosts.filter(post => post.isPublished).length}</p>
-                </div>
-                <div className="stats-item">
-                  <h6>Draft Posts</h6>
-                  <p className="fs-3 fw-bold">{blogPosts.filter(post => !post.isPublished).length}</p>
+              </div>
+            </div>
+            <div className="col-md-4 mb-3">
+              <div className="card bg-white shadow-sm h-100">
+                <div className="card-body d-flex align-items-center">
+                  <div className="p-3">
+                    <BsFileEarmarkBreak size={14}/>
+                  </div>
+                  <div>
+                    <h6 className="text-muted mb-1">Draft Posts</h6>
+                    <h3 className="mb-0">{blogPosts.filter((post) => !post.isPublished).length}</h3>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div className="row">
-          <div className="col-12">
-            <div className="card">
-              <div className="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">Manage Existing Posts</h5>
-                <div className="form-check form-switch">
-                  <input 
-                    className="form-check-input" 
-                    type="checkbox" 
-                    id="showOnlyPublished" 
-                  />
-                  <label className="form-check-label text-white" htmlFor="showOnlyPublished">
-                    Show only published
-                  </label>
+
+          {/* Table */}
+          <div className="row">
+            <div className="col-12">
+              <div className="card shadow-sm">
+                <div className="card-header bg-white d-flex justify-content-between align-items-center">
+                  <h5 className="mb-0">Manage Existing Posts</h5>
+                  <div className="form-check form-switch">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="showOnlyPublished"
+                      checked={showOnlyPublished}
+                      onChange={() => setShowOnlyPublished(!showOnlyPublished)}
+                    />
+                    <label className="form-check-label" htmlFor="showOnlyPublished">
+                      Show only published
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="card-body">
-                <div className="table-responsive">
-                  <table className="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Date</th>
-                        <th>Tags</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {blogPosts.map(post => (
-                        <tr key={post.id} className={!post.isPublished ? 'table-secondary' : ''}>
-                          <td>{post.id}</td>
-                          <td>{post.title}</td>
-                          <td>{post.author}</td>
-                          <td>{post.date}</td>
-                          <td>
-                            {post.tags.map(tag => (
-                              <span key={tag} className="badge bg-info me-1">{tag}</span>
-                            ))}
-                          </td>
-                          <td>
-                            <span className={`badge ${post.isPublished ? 'bg-success' : 'bg-warning'}`}>
-                              {post.isPublished ? 'Published' : 'Draft'}
-                            </span>
-                          </td>
-                          <td>
-                            <div className="btn-group btn-group-sm">
-                              <button 
-                                className="btn btn-primary" 
-                                onClick={() => handleEdit(post)}
-                              >
-                                <i className="bi bi-pencil"></i> Edit
-                              </button>
-                              <button 
-                                className="btn btn-danger" 
-                                onClick={() => confirmDelete(post)}
-                              >
-                                <i className="bi bi-trash"></i> Delete
-                              </button>
-                              <button 
-                                className={`btn ${post.isPublished ? 'btn-warning' : 'btn-success'}`} 
-                                onClick={() => togglePublishStatus(post.id)}
-                              >
-                                <i className={`bi ${post.isPublished ? 'bi-eye-slash' : 'bi-eye'}`}></i>
-                                {post.isPublished ? ' Unpublish' : ' Publish'}
-                              </button>
-                            </div>
-                          </td>
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table className="table table-hover">
+                      <thead className="table-light">
+                        <tr>
+                          <th>ID</th>
+                          <th>Title</th>
+                          <th>Author</th>
+                          <th>Date</th>
+                          <th>Tags</th>
+                          <th>Status</th>
+                          <th>Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {sortedPosts.length > 0 ? (
+                          sortedPosts.map((post) => (
+                            <tr key={post.id} className={!post.isPublished ? 'table-light' : ''}>
+                              <td>{post.id}</td>
+                              <td>{post.title}</td>
+                              <td>{post.author}</td>
+                              <td>{post.date}</td>
+                              <td>
+                                {post.tags.map((tag) => (
+                                  <span key={tag} className="badge bg-light text-dark border me-1">
+                                    {tag}
+                                  </span>
+                                ))}
+                              </td>
+                              <td>
+                                <span className={`badge ${post.isPublished ? 'bg-success' : 'bg-warning'}`}>
+                                  {post.isPublished ? 'Published' : 'Draft'}
+                                </span>
+                              </td>
+                              <td>
+                                <div className="btn-group btn-group-sm">
+                                  <button className="btn btn-outline-primary" onClick={() => handleEdit(post)}>
+                                    <i className="bi bi-pencil"></i> Edit
+                                  </button>
+                                  <button className="btn btn-outline-danger" onClick={() => confirmDelete(post)}>
+                                    <i className="bi bi-trash"></i> Delete
+                                  </button>
+                                  <button
+                                    className={`btn ${post.isPublished ? 'btn-outline-warning' : 'btn-outline-success'}`}
+                                    onClick={() => togglePublishStatus(post.id)}>
+                                    <i className={`bi ${post.isPublished ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+                                    {post.isPublished ? ' Unpublish' : ' Publish'}
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="7" className="text-center py-4">
+                              No posts found matching your criteria
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
+      {/* Blog Form Modal */}
+      <Modal show={showAddModal} onHide={handleCloseModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>{editMode ? 'Edit Blog Post' : 'Create New Blog Post'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <input type="hidden" name="id" value={formData.id} />
+
+            <Form.Group className="mb-3">
+              <Form.Label>Title</Form.Label>
+              <Form.Control type="text" name="title" value={formData.title} onChange={handleInputChange} required />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Author</Form.Label>
+              <Form.Control type="text" name="author" value={formData.author} onChange={handleInputChange} required />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Date (Leave blank for today's date)</Form.Label>
+              <Form.Control type="text" name="date" value={formData.date} onChange={handleInputChange} placeholder="March 29, 2025" />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control type="url" name="imageUrl" value={formData.imageUrl} onChange={handleInputChange} required />
+              {formData.imageUrl && (
+                <div className="mt-2">
+                  <img src={formData.imageUrl} alt="Post preview" className="img-thumbnail" style={{ maxHeight: '100px' }} />
+                </div>
+              )}
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Excerpt</Form.Label>
+              <Form.Control as="textarea" name="excerpt" value={formData.excerpt} onChange={handleInputChange} rows="2" required />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Content</Form.Label>
+              <Form.Control as="textarea" name="content" value={formData.content} onChange={handleInputChange} rows="6" required />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Tags (comma separated)</Form.Label>
+              <Form.Control
+                type="text"
+                name="tags"
+                value={formData.tags}
+                onChange={handleInputChange}
+                placeholder="React, JavaScript, Web Development"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Check
+                type="checkbox"
+                id="isPublished"
+                name="isPublished"
+                label="Publish immediately"
+                checked={formData.isPublished}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            {editMode ? 'Update Post' : 'Add Post'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       {/* Delete Confirmation Modal */}
-      {showDeleteConfirm && (
-        <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirm Deletion</h5>
-                <button 
-                  type="button" 
-                  className="btn-close" 
-                  onClick={() => setShowDeleteConfirm(false)}
-                ></button>
-              </div>
-              <div className="modal-body">
-                <p>Are you sure you want to delete the post "{postToDelete?.title}"?</p>
-                <p className="text-danger">This action cannot be undone.</p>
-              </div>
-              <div className="modal-footer">
-                <button 
-                  type="button" 
-                  className="btn btn-secondary" 
-                  onClick={() => setShowDeleteConfirm(false)}
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="button" 
-                  className="btn btn-danger" 
-                  onClick={handleDelete}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {showDeleteConfirm && <div className="modal-backdrop fade show"></div>}
-          </>
+      <Modal show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to delete the post "{postToDelete?.title}"?</p>
+          <p className="text-danger">This action cannot be undone.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteConfirm(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   )
 }
 

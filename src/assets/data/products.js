@@ -880,79 +880,127 @@ export const collegesData = [{
   courses: ['Engineer', 'BBA', 'BCA', 'BSC', 'MBBS'],
   features: ['Library', 'Canteen', 'Stationary', 'Hostel', 'Playground']
 }];
-export const courseCategories = [{
-  id: '501',
-  title: 'Data Science',
-  image: dataScienceImg,
-  courses: 15,
-  variant: 'bg-success'
-}, {
-  id: '502',
-  title: 'IT & Software',
-  image: onlineImg,
-  courses: 22,
-  variant: 'bg-orange'
-}, {
-  id: '503',
-  title: 'Engineering',
-  image: engineeringImg,
-  courses: 53,
-  variant: 'bg-danger'
-}, {
-  id: '504',
-  title: 'Web Development',
-  image: codingImg,
-  courses: 25,
-  variant: 'bg-purple'
-}, {
-  id: '505',
-  title: 'Finance',
-  image: profitImg,
-  courses: 20,
-  variant: 'bg-info'
-}, {
-  id: '506',
-  title: 'Medical',
-  image: medicalImg,
-  courses: 10,
-  variant: 'bg-blue'
-}, {
-  id: '507',
-  title: 'Architecture',
-  image: homeImg,
-  courses: 30,
-  variant: 'bg-warning'
-}, {
-  id: '508',
-  title: 'Art & Design',
-  image: artistImg,
-  courses: 35,
-  variant: 'bg-dark'
-}, {
-  id: '509',
-  title: 'Photography',
-  image: photographyImg,
-  courses: 20,
-  variant: 'bg-purple'
-}, {
-  id: '510',
-  title: 'Musics',
-  image: musicImg,
-  courses: 10,
-  variant: 'bg-danger'
-}, {
-  id: '511',
-  title: 'Marketing',
-  image: marketingImg,
-  courses: 30,
-  variant: 'bg-success'
-}, {
-  id: '512',
-  title: 'Accounting',
-  image: accountImg,
-  courses: 35,
-  variant: 'bg-primary'
-}];
+// export const courseCategories = [{
+//   id: '501',
+//   title: 'Data Science',
+//   image: dataScienceImg,
+//   courses: 15,
+//   variant: 'bg-success'
+// }, {
+//   id: '502',
+//   title: 'IT & Software',
+//   image: onlineImg,
+//   courses: 22,
+//   variant: 'bg-orange'
+// }, {
+//   id: '503',
+//   title: 'Engineering',
+//   image: engineeringImg,
+//   courses: 53,
+//   variant: 'bg-danger'
+// }, {
+//   id: '504',
+//   title: 'Web Development',
+//   image: codingImg,
+//   courses: 25,
+//   variant: 'bg-purple'
+// }, {
+//   id: '505',
+//   title: 'Finance',
+//   image: profitImg,
+//   courses: 20,
+//   variant: 'bg-info'
+// }, {
+//   id: '506',
+//   title: 'Medical',
+//   image: medicalImg,
+//   courses: 10,
+//   variant: 'bg-blue'
+// }, {
+//   id: '507',
+//   title: 'Architecture',
+//   image: homeImg,
+//   courses: 30,
+//   variant: 'bg-warning'
+// }, {
+//   id: '508',
+//   title: 'Art & Design',
+//   image: artistImg,
+//   courses: 35,
+//   variant: 'bg-dark'
+// }, {
+//   id: '509',
+//   title: 'Photography',
+//   image: photographyImg,
+//   courses: 20,
+//   variant: 'bg-purple'
+// }, {
+//   id: '510',
+//   title: 'Musics',
+//   image: musicImg,
+//   courses: 10,
+//   variant: 'bg-danger'
+// }, {
+//   id: '511',
+//   title: 'Marketing',
+//   image: marketingImg,
+//   courses: 30,
+//   variant: 'bg-success'
+// }, {
+//   id: '512',
+//   title: 'Accounting',
+//   image: accountImg,
+//   courses: 35,
+//   variant: 'bg-primary'
+// }];
+export const courseCategories = [
+  {
+    id: '1',
+    title: 'Test Seriese',
+    subcategories: []
+  },
+  {
+    id: '2',
+    title: 'TNPSC',
+    subcategories: [
+      { id: 'tnpsc-1', title: 'GROUP 4' },
+      { id: 'tnpsc-2', title: 'GROUP 2/2A' },
+      { id: 'tnpsc-3', title: 'GENERAL STUDIES' },
+      { id: 'tnpsc-4', title: 'GROUP 1' },
+      { id: 'tnpsc-5', title: 'GROUP 2' },
+      { id: 'tnpsc-6', title: 'TEST SERIES' },
+      { id: 'tnpsc-7', title: 'ECONOMICS' },
+      { id: 'tnpsc-8', title: 'MATHS' },
+      { id: 'tnpsc-9', title: 'POLITY' },
+      { id: 'tnpsc-10', title: 'UNIT 9' },
+      { id: 'tnpsc-11', title: 'UNIT 8' },
+      { id: 'tnpsc-12', title: 'HISTORY' },
+      { id: 'tnpsc-13', title: 'CIVIL' },
+      { id: 'tnpsc-14', title: 'AE' },
+      { id: 'tnpsc-15', title: 'INM' },
+      { id: 'tnpsc-16', title: 'ncert' },
+      { id: 'tnpsc-17', title: 'UPSC' },
+      { id: 'tnpsc-18', title: 'TNPSC' },
+    ]
+  },
+  {
+    id: '3',
+    title: 'UPSC - CSE',
+    subcategories: [
+      { id: 'upsc-1', title: 'ncert' }
+    ]
+  },
+  {
+    id: '4',
+    title: 'Bank Exam',
+    subcategories: []
+  },
+  {
+    id: '5',
+    title: 'Railway Exams',
+    subcategories: []
+  }
+];
 export const billingHistoryData = [{
   id: '3001',
   name: 'Sketch from A to Z: for app designer',

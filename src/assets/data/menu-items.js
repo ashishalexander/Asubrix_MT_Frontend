@@ -13,7 +13,7 @@
  */
 
 import { BsBasket, BsBasketFill, BsCardChecklist, BsCartCheck, BsCartCheckFill, BsCreditCard2Front, BsCreditCard2FrontFill, BsFileCheckFill, BsFileEarmarkPlusFill, BsFolderCheck, BsGear, BsGraphUp, BsGridFill, BsHouse, BsLock, BsPencilSquare, BsPeople, BsQuestionDiamond, BsStar, BsStarFill, BsTrash, BsUiChecksGrid, BsUiRadiosGrid, BsWallet2 } from 'react-icons/bs';
-import { FaBasketballBall, FaChartBar, FaCog, FaEdit, FaFacebook, FaLinkedinIn, FaRegCommentDots, FaRegFileAlt, FaTrashAlt, FaUserCog } from 'react-icons/fa';
+import { FaBasketballBall, FaChartBar, FaCog, FaEdit, FaFacebook, FaLinkedinIn, FaRegCommentDots, FaRegFileAlt, FaTrashAlt, FaUserCog, FaMicroblog  } from 'react-icons/fa';
 import { FaChartLine, FaUserGraduate, FaUserTie, FaWallet } from 'react-icons/fa6';
 import clientUnitLogo1 from '@/assets/images/client/uni-logo-01.svg';
 import clientUnitLogo2 from '@/assets/images/client/uni-logo-02.svg';
@@ -858,7 +858,7 @@ export const ADMIN_MENU_ITEMS = [{
 }, {
   key: 'blog-management',
   label: 'Blog Management',
-  icon: FaUserTie,
+  icon: FaMicroblog,
   url: '/admin/blog-management'
 }, {
   key: 'chat',
