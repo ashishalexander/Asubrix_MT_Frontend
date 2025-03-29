@@ -66,7 +66,7 @@ const FreeTestsList = () => {
           {paginatedTests.map((test) => (
             <Col lg={6} key={test.id}>
               {/* <Link to={`/free-tests/${test.id}`} className="text-decoration-none"> */}
-              <Link to={`/pages/free-test/free-test-details`} className="text-decoration-none">
+              <Link to={`/free-test/free-test-details`} className="text-decoration-none">
                 <Card className="shadow p-3">
                   <Row className="align-items-center">
                     <Col xs={2}>

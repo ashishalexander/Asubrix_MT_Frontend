@@ -41,7 +41,7 @@ const TestDetails = () => {
                     <h5 className="mb-0">{attempt.date}</h5>
                   </Col>
                   <Col xs={4} className="d-flex justify-content-end">
-                    <Button variant="success" href="/pages/test-questions" className="px-4 py-2 fw-bold">
+                    <Button variant="success" href="/test-questions" className="px-4 py-2 fw-bold">
                       Attempt
                     </Button>
                   </Col>

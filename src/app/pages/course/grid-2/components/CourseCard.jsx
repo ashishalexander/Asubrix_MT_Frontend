@@ -30,7 +30,7 @@ const CourseCard = ({
 
   return (
     <Link 
-      to="/pages/course/detail-adv" 
+      to="/courses/course-details" 
       style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
     >
       <Card className="shadow h-100" style={cardStyle}>

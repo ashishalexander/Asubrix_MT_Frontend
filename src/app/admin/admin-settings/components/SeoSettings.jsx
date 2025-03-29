@@ -1,4 +1,4 @@
-import { Card, Form, Row, Col, Nav, Tab, Badge } from 'react-bootstrap';
+import { Card, Form, Row, Col, Tab, Badge } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 
 const SeoSettings = () => {
@@ -166,21 +166,27 @@ const SeoSettings = () => {
       <Card.Body>
         <Tab.Container activeKey={activeTab} onSelect={setActiveTab}>
           <Row>
-            <Col md={3} className='bg-theme-secondary h-100 rounded'>
-              <Nav variant="pills" className="flex-column my-3">
-                {pages.map(page => (
-                  <Nav.Item key={page}>
-                    <Nav.Link eventKey={page} className="text-capitalize d-flex justify-content-between align-items-center">
-                      {page.replace(/-/g, ' ')}
-                      {seoConfig[page]?.metaTitle && (
-                        <Badge bg="success" pill>✓</Badge>
-                      )}
-                    </Nav.Link>
-                  </Nav.Item>
-                ))}
-              </Nav>
-            </Col>
-            <Col md={9}>
+            <Col md={12}>
+              <Form.Group className="mb-4 ">
+                <Form.Label>Select Page</Form.Label>
+                <div className="d-flex align-items-center">
+                  <Form.Select 
+                    value={activeTab} 
+                    onChange={(e) => setActiveTab(e.target.value)}
+                    className="text-capitalize border border-primary"
+                  >
+                    {pages.map(page => (
+                      <option key={page} value={page}>
+                        {page.replace(/-/g, ' ')}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  {seoConfig[activeTab]?.metaTitle && (
+                    <Badge bg="success" pill className="ms-2">✓</Badge>
+                  )}
+                </div>
+              </Form.Group>
+              
               <Tab.Content>
                 {pages.map(page => {
                   const titleStatus = getTitleLengthStatus(seoConfig[page]?.metaTitle || '');
@@ -260,7 +266,7 @@ const SeoSettings = () => {
                         <div className="text-end mt-3">
                           <button 
                             type="submit" 
-                            className="btn border-primary text-primary"
+                            className="btn border-primary "
                             disabled={isSaving}
                           >
                             {isSaving ? (

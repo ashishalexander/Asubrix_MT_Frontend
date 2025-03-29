@@ -229,7 +229,7 @@ const pagesRoutes = [
     element: <DetailMinimal />,
   },
   {
-    path: '/pages/course/detail-adv',
+    path: '/courses/course-details',
     name: 'Course Detail Advance',
     element: <DetailAdvance />,
   },
