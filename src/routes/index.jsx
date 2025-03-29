@@ -119,6 +119,7 @@ const NotFound = lazy(() => import('@/app/admin/error-404/page'))
 const AdminChat = lazy(() => import('@/app/admin/chat/page'))
 const StudentManagement = lazy(() => import('@/app/admin/student-management/page'))
 const FacultyManagement = lazy(() => import('@/app/admin/faculty-management/page'))
+const BlogManagement = lazy(() => import('@/app/admin/blog-management/page'))
 const EnquiriesPage = lazy(() => import('@/app/admin/enquiries/page'))
 
 // Add this import for Reports & Analytics
@@ -580,6 +581,11 @@ export const adminRoutes = [
     path: '/admin/test-management',
     name: 'Content Management',
     element: <ContentManagement />,
+  },
+  {
+    path: '/admin/blog-management',
+    name: 'Blog Management',
+    element: <BlogManagement />,
   },
   {
     path: '/admin/edit-course',

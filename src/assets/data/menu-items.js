@@ -856,6 +856,11 @@ export const ADMIN_MENU_ITEMS = [{
   icon: FaUserTie,
   url: '/admin/faculty-management'
 }, {
+  key: 'blog-management',
+  label: 'Blog Management',
+  icon: FaUserTie,
+  url: '/admin/blog-management'
+}, {
   key: 'chat',
   label: 'Chat Section',
   icon: FaRegCommentDots,
