@@ -133,14 +133,14 @@ export const INSTRUCTOR_MENU_ITEMS = [
     key: 'courses',
     label: 'My Courses',
     icon: BsBasket,
-    url: '/instructor/manage-course',
+    url: '/student/my-courses',
     parentKey: 'instructor'
   },
   {
     key: 'chat',
     label: 'Chat with Admin',
     icon: FaRegCommentDots,
-    url: '/instructor/chat',
+    url: '/student/chat',
     parentKey: 'instructor'
   },
   // {
@@ -167,7 +167,7 @@ export const INSTRUCTOR_MENU_ITEMS = [
     key: 'orders',
     label: 'Free Tests',
     icon: BsFolderCheck,
-    url: '/instructor/order',
+    url: '/student/test-details',
     parentKey: 'instructor'
   },
   //  {
@@ -188,7 +188,7 @@ export const INSTRUCTOR_MENU_ITEMS = [
     key: 'payout',
     label: 'Payment History',
     icon: BsWallet2,
-    url: '/instructor/payout',
+    url: '/student/payment-history',
     parentKey: 'instructor'
   },
   //  {

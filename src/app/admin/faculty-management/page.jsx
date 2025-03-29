@@ -98,7 +98,25 @@ const FacultyManagement = () => {
     setFaculties(faculties.map((faculty) => (faculty.id === facultyId ? { ...faculty, status: newStatus } : faculty)))
   }
 
+  // const handleAddFaculty = (newFaculty) => {
+  //   if (editingFaculty) {
+  //     // Update existing faculty
+  //     setFaculties(faculties.map((faculty) => (faculty.id === editingFaculty.id ? { ...newFaculty, id: faculty.id } : faculty)))
+  //   } else {
+  //     // Add new faculty
+  //     setFaculties([...faculties, { ...newFaculty, id: faculties.length + 1 }])
+  //   }
+  //   setShowAddModal(false)
+  //   setEditingFaculty(null)
+  // }
   const handleAddFaculty = (newFaculty) => {
+    // If newFaculty is null, just close the modal
+    if (newFaculty === null) {
+      setShowAddModal(false);
+      setEditingFaculty(null);
+      return;
+    }
+    
     if (editingFaculty) {
       // Update existing faculty
       setFaculties(faculties.map((faculty) => (faculty.id === editingFaculty.id ? { ...newFaculty, id: faculty.id } : faculty)))

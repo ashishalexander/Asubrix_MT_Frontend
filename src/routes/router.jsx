@@ -61,106 +61,31 @@ const AppRouter = props => {
 
       {/* App Routes */}
       {(appRoutes || []).map((route, idx) => (
-        <Route
-          key={idx + route.name}
-          path={route.path}
-          element={
-            isAuthenticated ? (
-              <OtherLayout {...props}>{route.element}</OtherLayout>
-            ) : (
-              <Navigate
-                to={{
-                  pathname: '/auth/sign-in',
-                  search: 'redirectTo=' + route.path
-                }}
-              />
-            )
-          }
-        />
+        <Route key={idx + route.name} path={route.path} element={<OtherLayout {...props}>{route.element}</OtherLayout>} />
       ))}
 
       {/* Shop Routes */}
       {(shopRoutes || []).map((route, idx) => (
-        <Route
-          key={idx + route.name}
-          path={route.path}
-          element={
-            isAuthenticated ? (
-              <ShopLayout {...props}>{route.element}</ShopLayout>
-            ) : (
-              <Navigate
-                to={{
-                  pathname: '/auth/sign-in',
-                  search: 'redirectTo=' + route.path
-                }}
-              />
-            )
-          }
-        />
+        <Route key={idx + route.name} path={route.path} element={<ShopLayout {...props}>{route.element}</ShopLayout>} />
       ))}
 
       {/* Instructor Routes */}
       {(InstructorRoutes || []).map((route, idx) => (
-        <Route
-          key={idx + route.name}
-          path={route.path}
-          element={
-            isAuthenticated ? (
-              <InstructorLayout {...props}>{route.element}</InstructorLayout>
-            ) : (
-              <Navigate
-                to={{
-                  pathname: '/auth/sign-in',
-                  search: 'redirectTo=' + route.path
-                }}
-              />
-            )
-          }
-        />
+        <Route key={idx + route.name} path={route.path} element={<InstructorLayout {...props}>{route.element}</InstructorLayout>} />
       ))}
 
       {/* Student Routes */}
       {(studentRoutes || []).map((route, idx) => (
-        <Route
-          key={idx + route.name}
-          path={route.path}
-          element={
-            isAuthenticated ? (
-              <StudentLayout {...props}>{route.element}</StudentLayout>
-            ) : (
-              <Navigate
-                to={{
-                  pathname: '/auth/sign-in',
-                  search: 'redirectTo=' + route.path
-                }}
-              />
-            )
-          }
-        />
+        <Route key={idx + route.name} path={route.path} element={<StudentLayout {...props}>{route.element}</StudentLayout>} />
       ))}
 
       {/* Admin Routes */}
       {(adminRoutes || []).map((route, idx) => (
-        <Route
-          key={idx + route.name}
-          path={route.path}
-          element={
-            isAuthenticated ? (
-              <AdminLayout {...props}>{route.element}</AdminLayout>
-            ) : (
-              <Navigate
-                to={{
-                  pathname: '/auth/sign-in',
-                  search: 'redirectTo=' + route.path
-                }}
-              />
-            )
-          }
-        />
+        <Route key={idx + route.name} path={route.path} element={<AdminLayout {...props}>{route.element}</AdminLayout>} />
       ))}
 
       {/* Catch all route - 404 */}
-      <Route path="*" element={<Navigate to="/academy/home" replace />} />
+      <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );
 };

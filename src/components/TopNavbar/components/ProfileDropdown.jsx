@@ -35,7 +35,7 @@ const ProfileDropdown = ({
           <DropdownDivider />
         </li>
         <li>
-          <DropdownItem href="/instructor/edit-profile">
+          <DropdownItem href="/student/dashboard">
             <BsPerson className="fa-fw me-2" />
             Dashboard
           </DropdownItem>

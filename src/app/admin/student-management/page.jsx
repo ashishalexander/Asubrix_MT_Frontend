@@ -88,13 +88,37 @@ const StudentManagement = () => {
     setStudents(students.map((student) => (student.id === studentId ? { ...student, status: newStatus } : student)))
   }
 
+  // const handleAddStudent = (newStudent) => {
+  //   if (editingStudent) {
+  //     // Update existing student
+  //     setStudents(students.map((student) => (student.id === editingStudent.id ? { ...newStudent, id: student.id } : student)))
+  //   } else {
+  //     // Add new student
+  //     setStudents([...students, { ...newStudent, id: students.length + 1, enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}` }])
+  //   }
+  //   setShowAddModal(false)
+  //   setEditingStudent(null)
+  // }
   const handleAddStudent = (newStudent) => {
+    // If newStudent is null, just close the modal
+    if (newStudent === null) {
+      setShowAddModal(false);
+      setEditingStudent(null);
+      return;
+    }
+    
     if (editingStudent) {
       // Update existing student
-      setStudents(students.map((student) => (student.id === editingStudent.id ? { ...newStudent, id: student.id } : student)))
+      setStudents(students.map((student) => 
+        (student.id === editingStudent.id ? { ...newStudent, id: student.id } : student)
+      ))
     } else {
       // Add new student
-      setStudents([...students, { ...newStudent, id: students.length + 1, enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}` }])
+      setStudents([...students, { 
+        ...newStudent, 
+        id: students.length + 1, 
+        enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}` 
+      }])
     }
     setShowAddModal(false)
     setEditingStudent(null)
