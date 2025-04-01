@@ -1,4 +1,4 @@
-import Footerone from '@/components/footer';
+// import Footerone from '@/components/footer';
 // const Footer = () => {
 //   return <footer className="bg-dark p-3">
 //       <Container>
@@ -48,7 +48,8 @@ import Footerone from '@/components/footer';
 // };
 
 const Footer = () =>{
-  return <Footerone className="custom-footer"/>
+  // return <Footerone className="custom-footer"/>
+  return <></>
 }
 
 export default Footer;
