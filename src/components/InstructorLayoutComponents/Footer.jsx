@@ -1,9 +1,4 @@
-import { developedBy, developedByLink } from '@/context/constants';
-import { Link } from 'react-router-dom';
-import logoLight from '@/assets/images/logo-light.svg';
-import { Col, Container, Row } from 'react-bootstrap';
-import { FaFacebook, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
-import Footerone from '@/components/footer'
+import Footerone from '@/components/footer';
 // const Footer = () => {
 //   return <footer className="bg-dark p-3">
 //       <Container>
