@@ -62,7 +62,7 @@ const NavbarTopbar = () => {
           </div>
           <div className="ms-xl-auto">
             <ul className="navbar-nav flex-row align-items-center">
-              <NotificationDropdown />
+              {/* <NotificationDropdown /> */}
               <ProfileDropdown className="ms-2 ms-md-3" />
             </ul>
           </div>

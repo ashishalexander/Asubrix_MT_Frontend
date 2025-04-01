@@ -266,7 +266,7 @@ const SeoSettings = () => {
                         <div className="text-end mt-3">
                           <button 
                             type="submit" 
-                            className="btn border-primary "
+                            className="btn btn-primary "
                             disabled={isSaving}
                           >
                             {isSaving ? (
@@ -275,7 +275,7 @@ const SeoSettings = () => {
                                 Saving...
                               </>
                             ) : (
-                              `Save ${page.replace(/-/g, ' ')} SEO`
+                              `Save SEO`
                             )}
                           </button>
                         </div>
@@ -288,7 +288,7 @@ const SeoSettings = () => {
           </Row>
         </Tab.Container>
         
-        <div className="text-end mt-4">
+        {/* <div className="text-end mt-4">
           <button 
             type="button" 
             className="btn btn-primary" 
@@ -304,7 +304,7 @@ const SeoSettings = () => {
               'Save All SEO Settings'
             )}
           </button>
-        </div>
+        </div> */}
       </Card.Body>
     </Card>
   );

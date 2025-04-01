@@ -1,6 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Form, Button, Row, Col, Modal, Image, Tabs, Tab } from 'react-bootstrap';
 import { FaImages, FaUpload, FaTrash, FaPlus, FaCog } from 'react-icons/fa';
+import { BsFullscreen } from 'react-icons/bs';
+import GlightBox from '@/components/GlightBox';
+import 'glightbox/dist/css/glightbox.min.css';
+
+// Import images properly
+import event11 from '@/assets/images/event/11.jpg';
+import event12 from '@/assets/images/event/12.jpg';
+import event13 from '@/assets/images/event/13.jpg';
+import event14 from '@/assets/images/event/14.jpg';
+import event15 from '@/assets/images/event/15.jpg';
+import event16 from '@/assets/images/event/16.jpg';
+import event17 from '@/assets/images/event/17.jpg';
 
 const GallerySettings = () => {
   const [activeTab, setActiveTab] = useState('configuration');
@@ -16,13 +28,13 @@ const GallerySettings = () => {
   });
 
   const [images, setImages] = useState([
-    { id: 1, src: '@/assets/images/event/11.jpg', name: '11.jpg' },
-    { id: 2, src: '@/assets/images/event/12.jpg', name: '12.jpg' },
-    { id: 3, src: '@/assets/images/event/13.jpg', name: '13.jpg' },
-    { id: 4, src: '@/assets/images/event/14.jpg', name: '14.jpg' },
-    { id: 5, src: '@/assets/images/event/15.jpg', name: '15.jpg' },
-    { id: 6, src: '@/assets/images/event/16.jpg', name: '16.jpg' },
-    { id: 7, src: '@/assets/images/event/17.jpg', name: '17.jpg' },
+    { id: 1, src: event11, name: '11.jpg' },
+    { id: 2, src: event12, name: '12.jpg' },
+    { id: 3, src: event13, name: '13.jpg' },
+    { id: 4, src: event14, name: '14.jpg' },
+    { id: 5, src: event15, name: '15.jpg' },
+    { id: 6, src: event16, name: '16.jpg' },
+    { id: 7, src: event17, name: '17.jpg' },
   ]);
 
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -216,24 +228,40 @@ const GallerySettings = () => {
                 <FaPlus className="me-2" /> Add Images
               </Button>
             </div>
-            <Row className="g-3">
+            <Row className="g-4">
               {images.map((image) => (
                 <Col key={image.id} xs={6} md={4} lg={3} className="position-relative">
-                  <div className="position-relative">
-                    <Image 
-                      src={image.src} 
-                      thumbnail 
-                      className="img-fluid"
-                    />
-                    <Button 
-                      variant="danger" 
-                      size="sm" 
-                      className="position-absolute top-0 end-0 m-2"
-                      onClick={() => removeImage(image.id)}
+                  <Card className="overflow-hidden">
+                    <div className="card-overlay-hover position-relative">
+                      <img 
+                        src={image.src} 
+                        className="img-fluid rounded-3" 
+                        alt={image.name}
+                      />
+                      <Button 
+                        variant="danger" 
+                        size="sm" 
+                        className="position-absolute top-0 end-0 m-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeImage(image.id);
+                        }}
+                      >
+                        <FaTrash />
+                      </Button>
+                    </div>
+                    <GlightBox 
+                      className="card-element-hover position-absolute w-100 h-100" 
+                      data-glightbox 
+                      data-gallery="gallery-admin" 
+                      href={image.src}
                     >
-                      <FaTrash />
-                    </Button>
-                  </div>
+                      <BsFullscreen
+                        size={30}
+                        className="fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-3 p-2 lh-1"
+                      />
+                    </GlightBox>
+                  </Card>
                   <p className="text-center mt-2 text-truncate">{image.name}</p>
                 </Col>
               ))}
@@ -258,22 +286,37 @@ const GallerySettings = () => {
           </Form.Group>
 
           {selectedFiles.length > 0 && (
-            <Row className="g-3 mb-3">
+            <Row className="g-4 mb-3">
               {selectedFiles.map((file) => (
                 <Col key={file.id} xs={6} md={4} lg={3} className="position-relative">
-                  <Image 
-                    src={file.src} 
-                    thumbnail 
-                    className="img-fluid"
-                  />
-                  <Button 
-                    variant="danger" 
-                    size="sm" 
-                    className="position-absolute top-0 end-0 m-2"
-                    onClick={() => removeSelectedFile(file.id)}
-                  >
-                    <FaTrash />
-                  </Button>
+                  <Card className="overflow-hidden">
+                    <div className="card-overlay-hover">
+                      <img 
+                        src={file.src} 
+                        className="img-fluid rounded-3" 
+                        alt={file.name}
+                      />
+                      <Button 
+                        variant="danger" 
+                        size="sm" 
+                        className="position-absolute top-0 end-0 m-2"
+                        onClick={() => removeSelectedFile(file.id)}
+                      >
+                        <FaTrash />
+                      </Button>
+                    </div>
+                    <GlightBox 
+                      className="card-element-hover position-absolute w-100 h-100" 
+                      data-glightbox 
+                      data-gallery="gallery-upload" 
+                      href={file.src}
+                    >
+                      <BsFullscreen
+                        size={30}
+                        className="fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-3 p-2 lh-1"
+                      />
+                    </GlightBox>
+                  </Card>
                   <p className="text-center mt-2 text-truncate">{file.name}</p>
                 </Col>
               ))}
