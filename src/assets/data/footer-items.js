@@ -5,27 +5,31 @@ export const footerLinks = [
     items: [
       {
         name: 'Home',
-        link: '/academy/home',
+        link: '/',
       },
       {
         name: 'About',
-        link: '/pages/about/about-us',
+        link: '/about-us',
       },
       {
         name: 'Our Team',
-        link: '/pages/instructors',
+        link: '/our-team',
       },
       {
         name: 'Courses',
-        link: '/pages/course/grid-2',
+        link: '/courses',
       },
       {
         name: 'Free Test',
-        link: '/pages/free-test',
+        link: '/free-test',
       },
       {
         name: 'Gallery',
-        link: '/pages/gallery',
+        link: '/gallery',
+      },
+      {
+        name: 'Blogs',
+        link: '/blogs',
       },
     ],
   },
