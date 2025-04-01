@@ -63,7 +63,7 @@ export const footerLinks = [
     items: [
       {
         name: 'Contact',
-        link: '/pages/about/contact-us',
+        link: '/contact-us',
       },
       {
         name: 'FAQ',
@@ -75,7 +75,7 @@ export const footerLinks = [
 export const footerLinks2 = [
   {
     name: 'About',
-    link: '/pages/about/about-us',
+    link: '/about-us',
   },
   {
     name: 'Terms',

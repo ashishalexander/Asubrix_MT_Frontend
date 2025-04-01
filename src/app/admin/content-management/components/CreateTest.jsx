@@ -274,7 +274,7 @@ const CreateTest = ({ onClose, onSave }) => {
                   </Form>
                   <div className="mt-4 d-flex justify-content-end">
                     <Button variant="primary" onClick={() => setActiveTab('sections')} className="d-flex align-items-center">
-                      Save & Continue <FiArrowRight className="ms-2" />
+                      Continue <FiArrowRight className="ms-2" />
                     </Button>
                   </div>
                 </div>
@@ -450,7 +450,7 @@ const CreateTest = ({ onClose, onSave }) => {
                   </div>
                   <div className="mt-4 d-flex justify-content-end">
                     <Button variant="primary" onClick={() => setActiveTab('settings')} className="d-flex align-items-center">
-                      Save & Continue <FiArrowRight className="ms-2" />
+                      Continue <FiArrowRight className="ms-2" />
                     </Button>
                   </div>
                 </div>

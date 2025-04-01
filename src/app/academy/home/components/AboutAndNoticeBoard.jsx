@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { BsFillPinFill, BsShieldCheck, BsStopwatch, BsTag } from 'react-icons/bs'
+import { TfiAnnouncement } from "react-icons/tfi";
 import { Link } from 'react-router-dom'
 import './AboutAndNoticeBoard.scss'
 
@@ -48,6 +49,10 @@ const AboutAndNoticeBoard = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur illo, temporibus in sunt facere commodi quos ducimus ipsam! Officia
               amet ipsum perspiciatis repellat! Quos possimus dicta, similique dolor rerum laborum!
             </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur illo, temporibus in sunt facere commodi quos ducimus ipsam! Officia
+              amet ipsum perspiciatis repellat! Quos possimus dicta, similique dolor rerum laborum!
+            </p>
             <div className="mt-2">
               <Link to="/about" className="btn btn-outline-primary">
                 More about us
@@ -58,9 +63,9 @@ const AboutAndNoticeBoard = () => {
 
         <Col lg={5}>
           <div className="notice-board-wrapper">
-              <h2 className="notice-head">
-                <BsStopwatch className="me-2" /> Notice Board
-              </h2>
+              <h3 className="notice-head ">
+                Announcements<TfiAnnouncement className='mx-3 text-primary'/>
+              </h3>
             <div className="notice-board">
               <div className="notice-board-container">
                 <div ref={marqueeRef} className="notice-board-marquee">
