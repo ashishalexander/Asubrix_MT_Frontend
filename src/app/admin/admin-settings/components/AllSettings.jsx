@@ -14,7 +14,7 @@ const AllSettings = () => {
   return (
     <>
       <Row>
-        <Col xs={12} className="mb-3 p-4">
+        <Col xs={12} className="mb-3 py-4 px-5">
           <h1 className="h3 mb-2 mb-sm-0">Admin Settings</h1>
         </Col>
       </Row>

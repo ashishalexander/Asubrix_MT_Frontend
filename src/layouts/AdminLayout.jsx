@@ -5,7 +5,7 @@
  */
 
 import logoImg from '@/assets/images/logo-light.svg';
-import logoImg2 from '@/assets/images/pymainlogo.webp';
+import logoImg2 from '@/assets/images/py_circle_logo.png';
 import AppMenu from '@/components/admin/AppMenu';
 import { useAuthContext } from '@/context/useAuthContext';
 import { useLayoutContext } from '@/context/useLayoutContext';
@@ -48,8 +48,8 @@ const AdminLayout = ({ children }) => {
     <main>
       <nav className="navbar sidebar navbar-expand-xl navbar-dark bg-theme-secondary">
         <div className="d-flex align-items-center">
-          <Link className="navbar-brand" to="/">
-            <img className="navbar-brand-item" src={logoImg2} alt="logo" />
+          <Link className="navbar-brand m-0" to="/">
+            <img className="navbar-admin-logo" src={logoImg2} alt="logo" />
           </Link>
         </div>
         

@@ -3,9 +3,7 @@ import './components/BlogManagement.scss'
 import { Container, Button, Form, Modal } from 'react-bootstrap'
 import { FaPlus, FaEye  } from 'react-icons/fa'
 import { FiSearch } from 'react-icons/fi'
-import { BsFileEarmarkRichtext, BsFileEarmarkBreak  } from "react-icons/bs";
-
-
+import { BsFileEarmarkRichtext, BsFileEarmarkBreak } from "react-icons/bs";
 
 const BlogManagement = () => {
   // State for blog posts
@@ -23,6 +21,12 @@ const BlogManagement = () => {
     tags: '',
     isPublished: true,
   })
+
+  // State for image preview
+  const [imagePreview, setImagePreview] = useState(null)
+  
+  // State for selected file
+  const [selectedFile, setSelectedFile] = useState(null)
 
   // State for editing mode
   const [editMode, setEditMode] = useState(false)
@@ -129,6 +133,25 @@ const BlogManagement = () => {
     }
   }
 
+  // Handle image file selection
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    
+    if (file) {
+      setSelectedFile(file)
+      
+      // Create a preview URL for the selected image
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreview(reader.result)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      setSelectedFile(null)
+      setImagePreview(null)
+    }
+  }
+
   // Handle form submission for creating or updating a post
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -144,11 +167,23 @@ const BlogManagement = () => {
         month: 'long',
         day: 'numeric',
       })
+    
+    // In a real application, you would upload the file to a server here
+    // and get back a URL. For this example, we'll use the preview URL
+    const imageUrl = imagePreview || formData.imageUrl
 
     if (editMode) {
       // Update existing post
       const updatedPosts = blogPosts.map((post) =>
-        post.id === parseInt(formData.id) ? { ...formData, date: submitDate, tags: formattedTags, id: parseInt(formData.id) } : post,
+        post.id === parseInt(formData.id) 
+          ? { 
+              ...formData, 
+              date: submitDate, 
+              tags: formattedTags, 
+              id: parseInt(formData.id),
+              imageUrl: imageUrl
+            } 
+          : post,
       )
       setBlogPosts(updatedPosts)
     } else {
@@ -158,6 +193,7 @@ const BlogManagement = () => {
         id: Date.now(), // Generate a unique ID
         date: submitDate,
         tags: formattedTags,
+        imageUrl: imageUrl
       }
       setBlogPosts([...blogPosts, newPost])
     }
@@ -174,6 +210,7 @@ const BlogManagement = () => {
       ...post,
       tags: post.tags.join(', '),
     })
+    setImagePreview(post.imageUrl)
     setShowAddModal(true)
   }
 
@@ -207,6 +244,8 @@ const BlogManagement = () => {
       isPublished: true,
     })
     setEditMode(false)
+    setSelectedFile(null)
+    setImagePreview(null)
   }
 
   // Handle closing modal
@@ -465,13 +504,47 @@ const BlogManagement = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Image URL</Form.Label>
-              <Form.Control type="url" name="imageUrl" value={formData.imageUrl} onChange={handleInputChange} required />
-              {formData.imageUrl && (
-                <div className="mt-2">
-                  <img src={formData.imageUrl} alt="Post preview" className="img-thumbnail" style={{ maxHeight: '100px' }} />
-                </div>
-              )}
+              <Form.Label>Blog Image</Form.Label>
+              <div className="d-flex flex-column">
+                <Form.Control 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleFileChange} 
+                  className="mb-2"
+                />
+                {imagePreview && (
+                  <div className="mt-2">
+                    <img 
+                      src={imagePreview} 
+                      alt="Post preview" 
+                      className="img-thumbnail" 
+                      style={{ maxHeight: '150px' }} 
+                    />
+                    <Button 
+                      variant="outline-danger" 
+                      size="sm" 
+                      className="mt-2"
+                      onClick={() => {
+                        setImagePreview(null);
+                        setSelectedFile(null);
+                      }}
+                    >
+                      Remove Image
+                    </Button>
+                  </div>
+                )}
+                {editMode && !imagePreview && formData.imageUrl && (
+                  <div className="mt-2">
+                    <p className="mb-1">Current image:</p>
+                    <img 
+                      src={formData.imageUrl} 
+                      alt="Current post image" 
+                      className="img-thumbnail" 
+                      style={{ maxHeight: '150px' }} 
+                    />
+                  </div>
+                )}
+              </div>
             </Form.Group>
 
             <Form.Group className="mb-3">

@@ -9,7 +9,7 @@
 
   &.navbar-expand-xl {
     width: 16.25rem;
-    
+
     .sidebar-content {
       width: 16.25rem;
       height: 100%;
@@ -28,16 +28,16 @@
       &::-webkit-scrollbar {
         width: 4px;
       }
-      
+
       &::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 4px;
       }
-      
+
       &::-webkit-scrollbar-thumb {
         background-color: var(--#{$prefix}primary);
         border-radius: 4px;
-        
+
         &:hover {
           background-color: var(--#{$prefix}primary-hover);
         }
@@ -57,16 +57,16 @@
       &::-webkit-scrollbar {
         width: 4px;
       }
-      
+
       &::-webkit-scrollbar-track {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 4px;
       }
-      
+
       &::-webkit-scrollbar-thumb {
         background-color: var(--#{$prefix}primary);
         border-radius: 4px;
-        
+
         &:hover {
           background-color: var(--#{$prefix}primary-hover);
         }
@@ -141,6 +141,10 @@
           height: 50px;
           width: auto;
         }
+        .navbar-admin-logo {
+          height: 100px;
+          width: auto;
+        }
 
         .sidebar-content {
           padding: 0 1rem 1rem;
@@ -164,7 +168,7 @@
         }
 
         // Sidebar menu item hover and active
-        .sidebar-content .navbar-nav>.nav-item>.nav-link[data-bs-toggle=collapse][aria-expanded=true] {
+        .sidebar-content .navbar-nav > .nav-item > .nav-link[data-bs-toggle='collapse'][aria-expanded='true'] {
           background: rgba(var(--#{$prefix}primary-rgb), 0.1);
           color: var(--#{$prefix}primary) !important;
           border-radius: $border-radius;
@@ -192,12 +196,12 @@
         }
 
         // Sidebar menu dropdown arrow
-        .sidebar-content .nav-item [data-bs-toggle=collapse] {
+        .sidebar-content .nav-item [data-bs-toggle='collapse'] {
           position: relative;
 
           &:before,
           &:after {
-            content: "";
+            content: '';
             background: rgba(var(--#{$prefix}white-rgb), 0.7);
             border-radius: 1px;
             display: block;
@@ -205,7 +209,9 @@
             height: 2px;
             width: 7px;
             margin: auto 12px;
-            transition: transform 0.3s cubic-bezier(0.8, 0.2, 0.5, 0.1), background 0.2s ease-in-out;
+            transition:
+              transform 0.3s cubic-bezier(0.8, 0.2, 0.5, 0.1),
+              background 0.2s ease-in-out;
             top: 0;
             bottom: 0;
           }
@@ -220,7 +226,7 @@
             right: 5px;
           }
 
-          &[aria-expanded=true] {
+          &[aria-expanded='true'] {
             &:before {
               transform: rotate(40deg);
               background: var(--#{$prefix}primary);
@@ -269,18 +275,19 @@
 
           .navbar-brand {
             padding: 1.3rem;
+            display: flex;
+            justify-content: center;
+            width: 100%;
           }
 
           .navbar-nav {
-            margin-bottom: 50px;
+            margin-bottom: 100px;
           }
 
           .navbar-nav .nav-item {
             position: relative;
           }
-
         }
-
 
         // Navbar styling for navbar collapse
         @include media-breakpoint-down($next) {
@@ -297,7 +304,7 @@
             padding: 1rem;
           }
 
-          .navbar-nav>.nav-item>.nav-link {
+          .navbar-nav > .nav-item > .nav-link {
             padding: 0.2rem;
             margin-bottom: 0;
             font-size: 0.938rem;
@@ -307,7 +314,6 @@
             border-bottom: 0;
             padding: 0;
           }
-
         }
       }
     }
@@ -395,12 +401,9 @@
   z-index: 1;
 }
 
-
-
 .admin-offcanvas-menu {
-
   // Sidebar menu item hover and active
-  .nav-item>.nav-link[data-bs-toggle=collapse][aria-expanded=true] {
+  .nav-item > .nav-link[data-bs-toggle='collapse'][aria-expanded='true'] {
     background: rgba(var(--#{$prefix}primary-rgb), 0.1);
     color: var(--#{$prefix}primary) !important;
     border-radius: $border-radius;
@@ -427,12 +430,12 @@
   }
 
   // Sidebar menu dropdown arrow
-  .nav-item [data-bs-toggle=collapse] {
+  .nav-item [data-bs-toggle='collapse'] {
     position: relative;
 
     &:before,
     &:after {
-      content: "";
+      content: '';
       background: rgba(var(--#{$prefix}white-rgb), 0.7);
       border-radius: 1px;
       display: block;
@@ -440,7 +443,9 @@
       height: 2px;
       width: 7px;
       margin: auto 12px;
-      transition: transform 0.3s cubic-bezier(0.8, 0.2, 0.5, 0.1), background 0.2s ease-in-out;
+      transition:
+        transform 0.3s cubic-bezier(0.8, 0.2, 0.5, 0.1),
+        background 0.2s ease-in-out;
       top: 0;
       bottom: 0;
     }
@@ -455,7 +460,7 @@
       right: 5px;
     }
 
-    &[aria-expanded=true] {
+    &[aria-expanded='true'] {
       &:before {
         transform: rotate(40deg);
         background: var(--#{$prefix}primary);
