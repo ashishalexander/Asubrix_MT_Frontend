@@ -1,3 +1,6 @@
+# Build stage
+FROM node:18 AS build
+
 # Set working directory
 WORKDIR /app
 
