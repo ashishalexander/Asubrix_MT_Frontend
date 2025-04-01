@@ -7,13 +7,14 @@
  * - General: src/assets/scss/components/_general.scss
  */
 
-import React, { useState } from 'react'
-import { Container, Form, Button, Modal } from 'react-bootstrap'
-import { FiSearch } from 'react-icons/fi'
-import { FaPlus, FaUserGraduate } from 'react-icons/fa'
 import PageMetaData from '@/components/PageMetaData'
-import StudentTable from './components/StudentTable'
+import React, { useState } from 'react'
+import { Button, Container, Form, Modal } from 'react-bootstrap'
+import { FaPlus } from 'react-icons/fa'
+import { FiSearch } from 'react-icons/fi'
+import StudentFilterAndExport from './components/StudentFilterAndExport'
 import StudentForm from './components/StudentForm'
+import StudentTable from './components/StudentTable'
 
 const dummyStudents = [
   {
@@ -74,6 +75,7 @@ const StudentManagement = () => {
   const [sortBy, setSortBy] = useState('newest')
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingStudent, setEditingStudent] = useState(null)
+  const [isFilterActive, setIsFilterActive] = useState(false)
 
   const handleEdit = (student) => {
     setEditingStudent(student)
@@ -88,37 +90,27 @@ const StudentManagement = () => {
     setStudents(students.map((student) => (student.id === studentId ? { ...student, status: newStatus } : student)))
   }
 
-  // const handleAddStudent = (newStudent) => {
-  //   if (editingStudent) {
-  //     // Update existing student
-  //     setStudents(students.map((student) => (student.id === editingStudent.id ? { ...newStudent, id: student.id } : student)))
-  //   } else {
-  //     // Add new student
-  //     setStudents([...students, { ...newStudent, id: students.length + 1, enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}` }])
-  //   }
-  //   setShowAddModal(false)
-  //   setEditingStudent(null)
-  // }
   const handleAddStudent = (newStudent) => {
     // If newStudent is null, just close the modal
     if (newStudent === null) {
-      setShowAddModal(false);
-      setEditingStudent(null);
-      return;
+      setShowAddModal(false)
+      setEditingStudent(null)
+      return
     }
-    
+
     if (editingStudent) {
       // Update existing student
-      setStudents(students.map((student) => 
-        (student.id === editingStudent.id ? { ...newStudent, id: student.id } : student)
-      ))
+      setStudents(students.map((student) => (student.id === editingStudent.id ? { ...newStudent, id: student.id } : student)))
     } else {
       // Add new student
-      setStudents([...students, { 
-        ...newStudent, 
-        id: students.length + 1, 
-        enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}` 
-      }])
+      setStudents([
+        ...students,
+        {
+          ...newStudent,
+          id: students.length + 1,
+          enrollmentId: `STU${String(students.length + 1).padStart(3, '0')}`,
+        },
+      ])
     }
     setShowAddModal(false)
     setEditingStudent(null)
@@ -127,6 +119,47 @@ const StudentManagement = () => {
   const handleCloseModal = () => {
     setShowAddModal(false)
     setEditingStudent(null)
+  }
+
+  // Filter students based on search query
+  const filteredStudents = students.filter(
+    (student) =>
+      student.name.toLowerCase().includes(searchQuery.toLowerCase()) || student.enrollmentId.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
+  // Format student data for export
+  const exportableStudentData = filteredStudents.map((student) => ({
+    ID: student.enrollmentId,
+    Name: student.name,
+    Email: student.email,
+    Phone: student.phone,
+    EnrollmentDate: student.enrollmentDate,
+    Status: student.status,
+    Courses: student.courses.join(', '),
+  }))
+
+  // Add these functions to StudentManagement
+  const handleDateFilterChange = (filterType, startDate, endDate) => {
+    // Filter the students based on enrollment date
+    let filteredData = [...dummyStudents]
+
+    if (filterType === 'custom' && startDate && endDate) {
+      filteredData = dummyStudents.filter((student) => {
+        const enrollmentDate = new Date(student.enrollmentDate)
+        return enrollmentDate >= startDate && enrollmentDate <= endDate
+      })
+      setIsFilterActive(true) // Set filter active flag
+    } else if (filterType === 'clear') {
+      // Handle clear filter case
+      setIsFilterActive(false)
+    }
+
+    setStudents(filteredData)
+  }
+
+  const handleSortChange = (sortField) => {
+    setSortBy(sortField)
+    // You can implement additional sorting logic here if needed
   }
 
   return (
@@ -189,43 +222,55 @@ const StudentManagement = () => {
         </Container>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards and Export Section */}
+      {/* Stats Cards and Export Section */}
       <Container fluid>
-        <div className="row mb-4 px-4">
-          <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div className="card">
-              <div className="card-body p-3">
-                <div className="row align-items-center">
-                  <div className="col-8">
-                    <div className="numbers">
-                      <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Students</p>
-                    </div>
-                  </div>
-                  <div className="col-4 text-end">
-                    <div className="icon icon-shape border border-2 border-theme-secondary text-center border-radius-md">
-                      <h5 className="font-weight-bolder mb-0 text-theme-secondary">{students.length}</h5>
-                    </div>
-                  </div>
-                </div>
+        <div className="row mb-4 align-items-center">
+          <div className="col-md-3 col-sm-6 mb-md-0 mb-3">
+            <div className="d-flex align-items-center">
+              <div className="me-3">
+                <h5 className="text-uppercase text-muted mb-0 fs-6">TOTAL STUDENTS</h5>
+              </div>
+              <div className="border border-2 border-secondary rounded p-2 px-3">
+                <h3 className="m-0 fw-bold">{students.length}</h3>
               </div>
             </div>
           </div>
-          <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div className="card">
-              <div className="card-body p-3">
-                <div className="row align-items-center">
-                  <div className="col-8">
-                    <div className="numbers">
-                      <p className="text-sm mb-0 text-uppercase font-weight-bold">Active Students</p>
-                    </div>
-                  </div>
-                  <div className="col-4 text-end">
-                    <div className="icon icon-shape border border-2 border-primary text-center border-radius-md">
-                      <h5 className="font-weight-bolder mb-0 text-primary">{students.filter((s) => s.status === 'active').length}</h5>
-                    </div>
-                  </div>
-                </div>
+
+          <div className="col-md-3 col-sm-6 mb-md-0 mb-3">
+            <div className="d-flex align-items-center">
+              <div className="me-3">
+                <h5 className="text-uppercase text-muted mb-0 fs-6">ACTIVE STUDENTS</h5>
               </div>
+              <div className="border border-2 border-danger rounded p-2 px-3">
+                <h3 className="m-0 fw-bold text-danger">{students.filter((s) => s.status === 'active').length}</h3>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-6 text-md-end mt-sm-3 mt-md-0">
+            <div className="d-flex justify-content-md-end gap-2">
+              {isFilterActive && (
+                <span
+                  className="filter-clear-btn cursor-pointer d-inline-flex align-items-center gap-2 px-2 py-0 m-0 "
+                  onClick={() => {
+                    setStudents(dummyStudents)
+                    setIsFilterActive(false)
+                  }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                  Clear Filter
+                </span>
+              )}
+              <StudentFilterAndExport
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                tableData={exportableStudentData}
+                onDateFilterChange={handleDateFilterChange}
+                onSortChange={handleSortChange}
+              />
             </div>
           </div>
         </div>
@@ -233,16 +278,7 @@ const StudentManagement = () => {
         {/* Student Table */}
         <div className="card">
           <div className="card-body px-0 pt-0 pb-2">
-            <StudentTable
-              students={students.filter(
-                (student) =>
-                  student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                  student.enrollmentId.toLowerCase().includes(searchQuery.toLowerCase())
-              )}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onStatusChange={handleStatusChange}
-            />
+            <StudentTable students={filteredStudents} onEdit={handleEdit} onDelete={handleDelete} onStatusChange={handleStatusChange} />
           </div>
         </div>
       </Container>
