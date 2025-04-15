@@ -48,7 +48,6 @@ const ContactFormAndMap = () => {
             </Col>
             <Col md={6}>
               <h2 className="mt-4 mt-md-0">Let&apos;s talk</h2>
-              <p>To request a quote or want to meet up for coffee, contact us directly or fill out the form and we will get back to you promptly</p>
               <form onSubmit={handleSubmit(() => {})}>
                 <TextFormInput name="name" label="Your name *" control={control} className="form-control-lg" containerClassName="mb-4 bg-light-input" />
                 <TextFormInput name="email" type="email" label="Email address *" control={control} className="form-control-lg" containerClassName="mb-4 bg-light-input" />

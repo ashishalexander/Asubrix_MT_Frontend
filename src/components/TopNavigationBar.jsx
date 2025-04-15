@@ -126,10 +126,10 @@ const TopNavigationBar = () => {
                     { label: 'Home', path: '/' },
                     { label: 'About', path: '/about-us' },
                     { label: 'Our Team', path: '/our-team' },
-                    { label: 'Courses', path: '/courses' },
+                    // { label: 'Courses', path: '/courses' },
                     { label: 'Free Test', path: '/free-test' },
                     { label: 'Gallery', path: '/gallery' },
-                    { label: 'Blogs', path: '/blogs' },
+                    // { label: 'Blogs', path: '/blogs' },
                     { label: 'Contact', path: '/contact-us' },
                   ].map(({ label, path }, idx) => (
                     <NavItem key={idx}>
@@ -138,26 +138,11 @@ const TopNavigationBar = () => {
                       </Link>
                     </NavItem>
                   ))}
-                  {/* <NavItem>
-                    <Link className="nav-link" to="/home">
-                      Home
-                    </Link>
-                  </NavItem> */}
-                  {/* <NavItem>
-                    <Link className="nav-link" to="/pages/about/about-us">
-                      About
-                    </Link>
-                  </NavItem>
-                  <NavItem>
-                    <Link className="nav-link" to="/pages/about/contact-us">
-                      Contact
-                    </Link>
-                  </NavItem> */}
                 </ul>
               </div>
             </Collapse>
             <ul className="nav flex-row align-items-center list-unstyled ms-xl-auto">
-              <NotificationDropdown />
+              {/* <NotificationDropdown /> */}
               <ProfileDropdown className="nav-item ms-3" />
             </ul>
           </Container>

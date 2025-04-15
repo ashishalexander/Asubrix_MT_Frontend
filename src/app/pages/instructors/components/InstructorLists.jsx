@@ -17,26 +17,7 @@ const InstructorCard = ({ instructor }) => {
         <h5 className="card-title mb-1">
           <Link to="#" className="text-decoration-none">{name}</Link>
         </h5>
-        <p className="text-muted small mb-2">{department}</p>
-        {/* <div className="d-flex justify-content-center align-items-center">
-          <span className="fw-bold me-2">{rating}</span>
-          <FaStar className="text-warning" />
-          <span className="small ms-2 text-muted">Professor at {college}</span>
-        </div>
-        <div className="mt-3">
-          <ul className="list-inline mb-0">
-            {socialMediaLinks.map((social, idx) => {
-              const Icon = social.icon;
-              return (
-                <li className="list-inline-item" key={idx}>
-                  <Link className={clsx('mb-0 me-1', social.variant)} to="">
-                    <Icon />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div> */}
+        {/* <p className="text-muted small mb-2">{department}</p> */}
       </CardBody>
     </Card>
   );

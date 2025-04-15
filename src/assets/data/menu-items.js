@@ -129,40 +129,20 @@ export const INSTRUCTOR_MENU_ITEMS = [
     url: '/student/dashboard',
     parentKey: 'instructor'
   },
-  {
-    key: 'courses',
-    label: 'My Courses',
-    icon: BsBasket,
-    url: '/student/my-courses',
-    parentKey: 'instructor'
-  },
-  {
-    key: 'chat',
-    label: 'Chat with Admin',
-    icon: FaRegCommentDots,
-    url: '/student/chat',
-    parentKey: 'instructor'
-  },
   // {
-  //   key: 'quiz',
-  //   label: 'Quiz',
-  //   icon: BsQuestionDiamond,
-  //   url: '/instructor/quiz',
+  //   key: 'courses',
+  //   label: 'My Courses',
+  //   icon: BsBasket,
+  //   url: '/student/my-courses',
   //   parentKey: 'instructor'
   // },
-  //  {
-  //   key: 'earnings',
-  //   label: 'Earnings',
-  //   icon: BsGraphUp,
-  //   url: '/instructor/earning',
+  // {
+  //   key: 'chat',
+  //   label: 'Chat with Admin',
+  //   icon: FaRegCommentDots,
+  //   url: '/student/chat',
   //   parentKey: 'instructor'
-  // }, {
-  //   key: 'students',
-  //   label: 'Students',
-  //   icon: BsPeople,
-  //   url: '/instructor/student-list',
-  //   parentKey: 'instructor'
-  // }, 
+  // },
   {
     key: 'orders',
     label: 'Free Tests',
@@ -170,41 +150,14 @@ export const INSTRUCTOR_MENU_ITEMS = [
     url: '/student/test-details',
     parentKey: 'instructor'
   },
-  //  {
-  //   key: 'reviews',
-  //   label: 'Reviews',
-  //   icon: BsStar,
-  //   url: '/instructor/review',
-  //   parentKey: 'instructor'
-  // }, 
+
   // {
-  //   key: 'profile',
-  //   label: 'Edit Profile',
-  //   icon: BsPencilSquare,
-  //   url: '/instructor/edit-profile',
+  //   key: 'payout',
+  //   label: 'Payment History',
+  //   icon: BsWallet2,
+  //   url: '/student/payment-history',
   //   parentKey: 'instructor'
   // },
-  {
-    key: 'payout',
-    label: 'Payment History',
-    icon: BsWallet2,
-    url: '/student/payment-history',
-    parentKey: 'instructor'
-  },
-  //  {
-  //   key: 'setting',
-  //   label: 'Settings',
-  //   icon: BsGear,
-  //   url: '/instructor/setting',
-  //   parentKey: 'instructor'
-  // }, 
-  // {
-  //   key: 'delete',
-  //   label: 'Delete Profile',
-  //   icon: BsTrash,
-  //   url: '/instructor/delete-account',
-  //   parentKey: 'instructor'
-  // }
 ];
 export const STUDENT_MENU_ITEMS = [{
   key: 'dashboard',
