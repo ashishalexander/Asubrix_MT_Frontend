@@ -52,8 +52,10 @@ import Footerone from '@/components/footer'
 //     </footer>;
 // };
 
+
+  
 const Footer = () =>{
-  return <Footerone className="custom-footer"/>
+  return <></>
 }
 
 export default Footer;

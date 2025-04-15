@@ -32,6 +32,12 @@ import instructor6 from '@/assets/images/instructor/06.jpg';
 import instructor8 from '@/assets/images/instructor/08.jpg';
 import instructor10 from '@/assets/images/instructor/10.jpg';
 import instructor11 from '@/assets/images/instructor/11.jpg';
+import kannan from '@/assets/images/instructor/kannan_l.jpg';
+import kaviyazhagan from '@/assets/images/instructor/kaviyazhagan_r.jpg';
+import manojkumar from '@/assets/images/instructor/manojkumar_v.jpg';
+import prabakaran from '@/assets/images/instructor/prabakaran_m.jpg';
+import prashanth from '@/assets/images/instructor/prashanth_j.jpg';
+import ramasamy from '@/assets/images/instructor/ramasamy_a.jpg';
 import university1 from '@/assets/images/university/01.jpg';
 import university2 from '@/assets/images/university/02.jpg';
 import university3 from '@/assets/images/university/03.jpg';
@@ -729,10 +735,10 @@ export const eventsData = [{
 export const instructorsData = [{
   id: '401',
   title: 'Build your brand & business',
-  image: instructor2,
+  image: prabakaran,
   students: 25,
   tasks: 15,
-  name: 'Jacqueline Miller',
+  name: 'Prabakaran M',
   subject: 'Computer Teacher',
   rating: 4.5,
   college: 'Eastbay College',
@@ -743,10 +749,10 @@ export const instructorsData = [{
 }, {
   id: '402',
   title: 'Master in logo design',
-  image: instructor1,
+  image: manojkumar,
   students: 118,
   tasks: 9,
-  name: 'Samuel Bishop',
+  name: 'Manojkumar V',
   subject: 'Marketing Teacher',
   rating: 4.5,
   college: 'VNSGU College',
@@ -756,10 +762,10 @@ export const instructorsData = [{
 }, {
   id: '403',
   title: 'Create brand using vector illustration',
-  image: instructor8,
+  image: ramasamy,
   students: 92,
   tasks: 38,
-  name: 'Dennis Barrett',
+  name: 'Ramasamy A',
   subject: 'Science Teacher',
   rating: 4.5,
   college: 'Sigma College',
@@ -770,10 +776,10 @@ export const instructorsData = [{
 }, {
   id: '404',
   title: 'Develop your marketing skills style',
-  image: instructor4,
+  image: prashanth,
   students: 82,
   tasks: 5,
-  name: 'Carolyn Ortiz',
+  name: 'Prashanth J',
   subject: 'Economy Teacher',
   rating: 4.5,
   college: 'Cambridge College',
@@ -783,10 +789,10 @@ export const instructorsData = [{
 }, {
   id: '405',
   title: 'Build your own responsive website',
-  image: instructor3,
+  image: kaviyazhagan,
   students: 50,
   tasks: 10,
-  name: 'Billy Vasquez',
+  name: 'Kaviyazhagan R',
   subject: 'Computer Teacher',
   rating: 4.5,
   college: 'LPU College',
@@ -797,10 +803,10 @@ export const instructorsData = [{
 }, {
   id: '406',
   title: 'Become a professional product photographer',
-  image: instructor6,
+  image: kannan,
   students: 50,
   tasks: 10,
-  name: 'Samuel Bishop',
+  name: 'Kannan L',
   subject: 'Computer Teacher',
   rating: 4.7,
   college: 'NIT College',
@@ -808,32 +814,6 @@ export const instructorsData = [{
   description: 'Contrasted oh estimating instrument. Size like body some one had. Are conduct viewing boy minutes warrant the expense.',
   totalCourses: 25,
   verified: true
-}, {
-  id: '407',
-  title: 'Developed your photo editing skills',
-  image: instructor10,
-  students: 50,
-  tasks: 10,
-  name: 'Lori Stevens',
-  subject: 'Computer Teacher',
-  rating: 4.9,
-  college: 'Oxford University',
-  department: 'Medical Science',
-  description: 'Yet no jokes worse her why. Bed one supposing breakfast day fulfilled off depending questions. Whatever boy her exertion his extended. Ecstatic followed handsome drawings.',
-  totalCourses: 25
-}, {
-  id: '408',
-  title: 'Master logo design',
-  image: instructor11,
-  students: 50,
-  tasks: 10,
-  name: 'Joan Wallace',
-  subject: 'Computer Teacher',
-  rating: 4.9,
-  college: 'LPU College',
-  department: 'Graphic Designer',
-  description: 'Tt so contrasted oh estimating instrument. Size like body some one had. Are conduct viewing boy minutes warrant the expense.',
-  totalCourses: 25
 }];
 export const collegesData = [{
   id: '201',

@@ -1,11 +1,9 @@
-import { socialMediaLinks } from '@/assets/data/footer-items';
 import { getAllInstructors } from '@/helpers/data';
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
-import { Card, CardBody, Col, Container, Row } from 'react-bootstrap';
-import { FaStar } from 'react-icons/fa';
-import Pagination from './Pagination';
 import { useFetchData } from '@/hooks/useFetchData';
+import { Card, CardBody, Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Pagination from './Pagination';
+import './instructorStyles.css';
 
 const InstructorCard = ({ instructor }) => {
   const { image, name, college, department, rating } = instructor;
@@ -13,7 +11,7 @@ const InstructorCard = ({ instructor }) => {
   return (
     <Card className="shadow h-100">
       <div className="instructor-image-wrapper">
-        <img src={image} className="card-img-top" alt={name} />
+        <img src={image} className="card-img-top instructor-image" alt={name} />
       </div>
       <CardBody className="text-center">
         <h5 className="card-title mb-1">
@@ -58,7 +56,7 @@ const InstructorLists = () => {
           ))}
         </Row>
         <div className="mt-5">
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </Container>
     </section>

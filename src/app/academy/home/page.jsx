@@ -1,17 +1,13 @@
-import PageMetaData from '@/components/PageMetaData'
-import CourseSlider from './components/CourseSlider'
 import Footer from '@/components/Footer'
-import PopularCourses from './components/PopularCourses'
+import PageMetaData from '@/components/PageMetaData'
 import TopNavigationBar from '@/components/TopNavigationBar'
-// import TopNavigationBar from './components/TopNavigationBar'
-import TrendingCourses from './components/TrendingCourses'
-import HeroSlider from './components/HeroSlider'
-import OfferCourses from './components/OfferCourses'
-import FeaturedCourses from './components/FeaturedCourses'
-import Testimonials from './components/Testimonials'
-import UpcomingEvents from './components/UpcomingEvents'
+import PopularCourses from './components/PopularCourses'
 import AboutAndNoticeBoard from './components/AboutAndNoticeBoard'
 import EnrolledCourses from './components/EnrolledCourses'
+import FeaturedCourses from './components/FeaturedCourses'
+import HeroSlider from './components/HeroSlider'
+import OfferCourses from './components/OfferCourses'
+import Testimonials from './components/Testimonials'
 
 const AcademicHome = () => {
   return (
@@ -23,11 +19,8 @@ const AcademicHome = () => {
         <AboutAndNoticeBoard/>
         <OfferCourses />
         <EnrolledCourses />
-        {/* <CourseSlider /> */}
-        {/* <TrendingCourses /> */}
         <FeaturedCourses />
         <PopularCourses />
-        {/* <UpcomingEvents/> */}
         <Testimonials />
       </main>
       <Footer className="custom-footer" />
