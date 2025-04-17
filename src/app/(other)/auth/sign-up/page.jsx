@@ -1,10 +1,12 @@
+//src/app/(other)/auth/sign-up/page.jsx
+
 import element3Img from '@/assets/images/element/03.svg';
 import PageMetaData from '@/components/PageMetaData';
 import { Col, Row } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 import AuthLayout from '../components/AuthLayout';
-import SingUpForm from './components/SingUpForm';
+import SignUpForm from './components/SingUpForm';
 const SignUpPage = () => {
   return <>
       <PageMetaData title="Sign-Up" />
@@ -15,7 +17,7 @@ const SignUpPage = () => {
               <img src={element3Img} className="w-auto h-40px mb-2 ms-0" alt="element" />
               <h2>Sign up for your account!</h2>
               <p className="lead mb-4">Nice to see you! Please Sign up with your account.</p>
-              <SingUpForm />
+              <SignUpForm />
 
               <div className="mt-4 text-center">
                 <span>

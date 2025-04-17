@@ -43,6 +43,7 @@ const RequestDemo = lazy(() => import('@/app/pages/form/request-demo/page'))
 const BookClass = lazy(() => import('@/app/pages/form/book-class/page'))
 const RequestAccess = lazy(() => import('@/app/pages/form/request-access/page'))
 const AdmissionForm = lazy(() => import('@/app/pages/form/admission-form/page'))
+const TestQuestions = lazy(() => import('@/app/pages/test-questions/page'))
 
 // about pages
 const AboutUs = lazy(() => import('@/app/pages/about/about-us/page'))
@@ -307,7 +308,7 @@ const pagesRoutes = [
     element: <FreeTest />,
   },
   {
-    path: '/free-test/free-test-details',
+    path: '/free-test/free-test-details/:testId',
     name: 'Free Test Details',
     element: <TestDetails />,
   },
@@ -315,6 +316,11 @@ const pagesRoutes = [
     path: '/test-questions',
     name: 'Test Questions',
     element: <TestQuestion />,
+  },
+  {
+    path: '/test-questions/:testId',
+    name: 'Test Questions',
+    element: <TestQuestions />,
   },
   // ---------------------------------
   {

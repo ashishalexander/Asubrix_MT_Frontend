@@ -1,7 +1,6 @@
 // App.jsx
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Button, Modal, Badge, Card } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { Container, Row, Col, Button, Modal, Badge, Card, Spinner } from 'react-bootstrap'
 import {
   InfoCircleFill,
   Stopwatch,
@@ -12,12 +11,26 @@ import {
   ExclamationTriangleFill,
   TrophyFill,
 } from 'react-bootstrap-icons'
+import { useParams, useNavigate } from 'react-router-dom'
 import QuestionNavigator from './components/QuestionNavigator'
 import QuestionPanel from './components/QuestionPanel'
 import InfoSidebar from './components/InfoSidebar'
 import { XCircleFill } from 'react-bootstrap-icons'
+import { useAuthContext } from '@/context/useAuthContext'
+import { useNotificationContext } from '@/context/useNotificationContext'
+import authService from '@/helpers/authService'
 
 function TestQuestions() {
+  const { testId } = useParams()
+  console.log('TestQuestions component received testId from URL params:', testId);
+  const navigate = useNavigate()
+  const { user, isAuthenticated } = useAuthContext()
+  const { showNotification } = useNotificationContext()
+  
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [testData, setTestData] = useState(null)
+  
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [showInfoPanel, setShowInfoPanel] = useState(true)
   const [showInstructions, setShowInstructions] = useState(false)
@@ -39,62 +52,75 @@ function TestQuestions() {
   const [timerWarning, setTimerWarning] = useState(false)
   const [startTime] = useState(Date.now())
 
-  // Test info
-  const testName = 'General Knowledge Assessment'
+  // Questions state
+  const [questions, setQuestions] = useState([])
 
-  // Instructions content
-  const instructions = [
-    'Read each question carefully before answering.',
-    'You can mark questions for review to come back to them later.',
-    'Once you submit the test, you cannot change your answers.',
-    'Each question carries equal marks.',
-    'There is no negative marking for wrong answers.',
-    'You can use the navigation panel to move between questions.',
-  ]
+  // Fetch test data from API
+  useEffect(() => {
+    if (!isAuthenticated || !user?.token) {
+      setError('Authentication required')
+      setLoading(false)
+      return
+    }
 
-  // Sample questions for the test
-  const [questions, setQuestions] = useState([
-    {
-      id: 1,
-      question: 'What is the capital of France?',
-      options: ['London', 'Berlin', 'Paris', 'Madrid'],
-      selectedOption: null,
-      markedForReview: false,
-      correctOption: 2, // Paris
-    },
-    {
-      id: 2,
-      question: 'Which planet is known as the Red Planet?',
-      options: ['Venus', 'Mars', 'Jupiter', 'Mercury'],
-      selectedOption: null,
-      markedForReview: false,
-      correctOption: 1, // Mars
-    },
-    {
-      id: 3,
-      question: 'What is the largest ocean on Earth?',
-      options: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
-      selectedOption: null,
-      markedForReview: false,
-      correctOption: 3, // Pacific Ocean
-    },
-    {
-      id: 4,
-      question: 'What is the chemical symbol for gold?',
-      options: ['Go', 'Gl', 'Au', 'Ag'],
-      selectedOption: null,
-      markedForReview: false,
-      correctOption: 2, // Au
-    },
-    {
-      id: 5,
-      question: 'Which of these is not a programming language?',
-      options: ['Java', 'Python', 'Banana', 'JavaScript'],
-      selectedOption: null,
-      markedForReview: false,
-      correctOption: 2, // Banana
-    },
-  ])
+    const fetchTestData = async () => {
+      try {
+        console.log(`Fetching test data for test ID: ${testId}`)
+        
+        // Use the API endpoint for taking a test
+        const responseData = await authService.getTestToTake(testId, user.token)
+        console.log('Test data received:', responseData)
+        
+        if (!responseData.test) {
+          throw new Error('Test data not found in response');
+        }
+        
+        // Set test data
+        setTestData(responseData.test)
+        
+        // Set time remaining if duration is available
+        // API provides duration_minutes directly
+        if (responseData.test.duration_minutes) {
+          const totalSeconds = parseInt(responseData.test.duration_minutes) * 60;
+          setTimeRemaining(totalSeconds > 0 ? totalSeconds : 3600)
+        }
+        
+        // Format questions from API response
+        const formattedQuestions = responseData.test.questions.map(q => ({
+          id: q.id,
+          question: q.question?.en, // Question text is in question.en
+          question_tamil: q.question?.ta, // Tamil version in question.ta
+          options: q.options.map(opt => opt.text?.en), // Options text in text.en
+          options_tamil: q.options.map(opt => opt.text?.ta), // Tamil options in text.ta
+          optionIds: q.options.map(opt => opt.id),
+          selectedOption: null,
+          markedForReview: false
+        }))
+        
+        setQuestions(formattedQuestions)
+        setLoading(false)
+      } catch (err) {
+        console.error('Error fetching test:', err)
+        
+        let errorMessage = 'Failed to load test'
+        if (err.response?.status === 401) {
+          errorMessage = 'Your session has expired. Please sign in again.'
+        } else if (err.response?.data?.error) {
+          errorMessage = err.response.data.error
+        }
+        
+        setError(errorMessage)
+        showNotification({
+          message: errorMessage,
+          variant: 'danger'
+        })
+        
+        setLoading(false)
+      }
+    }
+
+    fetchTestData()
+  }, [testId, isAuthenticated, user?.token, showNotification])
 
   // Calculate test stats
   const answeredCount = questions.filter((q) => q.selectedOption !== null).length
@@ -169,48 +195,137 @@ function TestQuestions() {
     setShowConfirmation(true)
   }
 
-  const handleSubmitTest = () => {
+  const handleSubmitTest = async () => {
     // Close confirmation modal
     setShowConfirmation(false)
-
+    
     // Stop the timer
     setTimerActive(false)
-
-    // Calculate results
-    const totalQuestions = questions.length
-    const correctAnswers = questions.filter((q) => q.selectedOption !== null && q.selectedOption === q.correctOption).length
-    const incorrectAnswers = questions.filter((q) => q.selectedOption !== null && q.selectedOption !== q.correctOption).length
-    const unanswered = questions.filter((q) => q.selectedOption === null).length
-    const score = Math.round((correctAnswers / totalQuestions) * 100)
-
-    // Calculate time taken
-    const timeTaken = formatDuration(Date.now() - startTime)
-
-    // Set results
-    setTestResults({
-      totalQuestions,
-      correctAnswers,
-      incorrectAnswers,
-      unanswered,
-      score,
-      timeTaken,
-    })
-
-    // Show results page
-    setShowResults(true)
+    
+    // Prepare submission data in the exact format required by the API
+    const answers = questions.map(q => {
+      if (q.selectedOption !== null) {
+        return {
+          question_id: q.id,
+          selected_option_id: q.optionIds[q.selectedOption]
+        }
+      }
+      return null
+    }).filter(a => a !== null)
+    
+    try {
+      console.log('Submitting test answers:', answers)
+      
+      // Debug the request payload
+      console.log('Request payload:', JSON.stringify({ answers }))
+      
+      // Submit test with answers array
+      const responseData = await authService.submitTest(testId, { answers }, user.token)
+      console.log('Test submission response:', responseData)
+      
+      // Calculate results based on the response
+      const totalQuestions = questions.length
+      
+      // Extract result data from the response
+      let correctAnswers = 0
+      let incorrectAnswers = 0
+      let score = 0
+      let passed = false
+      
+      if (responseData.result) {
+        // Use the result object structure from the API response
+        correctAnswers = responseData.result.correct_answers || 0
+        incorrectAnswers = totalQuestions - correctAnswers
+        score = responseData.result.score || 0
+        passed = responseData.result.passed || false
+      } else {
+        // Fallback calculations in case the API response is different
+        correctAnswers = responseData.correct_answers || 0
+        incorrectAnswers = responseData.incorrect_answers || 0
+        score = responseData.score || 0
+        passed = responseData.passed || false
+      }
+      
+      const unanswered = totalQuestions - answers.length
+      
+      // Calculate time taken
+      const timeTaken = formatDuration(Date.now() - startTime)
+      
+      // Set results
+      setTestResults({
+        totalQuestions,
+        correctAnswers,
+        incorrectAnswers,
+        unanswered,
+        score,
+        timeTaken,
+        passed
+      })
+      
+      // Show results page
+      setShowResults(true)
+      
+      showNotification({
+        message: 'Test submitted successfully!',
+        variant: 'success'
+      })
+    } catch (err) {
+      console.error('Error submitting test:', err)
+      
+      // Log detailed error information for debugging
+      if (err.response) {
+        console.error('Response status:', err.response.status)
+        console.error('Response data:', err.response.data)
+      } else if (err.request) {
+        console.error('Request made but no response received:', err.request)
+      } else {
+        console.error('Error setting up request:', err.message)
+      }
+      
+      showNotification({
+        message: err.response?.data?.error || 'Failed to submit test. Please try again.',
+        variant: 'danger'
+      })
+      
+      // Re-enable timer if submission fails
+      setTimerActive(true)
+    }
   }
 
   const handleBackToHome = () => {
-    // This would typically navigate to your home page
-    window.location.href = '/academy/home'
+    navigate('/academy/home')
   }
 
   const handleExitTest = () => {
-    setShowExitConfirmation(true)
+    setShowExitConfirmation(true);
   }
 
   const handleConfirmExit = () => {
-    window.location.href = '/pages/free-test/free-test-details'
+    navigate('/free-test');
+  }
+
+  if (loading) {
+    return (
+      <Container className="text-center py-5">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading test...</span>
+        </Spinner>
+        <p className="mt-3">Loading test content...</p>
+      </Container>
+    )
+  }
+
+  if (error) {
+    return (
+      <Container className="text-center py-5">
+        <div className="alert alert-danger">
+          <p>{error}</p>
+          <Button variant="primary" onClick={() => navigate('/free-test')}>
+            Back to Tests
+          </Button>
+        </div>
+      </Container>
+    )
   }
 
   // If showing results page
@@ -228,13 +343,21 @@ function TestQuestions() {
                   </div>
 
                   <div className="results-content p-4">
-                    <h2 className="test-name mb-4">{testName}</h2>
+                    <h2 className="test-name mb-4">{testData?.title || 'Test'}</h2>
 
                     <div className="score-container mb-4">
                       <div className="score-circle">
                         <div className="score-value">{testResults.score}%</div>
                       </div>
                       <div className="score-label">Your Score</div>
+                    </div>
+
+                    <div className="pass-status mb-4">
+                      {testResults.passed ? (
+                        <Badge bg="success" className="p-2 fs-6">PASSED</Badge>
+                      ) : (
+                        <Badge bg="danger" className="p-2 fs-6">FAILED</Badge>
+                      )}
                     </div>
 
                     <div className="results-details">
@@ -258,11 +381,14 @@ function TestQuestions() {
                         <div className="result-label">Time Taken</div>
                         <div className="result-value">{testResults.timeTaken}</div>
                       </div>
+                      <div className="result-item">
+                        <div className="result-label">Passing Score</div>
+                        <div className="result-value">{testData?.passing_score || 60}%</div>
+                      </div>
                     </div>
 
-                    <div className="mt-4 text-center">
-                      <Button variant="primary" size="lg" className="back-home-btn" onClick={handleBackToHome}>
-                        <HouseFill size={20} className="me-2" />
+                    <div className="d-flex justify-content-center mt-4">
+                      <Button variant="primary" className="px-4 py-2" onClick={handleBackToHome}>
                         Back to Home
                       </Button>
                     </div>
@@ -282,7 +408,7 @@ function TestQuestions() {
         <Container fluid className="test-app">
           <div className="test-header">
             <div>
-              <h1 className="test-title">{testName}</h1>
+              <h1 className="test-title">{testData?.title || 'Test'}</h1>
               <div className="mt-2">
                 <Badge bg="success" className="me-2">
                   {answeredCount} Answered
@@ -307,7 +433,10 @@ function TestQuestions() {
               </div>
 
               {/* Exit test button */}
-              <Button  className="mb-0 ms-2 d-flex align-items-center bg-danger border-0" onClick={handleExitTest}>
+              <Button 
+                className="mb-0 ms-2 d-flex align-items-center bg-danger border-0" 
+                onClick={handleExitTest}
+              >
                 <XCircleFill size={20} className="me-2" />
                 Exit Test
               </Button>
@@ -358,7 +487,7 @@ function TestQuestions() {
       <InfoSidebar
         isOpen={showInfoPanel}
         toggleSidebar={() => setShowInfoPanel(!showInfoPanel)}
-        testName={testName}
+        testName={testData?.title || 'Test'}
         totalQuestions={questions.length}
         answeredQuestions={answeredCount}
         markedQuestions={markedCount}
@@ -376,9 +505,21 @@ function TestQuestions() {
         <Modal.Body>
           <p className="mb-3">Please read the following instructions carefully before proceeding with the test:</p>
           <ul className="instructions-list">
-            {instructions.map((instruction, index) => (
-              <li key={index}>{instruction}</li>
-            ))}
+            {typeof testData?.instructions === 'string' ? (
+              <li>{testData.instructions}</li>
+            ) : Array.isArray(testData?.instructions) ? (
+              testData.instructions.map((instruction, index) => (
+                <li key={index}>{instruction}</li>
+              ))
+            ) : (
+              <>
+                <li>Read each question carefully before answering.</li>
+                <li>You can mark questions for review to come back to them later.</li>
+                <li>Once you submit the test, you cannot change your answers.</li>
+                <li>Each question carries equal marks.</li>
+                <li>There is no negative marking for wrong answers.</li>
+              </>
+            )}
           </ul>
         </Modal.Body>
         <Modal.Footer>
@@ -390,7 +531,7 @@ function TestQuestions() {
 
       {/* Confirmation Modal */}
       <Modal show={showConfirmation} onHide={() => setShowConfirmation(false)} centered className="confirmation-modal">
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title className="d-flex align-items-center">
             <ExclamationTriangleFill size={24} className="me-2 text-warning" />
             Submit Test
@@ -400,6 +541,13 @@ function TestQuestions() {
           <p className="confirmation-message">
             Are you sure you want to submit your test? Once submitted, you will not be able to change your answers.
           </p>
+
+          {answeredCount === 0 && (
+            <div className="alert alert-warning">
+              <ExclamationTriangleFill size={16} className="me-2" />
+              Warning: You haven't answered any questions. Submitting now will result in a score of 0.
+            </div>
+          )}
 
           <div className="test-summary">
             <h6>Test Summary</h6>
@@ -425,24 +573,26 @@ function TestQuestions() {
           <Button variant="outline-secondary" onClick={() => setShowConfirmation(false)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleSubmitTest}>
+          <Button 
+            variant="primary" 
+            onClick={handleSubmitTest}
+          >
             Yes, Submit Test
           </Button>
         </Modal.Footer>
       </Modal>
-
+      
       {/* Exit Confirmation Modal */}
-      <Modal show={showExitConfirmation} onHide={() => setShowExitConfirmation(false)} centered className="confirmation-modal">
-        <Modal.Header>
-          <Modal.Title className="d-flex align-items-center">
-            <ExclamationTriangleFill size={20} className="me-2 text-warning" />
-            Exit Test
-          </Modal.Title>
+      <Modal 
+        show={showExitConfirmation} 
+        onHide={() => setShowExitConfirmation(false)} 
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Exit Test?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="confirmation-message">
-            Are you sure you want to exit the test? Your progress will be lost.
-          </p>
+          <p>Are you sure you want to exit the test? Your progress will be lost.</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowExitConfirmation(false)}>

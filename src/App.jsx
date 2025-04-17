@@ -1,13 +1,13 @@
+//src/App.jsx
+
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AppProvidersWrapper from "./components/wrappers/AppProvidersWrapper";
 import AppRouter from "./routes/router";
 import ContactForm from "@/components/PopUpForm"; 
 import "@/assets/scss/style.scss";
-import configureFakeBackend from "./helpers/fake-backend";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-configureFakeBackend();
 
 function App() {
   const [showContactForm, setShowContactForm] = useState(false);

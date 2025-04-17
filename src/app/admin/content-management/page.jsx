@@ -7,27 +7,108 @@
  * - Tables: src/assets/scss/components/_tables.scss
  */
 
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, ButtonGroup } from 'react-bootstrap';
-import { FiGrid, FiList, FiSearch, FiFolder } from 'react-icons/fi';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Container, Row, Col, Card, Form, Button, ButtonGroup, InputGroup } from 'react-bootstrap';
+import { FiGrid, FiList, FiSearch, FiFolder, FiX } from 'react-icons/fi';
 import { FaPlus } from 'react-icons/fa'
 import TestsPortal from './components/TestsPortal';
 import CreateTest from './components/CreateTest';
 import TestSettings from './components/TestSettings';
 import { useNavigate } from 'react-router-dom'
 import PageMetaData from '@/components/PageMetaData'
+import { useAuthContext } from '@/context/useAuthContext';
+import authService from '@/helpers/authService';
 
 const ContentManagement = () => {
+  const { user } = useAuthContext();
   const [view, setView] = useState('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [showCreateTest, setShowCreateTest] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(1);
-  const [sortBy, setSortBy] = useState('lastModified');
+  const [sortBy, setSortBy] = useState('date');
   const [showAddFolder, setShowAddFolder] = useState(false);
+  const [currentFolderId, setCurrentFolderId] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
   
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  // Handle folder selection from TestsPortal
+  const handleFolderSelect = (folderId) => {
+    setCurrentFolderId(folderId);
+    // Clear search results when navigating to a folder
+    setSearchResults(null);
+    setSearchQuery('');
+  };
+
+  // Debounced search function
+  const debouncedSearch = useCallback(
+    (() => {
+      let timeout = null;
+      return (query, sort) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(async () => {
+          if (query.trim().length > 0) {
+            setIsSearching(true);
+            try {
+              console.log(`Searching with sort: ${sort}`);
+              // Pass sortBy directly - backend expects 'date' or 'name'
+              const results = await authService.searchTests(query, sort, user?.token);
+              setSearchResults(results);
+            } catch (error) {
+              console.error('Error searching tests:', error);
+              setSearchResults({ error: 'Failed to search tests' });
+            } finally {
+              setIsSearching(false);
+            }
+          } else {
+            // Clear search results when search query is empty
+            setSearchResults(null);
+          }
+        }, 500); // 500ms delay
+      };
+    })(),
+    [user?.token]
+  );
+
+  // Handle search input change
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    // Immediately clear results if query is empty
+    if (query.trim() === '') {
+      setSearchResults(null);
+      setIsSearching(false);
+    }
+  };
+
+  // Clear search
+  const clearSearch = () => {
+    setSearchQuery('');
+    setSearchResults(null);
+    setIsSearching(false);
+  };
+
+  // Trigger search when searchQuery or sortBy changes
+  useEffect(() => {
+    if (user?.token && searchQuery.trim().length > 0) {
+      debouncedSearch(searchQuery, sortBy);
+    }
+  }, [searchQuery, sortBy, debouncedSearch, user?.token]);
+
+  // Handle sort change - when sorting changes, rerun the search
+  const handleSortChange = (e) => {
+    const newSortValue = e.target.value;
+    setSortBy(newSortValue);
+    
+    // If we have an active search, immediately trigger a new search with the new sort
+    if (searchQuery.trim().length > 0 && user?.token) {
+      debouncedSearch(searchQuery, newSortValue);
+    }
+  };
 
   return (
     <>
@@ -75,18 +156,30 @@ const ContentManagement = () => {
           <div className="row g-3 align-items-center">
             <div className="col-md-8">
               <div className="search-input">
-                <div className="input-group">
-                  <span className="input-group-text border-end-0">
+                <InputGroup>
+                  <InputGroup.Text className="border-end-0">
                     <FiSearch className="text-muted" />
-                  </span>
+                  </InputGroup.Text>
                   <Form.Control
                     type="text"
                     placeholder="Search tests..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="border-start-0 ps-0 rounded-end"
+                    onChange={handleSearchChange}
+                    className="border-start-0 ps-0"
                   />
-                </div>
+                  {searchQuery && (
+                    <InputGroup.Text 
+                      className="bg-transparent cursor-pointer" 
+                      onClick={clearSearch}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <FiX className="text-muted" />
+                    </InputGroup.Text>
+                  )}
+                </InputGroup>
+                {isSearching && (
+                  <div className="text-muted small mt-1">Searching...</div>
+                )}
               </div>
             </div>
             <div className="col-md-4">
@@ -94,12 +187,11 @@ const ContentManagement = () => {
                 <label className="me-2 text-nowrap fw-medium">Sort by:</label>
                 <Form.Select 
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
+                  onChange={handleSortChange}
                   className="form-select"
                 >
-                  <option value="lastModified">Last Modified</option>
-                  <option value="title">Test Name</option>
-                  <option value="attempts">Attempts</option>
+                  <option value="date">Last Modified</option>
+                  <option value="name">Test Name</option>
                 </Form.Select>
               </div>
             </div>
@@ -119,6 +211,10 @@ const ContentManagement = () => {
               setShowAddFolder={setShowAddFolder}
               onCreateTest={() => setShowCreateTest(true)}
               onOpenSettings={() => setShowSettings(true)}
+              onFolderSelect={handleFolderSelect}
+              searchResults={searchResults}
+              isSearching={isSearching}
+              onClearSearch={clearSearch}
             />
           )}
 
@@ -131,6 +227,7 @@ const ContentManagement = () => {
                   setActiveStep(2);
                   setShowCreateTest(false);
                 }}
+                currentFolderId={currentFolderId}
               />
             </div>
           )}

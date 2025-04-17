@@ -4,14 +4,24 @@
  * - Content management styles: src/assets/scss/components/_content-management.scss
  */
 
-import React, { useState } from 'react'
-import { Alert, Button, Col, Form, Nav, Row, Tab } from 'react-bootstrap'
+import React, { useState, useEffect } from 'react'
+import { Alert, Button, Col, Form, Nav, Row, Tab, Spinner } from 'react-bootstrap'
 import { CiTrash } from 'react-icons/ci'
 import { FiArrowLeft, FiArrowRight, FiEdit2, FiInfo, FiList, FiPlus, FiSave, FiSettings, FiTrash2 } from 'react-icons/fi'
+import { useAuthContext } from '@/context/useAuthContext'
+import { useNotificationContext } from '@/context/useNotificationContext'
+import authService from '@/helpers/authService'
 
-const CreateTest = ({ onClose, onSave }) => {
+const CreateTest = ({ onClose, onSave, currentFolderId }) => {
+  const { user } = useAuthContext();
+  const { showNotification } = useNotificationContext();
+  
   const [activeTab, setActiveTab] = useState('basic')
   const [showQuestionForm, setShowQuestionForm] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [createdTestId, setCreatedTestId] = useState(null)
+  const [currentStep, setCurrentStep] = useState('basic') // basic, sections, settings
+  
   const [testData, setTestData] = useState({
     title: '',
     description: '',
@@ -29,6 +39,7 @@ const CreateTest = ({ onClose, onSave }) => {
       allowReview: true,
       requireProctoring: false,
       timeLimit: true,
+      isFree: true,
     },
   })
 
@@ -65,9 +76,181 @@ const CreateTest = ({ onClose, onSave }) => {
     }))
   }
 
-  const handleSave = () => {
-    onSave(testData)
-  }
+  const handleSave = async () => {
+    try {
+      setSubmitting(true);
+      
+      // Determine which step we're on and handle accordingly
+      if (currentStep === 'basic') {
+        // Create the test with basic information
+        await createBasicTest();
+      } else if (currentStep === 'sections' && testData.sections.length > 0) {
+        // Save the current section if any
+        await saveAllQuestions();
+      } else if (currentStep === 'settings') {
+        // Update test settings and finalize
+        await updateSettings();
+        
+        // Call onSave with the final test data
+        onSave({ ...testData, id: createdTestId });
+      }
+      
+      setSubmitting(false);
+    } catch (error) {
+      console.error('Error saving test:', error);
+      showNotification({
+        message: error.response?.data?.error || 'Failed to save test',
+        variant: 'danger'
+      });
+      setSubmitting(false);
+    }
+  };
+  
+  // Create a new test with basic information
+  const createBasicTest = async () => {
+    // Validate required fields
+    if (!testData.title) {
+      showNotification({
+        message: 'Please enter a test title',
+        variant: 'danger'
+      });
+      return;
+    }
+    
+    try {
+      // Prepare test data for API
+      const testRequestData = {
+        folder_id: currentFolderId || null,
+        title: testData.title,
+        description: testData.description || '',
+        category: testData.category || '',
+        passing_score: parseInt(testData.passingScore) || 60,
+        duration_hours: parseInt(testData.duration.hours) || 0,
+        duration_minutes: parseInt(testData.duration.minutes) || 0,
+        instructions: testData.instructions || ''
+      };
+      
+      // Call the API to create the test
+      const response = await authService.createTest(testRequestData, user.token);
+      console.log('Test created:', response);
+      
+      if (response && response.id) {
+        // Store the test ID for future API calls
+        setCreatedTestId(response.id);
+        
+        // Move to the next step
+        setCurrentStep('sections');
+        setActiveTab('sections');
+        
+        showNotification({
+          message: 'Test basic information saved successfully',
+          variant: 'success'
+        });
+      }
+    } catch (error) {
+      console.error('Error creating test:', error);
+      showNotification({
+        message: error.response?.data?.error || 'Failed to create test',
+        variant: 'danger'
+      });
+      throw error;
+    }
+  };
+  
+  // Save all questions to the test
+  const saveAllQuestions = async () => {
+    if (!createdTestId) {
+      showNotification({
+        message: 'No test ID available. Please create the test first.',
+        variant: 'danger'
+      });
+      return;
+    }
+    
+    try {
+      // Save each question
+      for (const question of testData.sections) {
+        await saveQuestion(question);
+      }
+      
+      // Move to the next step
+      setCurrentStep('settings');
+      setActiveTab('settings');
+      
+      showNotification({
+        message: 'All questions saved successfully',
+        variant: 'success'
+      });
+    } catch (error) {
+      console.error('Error saving questions:', error);
+      showNotification({
+        message: error.response?.data?.error || 'Failed to save questions',
+        variant: 'danger'
+      });
+      throw error;
+    }
+  };
+  
+  // Save a single question
+  const saveQuestion = async (question) => {
+    // Format the question data for the API
+    const questionData = {
+      question_english: question.questionEn,
+      question_tamil: question.questionTa,
+      options: question.optionsEn.map((optionEn, index) => ({
+        option_english: optionEn,
+        option_tamil: question.optionsTa[index],
+        is_correct: index === question.correctAnswer
+      }))
+    };
+    
+    // Call the API to add the question
+    const response = await authService.addQuestion(createdTestId, questionData, user.token);
+    console.log('Question added:', response);
+    
+    return response;
+  };
+  
+  // Update test settings
+  const updateSettings = async () => {
+    if (!createdTestId) {
+      showNotification({
+        message: 'No test ID available. Please create the test first.',
+        variant: 'danger'
+      });
+      return;
+    }
+    
+    try {
+      // Format settings data for the API
+      const settingsData = {
+        shuffle_questions: testData.settings.shuffleQuestions,
+        show_results_immediately: testData.settings.showResults,
+        allow_answer_review: testData.settings.allowReview,
+        enable_time_limit: testData.settings.timeLimit,
+        status: 'published', // Always publish when completing
+        is_free: testData.settings.isFree
+      };
+      
+      // Call the API to update settings
+      const response = await authService.updateTestSettings(createdTestId, settingsData, user.token);
+      console.log('Settings updated:', response);
+      
+      showNotification({
+        message: 'Test settings saved and test published successfully',
+        variant: 'success'
+      });
+      
+      return response;
+    } catch (error) {
+      console.error('Error updating settings:', error);
+      showNotification({
+        message: error.response?.data?.error || 'Failed to update settings',
+        variant: 'danger'
+      });
+      throw error;
+    }
+  };
 
   const toggleQuestionForm = () => {
     setShowQuestionForm(!showQuestionForm)
@@ -105,9 +288,72 @@ const CreateTest = ({ onClose, onSave }) => {
       setOptionsCount(2)
     } else {
       // Optional: Add error handling if questions are not filled
-      alert('Please fill in both English and Tamil questions')
+      showNotification({
+        message: 'Please fill in both English and Tamil questions',
+        variant: 'danger'
+      });
     }
-  }
+  };
+
+  // Handle tab navigation with validation
+  const handleNavigateToTab = (tab) => {
+    // If moving from basic to sections, validate and create test first
+    if (activeTab === 'basic' && tab === 'sections') {
+      if (!testData.title) {
+        showNotification({
+          message: 'Please enter a test title before proceeding',
+          variant: 'danger'
+        });
+        return;
+      }
+      
+      // If we don't have a test ID yet, create the test
+      if (!createdTestId) {
+        handleSave(); // This will create the test and move to sections tab if successful
+        return;
+      }
+    }
+    
+    // If moving from sections to settings, check if we have questions
+    if (activeTab === 'sections' && tab === 'settings') {
+      if (testData.sections.length === 0) {
+        showNotification({
+          message: 'Please add at least one question before proceeding',
+          variant: 'danger'
+        });
+        return;
+      }
+      
+      // Save all questions
+      saveAllQuestions();
+      return;
+    }
+    
+    // For other tab changes or if all validations pass
+    setActiveTab(tab);
+  };
+  
+  // Check if the input data is valid for the current step
+  const isStepValid = () => {
+    if (activeTab === 'basic') {
+      return !!testData.title;
+    }
+    if (activeTab === 'sections') {
+      return testData.sections.length > 0;
+    }
+    return true;
+  };
+  
+  // Handle final submission
+  const handleFinalSubmit = async () => {
+    try {
+      await handleSave();
+      // Close the form after successful submission
+      onClose();
+    } catch (error) {
+      console.error('Final submission error:', error);
+    }
+  };
 
   const handleDeleteQuestion = (index) => {
     setTestData((prev) => ({
@@ -273,8 +519,22 @@ const CreateTest = ({ onClose, onSave }) => {
                     </Form.Group>
                   </Form>
                   <div className="mt-4 d-flex justify-content-end">
-                    <Button variant="primary" onClick={() => setActiveTab('sections')} className="d-flex align-items-center">
-                      Continue <FiArrowRight className="ms-2" />
+                    <Button 
+                      variant="primary" 
+                      onClick={() => handleNavigateToTab('sections')} 
+                      className="d-flex align-items-center"
+                      disabled={!isStepValid() || submitting}
+                    >
+                      {submitting && activeTab === 'basic' ? (
+                        <>
+                          <Spinner size="sm" className="me-2" />
+                          Saving...
+                        </>
+                      ) : (
+                        <>
+                          Continue <FiArrowRight className="ms-2" />
+                        </>
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -448,9 +708,30 @@ const CreateTest = ({ onClose, onSave }) => {
                       ))
                     )}
                   </div>
-                  <div className="mt-4 d-flex justify-content-end">
-                    <Button variant="primary" onClick={() => setActiveTab('settings')} className="d-flex align-items-center">
-                      Continue <FiArrowRight className="ms-2" />
+                  <div className="mt-4 d-flex justify-content-between">
+                    <Button 
+                      variant="outline-secondary" 
+                      onClick={() => setActiveTab('basic')} 
+                      className="d-flex align-items-center"
+                    >
+                      <FiArrowLeft className="me-2" /> Back
+                    </Button>
+                    <Button 
+                      variant="primary" 
+                      onClick={() => handleNavigateToTab('settings')} 
+                      className="d-flex align-items-center"
+                      disabled={!isStepValid() || submitting}
+                    >
+                      {submitting && activeTab === 'sections' ? (
+                        <>
+                          <Spinner size="sm" className="me-2" />
+                          Saving Questions...
+                        </>
+                      ) : (
+                        <>
+                          Continue <FiArrowRight className="ms-2" />
+                        </>
+                      )}
                     </Button>
                   </div>
                 </div>
@@ -495,10 +776,40 @@ const CreateTest = ({ onClose, onSave }) => {
                       onChange={(e) => handleSettingsChange('timeLimit', e.target.checked)}
                       className="mb-3"
                     />
+
+                    <Form.Check
+                      type="switch"
+                      id="is-free"
+                      label="Make Test Free (Available without subscription)"
+                      checked={testData.settings.isFree}
+                      onChange={(e) => handleSettingsChange('isFree', e.target.checked)}
+                      className="mb-3"
+                    />
                   </Form>
-                  <div className="mt-4 d-flex justify-content-end">
-                    <Button variant="primary" onClick={handleSave} className="d-flex align-items-center">
-                      <FiSave className="me-2" /> Save Test
+                  <div className="mt-4 d-flex justify-content-between">
+                    <Button 
+                      variant="outline-secondary" 
+                      onClick={() => setActiveTab('sections')} 
+                      className="d-flex align-items-center"
+                    >
+                      <FiArrowLeft className="me-2" /> Back
+                    </Button>
+                    <Button 
+                      variant="primary" 
+                      onClick={handleFinalSubmit}
+                      className="d-flex align-items-center"
+                      disabled={submitting}
+                    >
+                      {submitting ? (
+                        <>
+                          <Spinner size="sm" className="me-2" />
+                          Publishing Test...
+                        </>
+                      ) : (
+                        <>
+                          <FiSave className="me-2" /> Save & Publish Test
+                        </>
+                      )}
                     </Button>
                   </div>
                 </div>

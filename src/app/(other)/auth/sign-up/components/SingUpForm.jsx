@@ -1,54 +1,196 @@
-import IconTextFormInput from '@/components/form/IconTextFormInput';
-import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useState } from 'react';
+import { Form, Button, Alert, Spinner, Col, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { BsEnvelopeFill, BsPersonFill, BsPhoneFill } from 'react-icons/bs';
-import { FaLock } from 'react-icons/fa';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-const SingUpForm = () => {
-  const signUpFormSchema = yup.object({
-    fullName: yup.string().required('Please enter your Full Name'),
-    phone: yup.string().matches(/^[0-9]{10}$/, 'Please enter valid phone number').required('Please enter your Phone Number'),
-    email: yup.string().email('Please enter valid email').required('Please enter your Email'),
-    password: yup.string().min(8, 'Password must be at least 8 characters').required('Please enter your Password'),
-    confirmPassword: yup.string().oneOf([yup.ref('password')], 'Passwords must match').required('Please confirm your Password')
+import { useNotificationContext } from '@/context/useNotificationContext';
+import authService from '@/helpers/authService';
+
+const SignUpForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { showNotification } = useNotificationContext();
+
+  // Registration schema
+  const signUpSchema = yup.object({
+    username: yup.string().required('Username is required'),
+    full_name: yup.string().required('Full name is required'),
+    email: yup.string().email('Please enter a valid email').required('Email is required'),
+    phone_number: yup.string().required('Phone number is required'),
+    password_hash: yup.string()
+      .min(8, 'Password must be at least 8 characters')
+      .required('Password is required')
   });
+
   const {
-    control,
-    handleSubmit
+    register,
+    handleSubmit,
+    formState: { errors }
   } = useForm({
-    resolver: yupResolver(signUpFormSchema)
+    resolver: yupResolver(signUpSchema)
   });
-  return <form onSubmit={handleSubmit(() => {})}>
-      <div className="mb-4">
-        <IconTextFormInput control={control} icon={BsPersonFill} placeholder="Full Name" label="Full Name *" name="fullName" />
-      </div>
-      <div className="mb-4">
-        <IconTextFormInput control={control} icon={BsPhoneFill} placeholder="Phone Number" label="Phone Number *" name="phone" />
-      </div>
-      <div className="mb-4">
-        <IconTextFormInput control={control} icon={BsEnvelopeFill} placeholder="E-mail" label="Email address *" name="email" />
-      </div>
-      <div className="mb-4">
-        <IconTextFormInput type="password" control={control} icon={FaLock} placeholder="*********" label="Password *" name="password" />
-      </div>
-      <div className="mb-4">
-        <IconTextFormInput type="password" control={control} icon={FaLock} placeholder="*********" label="Confirm Password *" name="confirmPassword" />
-      </div>
-      <div className="mb-4">
-        <div className="form-check">
-          <input type="checkbox" className="form-check-input" id="checkbox-1" />
-          <label className="form-check-label" htmlFor="checkbox-1">
-            By signing up, you agree to the<a href="#"> terms of service</a>
-          </label>
-        </div>
-      </div>
-      <div className="align-items-center mt-0">
-        <div className="d-grid">
-          <button className="btn btn-primary mb-0" type="submit">
-            Sign Up
-          </button>
-        </div>
-      </div>
-    </form>;
+
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      setError(null);
+      console.log('Attempting registration with:', data);
+
+      const userData = {
+        username: data.username,
+        email: data.email,
+        password_hash: data.password_hash,
+        phone_number: data.phone_number,
+        full_name: data.full_name,
+        role: 'student' // Always set role to student
+      };
+
+      const responseData = await authService.register(userData);
+      console.log('Registration response:', responseData);
+
+      showNotification({
+        message: 'Registration successful! Please sign in.',
+        variant: 'success'
+      });
+      
+      navigate('/auth/sign-in');
+      
+    } catch (err) {
+      console.error('Registration error:', err);
+      setError(err.response?.data?.error || 'Registration failed. Please try again.');
+      
+      showNotification({
+        message: err.response?.data?.error || 'Registration failed',
+        variant: 'danger'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="signup-form">
+      {error && (
+        <Alert variant="danger" className="mb-3">
+          {error}
+        </Alert>
+      )}
+
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Choose a username"
+                {...register('username')}
+                isInvalid={!!errors.username}
+              />
+              {errors.username && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.username.message}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+          </Col>
+          
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your full name"
+                {...register('full_name')}
+                isInvalid={!!errors.full_name}
+              />
+              {errors.full_name && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.full_name.message}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                {...register('email')}
+                isInvalid={!!errors.email}
+              />
+              {errors.email && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.email.message}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+          </Col>
+          
+          <Col md={6}>
+            <Form.Group className="mb-3">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your phone number"
+                {...register('phone_number')}
+                isInvalid={!!errors.phone_number}
+              />
+              {errors.phone_number && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.phone_number.message}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Create a password"
+            {...register('password_hash')}
+            isInvalid={!!errors.password_hash}
+          />
+          {errors.password_hash && (
+            <Form.Control.Feedback type="invalid">
+              {errors.password_hash.message}
+            </Form.Control.Feedback>
+          )}
+        </Form.Group>
+
+        <Button 
+          variant="primary" 
+          type="submit" 
+          className="w-100 mt-3" 
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                className="me-2"
+              />
+              Creating Account...
+            </>
+          ) : (
+            'Sign Up'
+          )}
+        </Button>
+      </Form>
+    </div>
+  );
 };
-export default SingUpForm;
+
+export default SignUpForm; 

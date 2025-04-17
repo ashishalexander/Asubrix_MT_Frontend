@@ -1,7 +1,6 @@
-import Banner from './components/Banner'
-import FreeTestsList from './components/FreeTestsList'
-import TopNavigationBar from '@/components/TopNavigationBar'
 import Footer from '@/components/Footer'
+import TopNavigationBar from '@/components/TopNavigationBar'
+import FreeTestsList from './components/FreeTestsList'
 import Hero from './components/Hero'
 
 const FreeTest = () => {
@@ -10,7 +9,6 @@ const FreeTest = () => {
       <TopNavigationBar />
       <main>
         <Hero/>
-        {/* <Banner /> */}
         <FreeTestsList />
       </main>
       <Footer className="custom-footer"/>
