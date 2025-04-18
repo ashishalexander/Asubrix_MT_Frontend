@@ -4,20 +4,25 @@ function HttpClient() {
   // Create an axios instance with proper configuration
   const instance = axios.create({
     baseURL: 'http://localhost:3000',
-    timeout: 15000,
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    timeout: 15000
+    // Remove default Content-Type header
   });
   
-  // Debug interceptor
+  // Add a request interceptor to set Content-Type only for non-FormData requests
   instance.interceptors.request.use(
     (config) => {
+      // If the request data is FormData, don't set Content-Type (browser will set it)
+      if (!(config.data instanceof FormData)) {
+        config.headers['Content-Type'] = 'application/json';
+      }
+      
       console.log('HttpClient Request:', {
         url: config.url,
         method: config.method,
-        headers: config.headers
+        headers: config.headers,
+        isFormData: config.data instanceof FormData
       });
+      
       return config;
     },
     (error) => {

@@ -15,8 +15,8 @@ const SignUpForm = () => {
 
   // Registration schema
   const signUpSchema = yup.object({
-    username: yup.string().required('Username is required'),
-    full_name: yup.string().required('Full name is required'),
+    first_name: yup.string().required('First name is required'),
+    last_name: yup.string().required('Last name is required'),
     email: yup.string().email('Please enter a valid email').required('Email is required'),
     phone_number: yup.string().required('Phone number is required'),
     password_hash: yup.string()
@@ -39,11 +39,11 @@ const SignUpForm = () => {
       console.log('Attempting registration with:', data);
 
       const userData = {
-        username: data.username,
+        first_name: data.first_name,
         email: data.email,
         password_hash: data.password_hash,
         phone_number: data.phone_number,
-        full_name: data.full_name,
+        last_name: data.last_name,
         role: 'student' // Always set role to student
       };
 
@@ -82,16 +82,16 @@ const SignUpForm = () => {
         <Row>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Username</Form.Label>
+              <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Choose a username"
-                {...register('username')}
-                isInvalid={!!errors.username}
+                placeholder="Enter your first name"
+                {...register('first_name')}
+                isInvalid={!!errors.first_name}
               />
-              {errors.username && (
+              {errors.first_name && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.username.message}
+                  {errors.first_name.message}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
@@ -99,16 +99,16 @@ const SignUpForm = () => {
           
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Full Name</Form.Label>
+              <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter your full name"
-                {...register('full_name')}
-                isInvalid={!!errors.full_name}
+                placeholder="Enter your last name"
+                {...register('last_name')}
+                isInvalid={!!errors.last_name}
               />
-              {errors.full_name && (
+              {errors.last_name && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.full_name.message}
+                  {errors.last_name.message}
                 </Form.Control.Feedback>
               )}
             </Form.Group>

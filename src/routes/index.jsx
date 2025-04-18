@@ -83,7 +83,7 @@ const InstructorCourseAdd = lazy(() => import('@/app/(other)/instructor/course-a
 const Quiz = lazy(() => import('@/app/instructor/quiz/page'))
 const Earnings = lazy(() => import('@/app/instructor/earning/page'))
 const StudentsList = lazy(() => import('@/app/instructor/student-list/page'))
-const Orders = lazy(() => import('@/app/instructor/order/page'))
+const Tests = lazy(() => import('@/app/instructor/tests/page'))
 const InstructorReviews = lazy(() => import('@/app/instructor/review/page'))
 const Payout = lazy(() => import('@/app/instructor/payout/page'))
 const EditProfile = lazy(() => import('@/app/instructor/edit-profile/page'))
@@ -91,7 +91,7 @@ const Settings = lazy(() => import('@/app/instructor/setting/page'))
 const DeleteAccount = lazy(() => import('@/app/instructor/delete-account/page'))
 const InstructorChatPage = lazy(() => import('@/app/instructor/chat/page'))
 
-//Student
+//Old-Student
 const StudentDashboard = lazy(() => import('@/app/student/dashboard/page'))
 const Subscription = lazy(() => import('@/app/student/subscription/page'))
 const StudentCourseList = lazy(() => import('@/app/student/course-list/page'))
@@ -490,8 +490,8 @@ export const InstructorRoutes = [
   },
   {
     path: '/student/test-details',
-    name: 'Orders',
-    element: <Orders />,
+    name: 'Tests',
+    element: <Tests />,
   },
   {
     path: '/instructor/review',

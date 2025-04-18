@@ -21,7 +21,6 @@ import ProfileDropdown from '@/components/TopNavbar/components/ProfileDropdown'
 import useScrollEvent from '@/hooks/useScrollEvent'
 import useToggle from '@/hooks/useToggle'
 import avatar3 from '@/assets/images/avatar/03.jpg'
-
 const NotificationDropdown = () => {
   return (
     <Dropdown className="nav-item ms-2 ms-sm-3">
