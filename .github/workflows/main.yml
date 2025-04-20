@@ -36,5 +36,5 @@ jobs:
             echo "Running new Docker container..."
             docker run -d --name pudhuyugam-app -p 3000:80 pudhuyugam:latest
 
-            echo "Deployment complete."
+            echo "Production Deployment complete."
           EOF
