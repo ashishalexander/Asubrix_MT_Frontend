@@ -53,24 +53,6 @@ const BannerModal = ({ show, onHide, banner = null }) => {
               defaultValue={banner?.description}
             />
           </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Status</Form.Label>
-            <Form.Check
-              type="radio"
-              label="Active"
-              name="status"
-              id="status-active"
-              defaultChecked={!banner || banner.status === 'Active'}
-            />
-            <Form.Check
-              type="radio"
-              label="Inactive"
-              name="status"
-              id="status-inactive"
-              defaultChecked={banner?.status === 'Inactive'}
-            />
-          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -85,4 +67,4 @@ const BannerModal = ({ show, onHide, banner = null }) => {
   );
 };
 
-export default BannerModal; 
+export default BannerModal;

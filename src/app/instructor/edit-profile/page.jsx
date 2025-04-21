@@ -14,8 +14,8 @@ const EditProfilePage = () => {
       <PageMetaData title="Edit Profile" />
       <EditProfile />
       <Row className="g-4 mt-3">
-        <EmailChange />
-        <PasswordChange />
+        {/* <EmailChange />
+        <PasswordChange /> */}
       </Row>
     </Container>
   );

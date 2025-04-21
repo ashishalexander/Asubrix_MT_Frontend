@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import { Badge, Button, Card, Form } from 'react-bootstrap'
+import { Button, Card, Form, Modal } from 'react-bootstrap'
 import { BsPencilSquare, BsTrash, BsEye } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
 import { FaPlus } from 'react-icons/fa'
-import BannerModal from '../../../admin/banners/components/BannerModal'
 
 const BannerSettings = () => {
   const [banners, setBanners] = useState([
     {
       id: 1,
       title: 'Banner One',
-      status: 'Active',
       image: '/path/to/banner1.jpg',
       link: '#',
       description: 'Main homepage banner',
@@ -18,7 +16,6 @@ const BannerSettings = () => {
     {
       id: 2,
       title: 'Banner Two',
-      status: 'Active',
       image: '/path/to/banner2.jpg',
       link: '#',
       description: 'Secondary promotional banner',
@@ -41,7 +38,6 @@ const BannerSettings = () => {
   }
 
   const handleViewBanner = (banner) => {
-    // Implement view functionality
     console.log('Viewing banner:', banner)
   }
 
@@ -50,15 +46,15 @@ const BannerSettings = () => {
     setSelectedBanner(null)
   }
 
-  // Filter banners based on search query
   const filteredBanners = banners.filter(
     (banner) =>
-      banner.title.toLowerCase().includes(searchQuery.toLowerCase()) || banner.description.toLowerCase().includes(searchQuery.toLowerCase()),
+      banner.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      banner.description.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   return (
     <>
-      {/* Header Section */}
+      {/* Header */}
       <div className="d-flex flex-wrap justify-content-between align-items-center mb-3">
         <div>
           <h4 className="mb-0">Banner Management</h4>
@@ -70,7 +66,7 @@ const BannerSettings = () => {
         </Button>
       </div>
 
-      {/* Search and Sort Section */}
+      {/* Search and Sort */}
       <div className="row g-3 align-items-center mb-3">
         <div className="col-md-8">
           <div className="search-input">
@@ -91,24 +87,26 @@ const BannerSettings = () => {
         <div className="col-md-4">
           <div className="d-flex align-items-center justify-content-end">
             <label className="me-2 text-nowrap fw-medium">Sort by:</label>
-            <Form.Select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="form-select">
+            <Form.Select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="form-select"
+            >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
               <option value="title">Title</option>
-              <option value="status">Status</option>
             </Form.Select>
           </div>
         </div>
       </div>
 
-      {/* Table Section */}
+      {/* Table */}
       <Card className="border-0">
         <Card.Body className="p-0">
           <table className="admin-table">
             <thead>
               <tr>
                 <th>Title</th>
-                <th>Status</th>
                 <th>Description</th>
                 <th className="text-end">Actions</th>
               </tr>
@@ -117,35 +115,16 @@ const BannerSettings = () => {
               {filteredBanners.map((banner) => (
                 <tr key={banner.id}>
                   <td>{banner.title}</td>
-                  <td>
-                    <span className={`status-badge ${banner.status.toLowerCase()}`}>
-                      {banner.status}
-                    </span>
-                  </td>
                   <td>{banner.description}</td>
                   <td>
                     <div className="d-flex justify-content-end gap-2">
-                      <Button 
-                        variant="light" 
-                        size="sm" 
-                        className="action-btn"
-                        onClick={() => handleViewBanner(banner)}
-                      >
+                      <Button variant="light" size="sm" className="action-btn" onClick={() => handleViewBanner(banner)}>
                         <BsEye />
                       </Button>
-                      <Button 
-                        variant="light" 
-                        size="sm" 
-                        className="action-btn"
-                        onClick={() => handleEditBanner(banner)}
-                      >
+                      <Button variant="light" size="sm" className="action-btn" onClick={() => handleEditBanner(banner)}>
                         <BsPencilSquare />
                       </Button>
-                      <Button 
-                        variant="light" 
-                        size="sm" 
-                        className="action-btn text-danger"
-                      >
+                      <Button variant="light" size="sm" className="action-btn text-danger">
                         <BsTrash />
                       </Button>
                     </div>
@@ -157,12 +136,61 @@ const BannerSettings = () => {
         </Card.Body>
       </Card>
 
-      {/* Banner Modal */}
-      <BannerModal
-        show={showModal}
-        onHide={handleCloseModal}
-        banner={selectedBanner}
-      />
+      {/* Banner Modal  */}
+      <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedBanner ? 'Edit Banner' : 'Add New Banner'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Title <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter banner title"
+                defaultValue={selectedBanner?.title}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Image (1126px x 400px) <span className="text-danger">*</span></Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/*"
+                required={!selectedBanner}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Link</Form.Label>
+              <Form.Control
+                type="url"
+                placeholder="Enter banner link"
+                defaultValue={selectedBanner?.link}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Enter banner description"
+                defaultValue={selectedBanner?.description}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="primary">
+            {selectedBanner ? 'Update Banner' : 'Add Banner'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }

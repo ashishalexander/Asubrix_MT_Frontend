@@ -224,12 +224,19 @@ const CreateTest = ({ onClose, onSave, currentFolderId }) => {
     try {
       // Format settings data for the API
       const settingsData = {
+        title: testData.title,
+        description: testData.description,
+        category: testData.category,
+        passing_score: testData.passingScore || 70,
+        duration_hours: testData.duration?.hours || 1,
+        duration_minutes: testData.duration?.minutes || 0,
+        instructions: testData.instructions || '',
+        is_free: testData.settings.isFree,
+        status: 'published', // Always publish when completing
         shuffle_questions: testData.settings.shuffleQuestions,
         show_results_immediately: testData.settings.showResults,
         allow_answer_review: testData.settings.allowReview,
-        enable_time_limit: testData.settings.timeLimit,
-        status: 'published', // Always publish when completing
-        is_free: testData.settings.isFree
+        enable_time_limit: testData.settings.timeLimit
       };
       
       // Call the API to update settings

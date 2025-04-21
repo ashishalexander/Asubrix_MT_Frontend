@@ -297,8 +297,8 @@ const EditProfile = () => {
           <TextFormInput name="firstName" label="First name" control={control} containerClassName="col-md-6" />
           <TextFormInput name="lastName" label="Last name" control={control} containerClassName="col-md-6" />
 
-          <TextFormInput name="email" label="Email id" control={control} containerClassName="col-md-6" />
-          <TextFormInput name="phone" label="Phone number" control={control} containerClassName="col-md-6" />
+          <TextFormInput name="email" label="Email id" control={control} containerClassName="col-md-6" disabled={true}/>
+          <TextFormInput name="phone" label="Phone number" control={control} containerClassName="col-md-6" disabled={true}/>
           
           <Col xs={12}>
             <label className="form-label">About me</label>

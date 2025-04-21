@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import ChoicesFormInput from '@/components/form/ChoicesFormInput';
 import PageMetaData from '@/components/PageMetaData';
-import { Card, CardBody, CardHeader, Col, FormControl, Row, Spinner } from 'react-bootstrap';
+import { Card, CardBody, CardHeader, Col, FormControl, Row, Spinner, Button, Badge, Container } from 'react-bootstrap';
 import { FaAngleLeft, FaAngleRight, FaSearch } from 'react-icons/fa';
+import { TrophyFill } from 'react-bootstrap-icons';
 import httpClient from '@/helpers/httpClient';
 import { useAuthContext } from '@/context/useAuthContext';
 import { format } from 'date-fns';
+import authService from '@/helpers/authService';
+import { useNotificationContext } from '@/context/useNotificationContext';
 
 const TestsHistoryPage = () => {
   const [loading, setLoading] = useState(true);
+  const [resultLoading, setResultLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('newest');
   const [testHistory, setTestHistory] = useState([]);
@@ -18,8 +22,11 @@ const TestsHistoryPage = () => {
     currentPage: 1,
     limit: 5
   });
+  const [selectedTest, setSelectedTest] = useState(null);
+  const [testResults, setTestResults] = useState(null);
   
   const { user } = useAuthContext();
+  const { showNotification } = useNotificationContext();
   
   const fetchTestHistory = async (page = 1) => {
     try {
@@ -36,6 +43,10 @@ const TestsHistoryPage = () => {
       }
     } catch (error) {
       console.error('Error fetching test history:', error);
+      showNotification({
+        message: 'Failed to load test history',
+        variant: 'danger'
+      });
     } finally {
       setLoading(false);
     }
@@ -68,11 +79,178 @@ const TestsHistoryPage = () => {
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
   };
+
+  const fetchTestResult = async (testId, attemptId) => {
+    try {
+      setResultLoading(true);
+      
+      // Use the same API endpoint as in test-questions page
+      const response = await authService.getTestResult(testId, attemptId, user.token);
+      
+      console.log('Test result response:', response);
+      
+      if (response) {
+        setTestResults({
+          totalQuestions: response.total_questions || 0,
+          correctAnswers: response.correct_answers || 0,
+          incorrectAnswers: response.incorrect_answers || 0,
+          unanswered: response.unanswered || 0,
+          score: response.score || 0,
+          timeTaken: response.time_taken || '-',
+          passed: response.passed || false,
+          passingScore: response.passing_score || 60
+        });
+      } else {
+        // Fallback to basic data from history
+        setTestResults({
+          totalQuestions: '-',
+          correctAnswers: '-',
+          incorrectAnswers: '-',
+          unanswered: '-',
+          score: selectedTest.score || 0,
+          timeTaken: '-',
+          passed: selectedTest.status === 'Passed',
+          passingScore: 60
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching test result:', error);
+      showNotification({
+        message: 'Failed to load test result details',
+        variant: 'warning'
+      });
+      
+      // Set default values from the history item
+      setTestResults({
+        totalQuestions: '-',
+        correctAnswers: '-',
+        incorrectAnswers: '-',
+        unanswered: '-',
+        score: selectedTest.score || 0,
+        timeTaken: '-',
+        passed: selectedTest.status === 'Passed',
+        passingScore: 60
+      });
+    } finally {
+      setResultLoading(false);
+    }
+  };
+
+  const handleTestClick = (test) => {
+    setSelectedTest(test);
+    // Fetch detailed test result if available
+    if (test.test_id && test.attempt_id) {
+      fetchTestResult(test.test_id, test.attempt_id);
+    } else {
+      // Use basic data from history
+      setTestResults({
+        totalQuestions: '-',
+        correctAnswers: '-',
+        incorrectAnswers: '-',
+        unanswered: '-',
+        score: test.score || 0,
+        timeTaken: '-',
+        passed: test.status === 'Passed',
+        passingScore: 60
+      });
+    }
+  };
+
+  const handleBackToList = () => {
+    setSelectedTest(null);
+    setTestResults(null);
+  };
   
   const filteredTests = searchTerm 
     ? testHistory.filter(test => 
         test.test_name.toLowerCase().includes(searchTerm.toLowerCase()))
     : testHistory;
+  
+  // If a test is selected, show the test results view
+  if (selectedTest) {
+    return <>
+      <PageMetaData title="Test Result" />
+      <div className="result-card app-container results-container">
+        <Container className="py-5">
+          <Row className="justify-content-center">
+            <Col lg={8} md={10}>
+              <Card className="results-card">
+                <Card.Body className="p-0">
+                  {resultLoading ? (
+                    <div className="text-center py-5">
+                      <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading test result...</span>
+                      </Spinner>
+                      <p className="mt-3">Loading test result details...</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="results-header">
+                        <TrophyFill size={36} className="trophy-icon" />
+                        <h1>Test Results</h1>
+                      </div>
+
+                      <div className="results-content p-4">
+                        <h2 className="test-name mb-4">{selectedTest.test_name || 'Test'}</h2>
+
+                        <div className="score-container mb-4">
+                          <div className="score-circle">
+                            <div className="score-value">{testResults?.score || selectedTest.score}%</div>
+                          </div>
+                          <div className="score-label">Your Score</div>
+                        </div>
+
+                        <div className="pass-status mb-4">
+                          {(testResults?.passed || selectedTest.status === 'Passed') ? (
+                            <Badge bg="success" className="p-2 fs-6">PASSED</Badge>
+                          ) : (
+                            <Badge bg="danger" className="p-2 fs-6">FAILED</Badge>
+                          )}
+                        </div>
+
+                        <div className="results-details">
+                          <div className="result-item">
+                            <div className="result-label">Total Questions</div>
+                            <div className="result-value">{testResults?.totalQuestions || '-'}</div>
+                          </div>
+                          <div className="result-item correct">
+                            <div className="result-label">Correct Answers</div>
+                            <div className="result-value">{testResults?.correctAnswers || '-'}</div>
+                          </div>
+                          <div className="result-item incorrect">
+                            <div className="result-label">Incorrect Answers</div>
+                            <div className="result-value">{testResults?.incorrectAnswers || '-'}</div>
+                          </div>
+                          <div className="result-item unanswered">
+                            <div className="result-label">Unanswered</div>
+                            <div className="result-value">{testResults?.unanswered || '-'}</div>
+                          </div>
+                          <div className="result-item">
+                            <div className="result-label">Time Taken</div>
+                            <div className="result-value">{testResults?.timeTaken || '-'}</div>
+                          </div>
+                          <div className="result-item">
+                            <div className="result-label">Passing Score</div>
+                            <div className="result-value">{testResults?.passingScore || 60}%</div>
+                          </div>
+                        </div>
+
+                        <div className="d-flex justify-content-center mt-4">
+                          <Button variant="primary" className="px-4 py-2" onClick={handleBackToList}>
+                            Back to Tests
+                          </Button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </>;
+  }
   
   return <>
       <PageMetaData title="Test History" />
@@ -135,7 +313,12 @@ const TestsHistoryPage = () => {
                   <tbody>
                     {filteredTests.length > 0 ? (
                       filteredTests.map((test) => (
-                        <tr key={test.attempt_id}>
+                        <tr 
+                          key={test.attempt_id} 
+                          onClick={() => handleTestClick(test)}
+                          style={{ cursor: 'pointer' }}
+                          className="test-row"
+                        >
                           <td>{test.test_name}</td>
                           <td>{formatDate(test.taken_date)}</td>
                           <td>{test.score}%</td>

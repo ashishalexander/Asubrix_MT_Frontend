@@ -7,108 +7,108 @@
  * - Tables: src/assets/scss/components/_tables.scss
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Row, Col, Card, Form, Button, ButtonGroup, InputGroup } from 'react-bootstrap';
-import { FiGrid, FiList, FiSearch, FiFolder, FiX } from 'react-icons/fi';
-import { FaPlus } from 'react-icons/fa'
-import TestsPortal from './components/TestsPortal';
-import CreateTest from './components/CreateTest';
-import TestSettings from './components/TestSettings';
-import { useNavigate } from 'react-router-dom'
 import PageMetaData from '@/components/PageMetaData'
-import { useAuthContext } from '@/context/useAuthContext';
-import authService from '@/helpers/authService';
+import { useAuthContext } from '@/context/useAuthContext'
+import authService from '@/helpers/authService'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Button, Container, Form, InputGroup } from 'react-bootstrap'
+import { FaPlus } from 'react-icons/fa'
+import { FiFolder, FiSearch, FiX } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
+import CreateTest from './components/CreateTest'
+import TestSettings from './components/TestSettings'
+import TestsPortal from './components/TestsPortal'
 
 const ContentManagement = () => {
-  const { user } = useAuthContext();
-  const [view, setView] = useState('grid');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showCreateTest, setShowCreateTest] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [activeStep, setActiveStep] = useState(1);
-  const [sortBy, setSortBy] = useState('date');
-  const [showAddFolder, setShowAddFolder] = useState(false);
-  const [currentFolderId, setCurrentFolderId] = useState(null);
-  const [searchResults, setSearchResults] = useState(null);
-  const [isSearching, setIsSearching] = useState(false);
-  
-  const navigate = useNavigate();
+  const { user } = useAuthContext()
+  const [view, setView] = useState('grid')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [showCreateTest, setShowCreateTest] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [activeStep, setActiveStep] = useState(1)
+  const [sortBy, setSortBy] = useState('date')
+  const [showAddFolder, setShowAddFolder] = useState(false)
+  const [currentFolderId, setCurrentFolderId] = useState(null)
+  const [searchResults, setSearchResults] = useState(null)
+  const [isSearching, setIsSearching] = useState(false)
+
+  const navigate = useNavigate()
 
   // Handle folder selection from TestsPortal
   const handleFolderSelect = (folderId) => {
-    setCurrentFolderId(folderId);
+    setCurrentFolderId(folderId)
     // Clear search results when navigating to a folder
-    setSearchResults(null);
-    setSearchQuery('');
-  };
+    setSearchResults(null)
+    setSearchQuery('')
+  }
 
   // Debounced search function
   const debouncedSearch = useCallback(
     (() => {
-      let timeout = null;
+      let timeout = null
       return (query, sort) => {
-        clearTimeout(timeout);
+        clearTimeout(timeout)
         timeout = setTimeout(async () => {
           if (query.trim().length > 0) {
-            setIsSearching(true);
+            setIsSearching(true)
             try {
-              console.log(`Searching with sort: ${sort}`);
+              console.log(`Searching with sort: ${sort}`)
               // Pass sortBy directly - backend expects 'date' or 'name'
-              const results = await authService.searchTests(query, sort, user?.token);
-              setSearchResults(results);
+              const results = await authService.searchTests(query, sort, user?.token)
+              setSearchResults(results)
             } catch (error) {
-              console.error('Error searching tests:', error);
-              setSearchResults({ error: 'Failed to search tests' });
+              console.error('Error searching tests:', error)
+              setSearchResults({ error: 'Failed to search tests' })
             } finally {
-              setIsSearching(false);
+              setIsSearching(false)
             }
           } else {
             // Clear search results when search query is empty
-            setSearchResults(null);
+            setSearchResults(null)
           }
-        }, 500); // 500ms delay
-      };
+        }, 500) // 500ms delay
+      }
     })(),
-    [user?.token]
-  );
+    [user?.token],
+  )
 
   // Handle search input change
   const handleSearchChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    
+    const query = e.target.value
+    setSearchQuery(query)
+
     // Immediately clear results if query is empty
     if (query.trim() === '') {
-      setSearchResults(null);
-      setIsSearching(false);
+      setSearchResults(null)
+      setIsSearching(false)
     }
-  };
+  }
 
   // Clear search
   const clearSearch = () => {
-    setSearchQuery('');
-    setSearchResults(null);
-    setIsSearching(false);
-  };
+    setSearchQuery('')
+    setSearchResults(null)
+    setIsSearching(false)
+  }
 
   // Trigger search when searchQuery or sortBy changes
   useEffect(() => {
     if (user?.token && searchQuery.trim().length > 0) {
-      debouncedSearch(searchQuery, sortBy);
+      debouncedSearch(searchQuery, sortBy)
     }
-  }, [searchQuery, sortBy, debouncedSearch, user?.token]);
+  }, [searchQuery, sortBy, debouncedSearch, user?.token])
 
   // Handle sort change - when sorting changes, rerun the search
   const handleSortChange = (e) => {
-    const newSortValue = e.target.value;
-    setSortBy(newSortValue);
-    
+    const newSortValue = e.target.value
+    setSortBy(newSortValue)
+
     // If we have an active search, immediately trigger a new search with the new sort
     if (searchQuery.trim().length > 0 && user?.token) {
-      debouncedSearch(searchQuery, newSortValue);
+      debouncedSearch(searchQuery, newSortValue)
     }
-  };
+  }
 
   return (
     <>
@@ -134,18 +134,11 @@ const ContentManagement = () => {
               </nav>
             </div>
             <div className="d-flex gap-2">
-              <Button 
-                variant="outline-primary" 
-                className="d-flex align-items-center"
-                onClick={() => setShowAddFolder(true)}
-              >
+              <Button variant="outline-primary" className="d-flex align-items-center" onClick={() => setShowAddFolder(true)}>
                 <FiFolder className="me-2" />
                 New Folder
               </Button>
-              <Button 
-                className="btn-add-content d-flex align-items-center" 
-                onClick={() => setShowCreateTest(true)}
-              >
+              <Button className="btn-add-content d-flex align-items-center" onClick={() => setShowCreateTest(true)}>
                 <FaPlus className="me-2" />
                 New Test
               </Button>
@@ -168,28 +161,18 @@ const ContentManagement = () => {
                     className="border-start-0 ps-0"
                   />
                   {searchQuery && (
-                    <InputGroup.Text 
-                      className="bg-transparent cursor-pointer" 
-                      onClick={clearSearch}
-                      style={{ cursor: 'pointer' }}
-                    >
+                    <InputGroup.Text className="bg-transparent cursor-pointer" onClick={clearSearch} style={{ cursor: 'pointer' }}>
                       <FiX className="text-muted" />
                     </InputGroup.Text>
                   )}
                 </InputGroup>
-                {isSearching && (
-                  <div className="text-muted small mt-1">Searching...</div>
-                )}
+                {isSearching && <div className="text-muted small mt-1">Searching...</div>}
               </div>
             </div>
             <div className="col-md-4">
               <div className="d-flex align-items-center justify-content-end">
                 <label className="me-2 text-nowrap fw-medium">Sort by:</label>
-                <Form.Select 
-                  value={sortBy}
-                  onChange={handleSortChange}
-                  className="form-select"
-                >
+                <Form.Select value={sortBy} onChange={handleSortChange} className="form-select">
                   <option value="date">Last Modified</option>
                   <option value="name">Test Name</option>
                 </Form.Select>
@@ -223,9 +206,9 @@ const ContentManagement = () => {
               <CreateTest
                 onClose={() => setShowCreateTest(false)}
                 onSave={(testData) => {
-                  setProgress(75);
-                  setActiveStep(2);
-                  setShowCreateTest(false);
+                  setProgress(75)
+                  setActiveStep(2)
+                  setShowCreateTest(false)
                 }}
                 currentFolderId={currentFolderId}
               />
@@ -237,7 +220,7 @@ const ContentManagement = () => {
               <TestSettings
                 onClose={() => setShowSettings(false)}
                 onSave={(settings) => {
-                  setShowSettings(false);
+                  setShowSettings(false)
                 }}
               />
             </div>
@@ -245,7 +228,7 @@ const ContentManagement = () => {
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default ContentManagement; 
+export default ContentManagement

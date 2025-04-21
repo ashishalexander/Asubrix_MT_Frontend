@@ -331,7 +331,7 @@ function TestQuestions() {
   // If showing results page
   if (showResults) {
     return (
-      <div className="app-container results-container">
+      <div className="result-card app-container results-container">
         <Container className="py-5">
           <Row className="justify-content-center">
             <Col lg={8} md={10}>

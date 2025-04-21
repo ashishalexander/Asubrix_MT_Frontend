@@ -107,10 +107,10 @@ const SignIn = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label className="d-flex justify-content-between align-items-center">
+          {/* <Form.Label className="d-flex justify-content-between align-items-center">
             <span>Password</span>
             <a href="/auth/forgot-password" className="text-decoration-underline">Forgot password?</a>
-          </Form.Label>
+          </Form.Label> */}
           <Form.Control
             type="password"
             placeholder="Enter your password"
