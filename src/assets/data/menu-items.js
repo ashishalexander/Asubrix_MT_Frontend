@@ -129,20 +129,20 @@ export const INSTRUCTOR_MENU_ITEMS = [
     url: '/student/dashboard',
     parentKey: 'instructor'
   },
-  // {
-  //   key: 'courses',
-  //   label: 'My Courses',
-  //   icon: BsBasket,
-  //   url: '/student/my-courses',
-  //   parentKey: 'instructor'
-  // },
-  // {
-  //   key: 'chat',
-  //   label: 'Chat with Admin',
-  //   icon: FaRegCommentDots,
-  //   url: '/student/chat',
-  //   parentKey: 'instructor'
-  // },
+  {
+    key: 'courses',
+    label: 'My Courses',
+    icon: BsBasket,
+    url: '/student/my-courses',
+    parentKey: 'instructor'
+  },
+  {
+    key: 'chat',
+    label: 'Chat with Admin',
+    icon: FaRegCommentDots,
+    url: '/student/chat',
+    parentKey: 'instructor'
+  },
   {
     key: 'orders',
     label: 'Free Tests',
@@ -151,13 +151,13 @@ export const INSTRUCTOR_MENU_ITEMS = [
     parentKey: 'instructor'
   },
 
-  // {
-  //   key: 'payout',
-  //   label: 'Payment History',
-  //   icon: BsWallet2,
-  //   url: '/student/payment-history',
-  //   parentKey: 'instructor'
-  // },
+  {
+    key: 'payout',
+    label: 'Payment History',
+    icon: BsWallet2,
+    url: '/student/payment-history',
+    parentKey: 'instructor'
+  },
 ];
 export const STUDENT_MENU_ITEMS = [{
   key: 'dashboard',

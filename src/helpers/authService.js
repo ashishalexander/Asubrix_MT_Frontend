@@ -261,7 +261,8 @@ const authService = {
     try {
       // Make sure we're sending the exact format required by the API
       const submissionData = {
-        answers: Array.isArray(data.answers) ? data.answers : []
+        answers: Array.isArray(data.answers) ? data.answers : [],
+        time_taken_seconds: data.time_taken_seconds || 0
       };
       
       console.log(`Submitting test ${testId} with data:`, submissionData);

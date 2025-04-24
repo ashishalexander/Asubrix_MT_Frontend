@@ -202,6 +202,9 @@ function TestQuestions() {
     // Stop the timer
     setTimerActive(false)
     
+    // Calculate time taken in seconds
+    const timeTakenSeconds = Math.floor((Date.now() - startTime) / 1000)
+    
     // Prepare submission data in the exact format required by the API
     const answers = questions.map(q => {
       if (q.selectedOption !== null) {
@@ -217,10 +220,13 @@ function TestQuestions() {
       console.log('Submitting test answers:', answers)
       
       // Debug the request payload
-      console.log('Request payload:', JSON.stringify({ answers }))
+      console.log('Request payload:', JSON.stringify({ answers, time_taken_seconds: timeTakenSeconds }))
       
-      // Submit test with answers array
-      const responseData = await authService.submitTest(testId, { answers }, user.token)
+      // Submit test with answers array and time taken
+      const responseData = await authService.submitTest(testId, { 
+        answers, 
+        time_taken_seconds: timeTakenSeconds 
+      }, user.token)
       console.log('Test submission response:', responseData)
       
       // Calculate results based on the response
