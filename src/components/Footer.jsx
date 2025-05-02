@@ -1,7 +1,7 @@
 import { footerLinks } from '@/assets/data/footer-items'
 import playStore from '@/assets/images/client/app-store.svg'
 import googlePlay from '@/assets/images/client/google-play.svg'
-import Royal_victorian_Logo from '@/assets/images/Royal_victorian_Logo.png'
+import Royal_victorian_Logo from '../assets/images/Royal_Victorian_Logo.png'
 import '@/assets/scss/style.scss'
 import { currentYear } from '@/context/constants'
 import clsx from 'clsx'
