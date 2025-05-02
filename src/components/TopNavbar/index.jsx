@@ -1,16 +1,12 @@
 import useScrollEvent from '@/hooks/useScrollEvent';
 import clsx from 'clsx';
 import { useRef } from 'react';
-const TopNavbar = ({
-  children,
-  className
-}) => {
-  const {
-    scrollY
-  } = useScrollEvent();
+const TopNavbar = ({ children, className}) => {
+  const {scrollY} = useScrollEvent();
   const headerRef = useRef(null);
+  
   return <>
-      <header ref={headerRef} className={clsx('navbar-light navbar-sticky header-static', className, {
+      <header ref={headerRef} className={clsx('navbar-dark bg-dark-blue navbar-sticky header-static', className, {
       'navbar-sticky-on': scrollY >= 400
     })}>
         <nav className="navbar navbar-expand-xl">{children}</nav>

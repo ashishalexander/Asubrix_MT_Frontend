@@ -1,44 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Button, Row, Col, Modal, Image, Tabs, Tab } from 'react-bootstrap';
+import { Card, Form, Button, Row, Col, Modal, Image, Tabs, Tab, Alert, Spinner } from 'react-bootstrap';
 import { FaImages, FaUpload, FaTrash, FaPlus, FaCog } from 'react-icons/fa';
 import { BsFullscreen } from 'react-icons/bs';
 import GlightBox from '@/components/GlightBox';
 import 'glightbox/dist/css/glightbox.min.css';
-
-// Import images properly
-import event11 from '@/assets/images/event/11.jpg';
-import event12 from '@/assets/images/event/12.jpg';
-import event13 from '@/assets/images/event/13.jpg';
-import event14 from '@/assets/images/event/14.jpg';
-import event15 from '@/assets/images/event/15.jpg';
-import event16 from '@/assets/images/event/16.jpg';
-import event17 from '@/assets/images/event/17.jpg';
+import httpClient from '../../../../helpers/httpClient';
 
 const GallerySettings = () => {
   const [activeTab, setActiveTab] = useState('configuration');
   const [galleryConfig, setGalleryConfig] = useState({
     title: 'Our Best Moments',
-    layout: 'mixed', // mixed, grid, masonry
+    layout: 'mixed',
     maxImages: 6,
     allowVideoEmbeds: true,
     showFullscreenIcon: true,
-    galleryType: 'event', // event, portfolio, team, etc.
+    galleryType: 'event',
     imageQuality: 'high',
     lightboxEnabled: true
   });
 
-  const [images, setImages] = useState([
-    { id: 1, src: event11, name: '11.jpg' },
-    { id: 2, src: event12, name: '12.jpg' },
-    { id: 3, src: event13, name: '13.jpg' },
-    { id: 4, src: event14, name: '14.jpg' },
-    { id: 5, src: event15, name: '15.jpg' },
-    { id: 6, src: event16, name: '16.jpg' },
-    { id: 7, src: event17, name: '17.jpg' },
-  ]);
-
+  const [images, setImages] = useState([]);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  
+  // State for handling loading and error states
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  // Fetch gallery settings on component mount
+  useEffect(() => {
+    fetchGallerySettings();
+  }, []);
+
+  const fetchGallerySettings = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await httpClient.get('/api/gallery/settings');
+      const { data } = response.data;
+      
+      // Update the gallery configuration
+      setGalleryConfig({
+        title: data.title,
+        layout: data.layout,
+        maxImages: data.maxImages,
+        allowVideoEmbeds: data.allowVideoEmbeds,
+        showFullscreenIcon: data.showFullscreenIcon,
+        galleryType: data.galleryType,
+        imageQuality: data.imageQuality,
+        lightboxEnabled: data.lightboxEnabled
+      });
+      
+      // Update the images array
+      const formattedImages = data.images.map(image => ({
+        id: image._id,
+        src: image.path,
+        name: image.name,
+        isVideo: image.isVideo,
+        videoUrl: image.videoUrl,
+        order: image.order
+      }));
+      
+      // Sort images by order property
+      formattedImages.sort((a, b) => a.order - b.order);
+      setImages(formattedImages);
+      
+    } catch (err) {
+      console.error('Error fetching gallery settings:', err);
+      setError('Failed to load gallery settings. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleConfigChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -51,7 +88,7 @@ const GallerySettings = () => {
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     const newImages = files.map((file, index) => ({
-      id: Date.now() + index,
+      id: `temp-${Date.now()}-${index}`,
       src: URL.createObjectURL(file),
       name: file.name,
       file: file
@@ -63,29 +100,186 @@ const GallerySettings = () => {
     setSelectedFiles(selectedFiles.filter(file => file.id !== id));
   };
 
-  const confirmUpload = () => {
-    // TODO: Implement actual upload logic
-    const uploadedImages = selectedFiles.map(file => ({
-      id: file.id,
-      src: file.src,
-      name: file.name
-    }));
+  const confirmUpload = async () => {
+    if (selectedFiles.length === 0) return;
     
-    setImages([...images, ...uploadedImages]);
-    setSelectedFiles([]);
-    setShowUploadModal(false);
+    setUploading(true);
+    setError(null);
+    
+    try {
+      // Create FormData for file upload
+      const formData = new FormData();
+      
+      // Use array upload endpoint if multiple files, single upload endpoint if one file
+      if (selectedFiles.length > 1) {
+        // For multiple files, append each file with the same name to indicate an array
+        selectedFiles.forEach(fileObj => {
+          formData.append('images', fileObj.file);
+        });
+        
+        const response = await httpClient.post('/api/gallery/images', formData);
+        const uploadedImages = response.data.data.map(image => ({
+          id: image._id,
+          src: image.path,
+          name: image.name,
+          order: image.order,
+          isVideo: image.isVideo,
+          videoUrl: image.videoUrl
+        }));
+        
+        setImages([...images, ...uploadedImages]);
+        setSuccess(`Successfully uploaded ${uploadedImages.length} images`);
+      } else {
+        // For single file
+        formData.append('image', selectedFiles[0].file);
+        
+        const response = await httpClient.post('/api/gallery/image', formData);
+        const uploadedImage = response.data.data;
+        
+        setImages([...images, {
+          id: uploadedImage._id,
+          src: uploadedImage.path,
+          name: uploadedImage.name,
+          order: uploadedImage.order,
+          isVideo: uploadedImage.isVideo,
+          videoUrl: uploadedImage.videoUrl
+        }]);
+        setSuccess('Image uploaded successfully');
+      }
+      
+      // Clear selected files and close modal
+      setSelectedFiles([]);
+      setShowUploadModal(false);
+      
+    } catch (err) {
+      console.error('Error uploading images:', err);
+      setError('Failed to upload images. Please try again.');
+    } finally {
+      setUploading(false);
+      // Clear success message after a delay
+      if (success) {
+        setTimeout(() => setSuccess(null), 3000);
+      }
+    }
   };
 
-  const removeImage = (id) => {
-    // TODO: Implement actual image removal logic
-    setImages(images.filter(img => img.id !== id));
+  const removeImage = async (id) => {
+    if (!id) return;
+    
+    if (window.confirm('Are you sure you want to delete this image? This action cannot be undone.')) {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        await httpClient.delete(`/api/gallery/image/${id}`);
+        
+        // Remove from local state
+        setImages(images.filter(img => img.id !== id));
+        setSuccess('Image removed successfully');
+        
+      } catch (err) {
+        console.error('Error removing image:', err);
+        setError('Failed to remove image. Please try again.');
+      } finally {
+        setLoading(false);
+        // Clear success message after a delay
+        if (success) {
+          setTimeout(() => setSuccess(null), 3000);
+        }
+      }
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Implement save logic for gallery settings
-    console.log('Gallery Settings Saved:', galleryConfig);
+    setSaving(true);
+    setError(null);
+    
+    try {
+      await httpClient.put('/api/gallery/settings', galleryConfig);
+      setSuccess('Gallery settings saved successfully');
+    } catch (err) {
+      console.error('Error saving gallery settings:', err);
+      setError('Failed to save gallery settings. Please try again.');
+    } finally {
+      setSaving(false);
+      // Clear success message after a delay
+      if (success) {
+        setTimeout(() => setSuccess(null), 3000);
+      }
+    }
   };
+
+  // Function to add video
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [videoData, setVideoData] = useState({
+    videoUrl: '',
+    thumbnailUrl: '',
+    name: '',
+  });
+
+  const handleVideoDataChange = (e) => {
+    const { name, value } = e.target;
+    setVideoData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const addVideo = async () => {
+    if (!videoData.videoUrl || !videoData.thumbnailUrl) {
+      setError('Video URL and thumbnail URL are required');
+      return;
+    }
+    
+    setUploading(true);
+    setError(null);
+    
+    try {
+      const response = await httpClient.post('/api/gallery/video', videoData);
+      const newVideo = response.data.data;
+      
+      setImages([...images, {
+        id: newVideo._id,
+        src: newVideo.path,
+        name: newVideo.name,
+        order: newVideo.order,
+        isVideo: true,
+        videoUrl: newVideo.videoUrl
+      }]);
+      
+      // Reset form and close modal
+      setVideoData({ videoUrl: '', thumbnailUrl: '', name: '' });
+      setShowVideoModal(false);
+      setSuccess('Video added successfully');
+      
+    } catch (err) {
+      console.error('Error adding video:', err);
+      setError('Failed to add video. Please try again.');
+    } finally {
+      setUploading(false);
+      // Clear success message after a delay
+      if (success) {
+        setTimeout(() => setSuccess(null), 3000);
+      }
+    }
+  };
+
+  if (loading && images.length === 0) {
+    return (
+      <Card className="mb-4">
+        <Card.Header>
+          <Card.Title>Gallery Management</Card.Title>
+        </Card.Header>
+        <Card.Body className="text-center p-5">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+          <p className="mt-3">Loading gallery settings...</p>
+        </Card.Body>
+      </Card>
+    );
+  }
 
   return (
     <Card className="mb-4">
@@ -96,6 +290,9 @@ const GallerySettings = () => {
         </Card.Title>
       </Card.Header>
       <Card.Body>
+        {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
+        
         <Tabs 
           activeKey={activeTab}
           onSelect={(k) => setActiveTab(k)}
@@ -212,8 +409,13 @@ const GallerySettings = () => {
                 </Col>
               </Row>
 
-              <Button variant="primary" type="submit" className="mt-3">
-                Save Gallery Settings
+              <Button 
+                variant="primary" 
+                type="submit" 
+                className="mt-3" 
+                disabled={saving}
+              >
+                {saving ? 'Saving...' : 'Save Gallery Settings'}
               </Button>
             </Form>
           </Tab>
@@ -221,61 +423,86 @@ const GallerySettings = () => {
           <Tab eventKey="images" title={<><FaImages className="me-2" />Images</>}>
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h5>Uploaded Images</h5>
-              <Button 
-                variant="success" 
-                onClick={() => setShowUploadModal(true)}
-              >
-                <FaPlus className="me-2" /> Add Images
-              </Button>
+              <div>
+                <Button 
+                  variant="primary" 
+                  onClick={() => setShowVideoModal(true)}
+                  className="me-2"
+                >
+                  <FaPlus className="me-2" /> Add Video
+                </Button>
+                <Button 
+                  variant="success" 
+                  onClick={() => setShowUploadModal(true)}
+                >
+                  <FaPlus className="me-2" /> Add Images
+                </Button>
+              </div>
             </div>
-            <Row className="g-4">
-              {images.map((image) => (
-                <Col key={image.id} xs={6} md={4} lg={3} className="position-relative">
-                  <Card className="overflow-hidden">
-                    <div className="card-overlay-hover position-relative">
-                      <img 
-                        src={image.src} 
-                        className="img-fluid rounded-3" 
-                        alt={image.name}
-                      />
-                      <Button 
-                        variant="danger" 
-                        size="sm" 
-                        className="position-absolute top-0 end-0 m-2"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeImage(image.id);
-                        }}
+            {images.length === 0 && !loading ? (
+              <Alert variant="info">
+                No images found. Click "Add Images" to upload some gallery images.
+              </Alert>
+            ) : (
+              <Row className="g-4">
+                {images.map((image) => (
+                  <Col key={image.id} xs={6} md={4} lg={3} className="position-relative">
+                    <Card className="overflow-hidden">
+                      <div className="card-overlay-hover position-relative">
+                        <img 
+                          src={image.src} 
+                          className="img-fluid rounded-3" 
+                          alt={image.name}
+                        />
+                        {image.isVideo && (
+                          <span className="position-absolute top-0 start-0 m-2 badge bg-danger">
+                            Video
+                          </span>
+                        )}
+                        <Button 
+                          variant="danger" 
+                          size="sm" 
+                          className="position-absolute top-0 end-0 m-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeImage(image.id);
+                          }}
+                          disabled={loading}
+                        >
+                          <FaTrash />
+                        </Button>
+                      </div>
+                      <GlightBox 
+                        className="card-element-hover position-absolute w-100 h-100" 
+                        data-glightbox 
+                        data-gallery="gallery-admin" 
+                        href={image.src}
                       >
-                        <FaTrash />
-                      </Button>
-                    </div>
-                    <GlightBox 
-                      className="card-element-hover position-absolute w-100 h-100" 
-                      data-glightbox 
-                      data-gallery="gallery-admin" 
-                      href={image.src}
-                    >
-                      <BsFullscreen
-                        size={30}
-                        className="fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-3 p-2 lh-1"
-                      />
-                    </GlightBox>
-                  </Card>
-                  <p className="text-center mt-2 text-truncate">{image.name}</p>
-                </Col>
-              ))}
-            </Row>
+                        <BsFullscreen
+                          size={30}
+                          className="fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-3 p-2 lh-1"
+                        />
+                      </GlightBox>
+                    </Card>
+                    <p className="text-center mt-2 text-truncate">
+                      {image.name} {image.isVideo && '(Video)'}
+                    </p>
+                  </Col>
+                ))}
+              </Row>
+            )}
           </Tab>
         </Tabs>
       </Card.Body>
 
-      {/* Upload Modal */}
+      {/* Upload Images Modal */}
       <Modal show={showUploadModal} onHide={() => setShowUploadModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Upload Images</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {error && <Alert variant="danger">{error}</Alert>}
+          
           <Form.Group className="mb-3">
             <Form.Control 
               type="file" 
@@ -330,9 +557,69 @@ const GallerySettings = () => {
           <Button 
             variant="primary" 
             onClick={confirmUpload}
-            disabled={selectedFiles.length === 0}
+            disabled={selectedFiles.length === 0 || uploading}
           >
-            Upload Images
+            {uploading ? 'Uploading...' : 'Upload Images'}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Add Video Modal */}
+      <Modal show={showVideoModal} onHide={() => setShowVideoModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Video</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {error && <Alert variant="danger">{error}</Alert>}
+          
+          <Form.Group className="mb-3">
+            <Form.Label>Video Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={videoData.name}
+              onChange={handleVideoDataChange}
+              placeholder="Enter video name"
+            />
+          </Form.Group>
+          
+          <Form.Group className="mb-3">
+            <Form.Label>Video URL (YouTube/Vimeo)</Form.Label>
+            <Form.Control
+              type="url"
+              name="videoUrl"
+              value={videoData.videoUrl}
+              onChange={handleVideoDataChange}
+              placeholder="https://www.youtube.com/watch?v=..."
+              required
+            />
+          </Form.Group>
+          
+          <Form.Group className="mb-3">
+            <Form.Label>Thumbnail URL</Form.Label>
+            <Form.Control
+              type="url"
+              name="thumbnailUrl"
+              value={videoData.thumbnailUrl}
+              onChange={handleVideoDataChange}
+              placeholder="https://img.youtube.com/vi/..."
+              required
+            />
+            <Form.Text className="text-muted">
+              Enter the URL of a thumbnail image for this video
+            </Form.Text>
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowVideoModal(false)}>
+            Cancel
+          </Button>
+          <Button 
+            variant="primary" 
+            onClick={addVideo}
+            disabled={!videoData.videoUrl || !videoData.thumbnailUrl || uploading}
+          >
+            {uploading ? 'Adding...' : 'Add Video'}
           </Button>
         </Modal.Footer>
       </Modal>

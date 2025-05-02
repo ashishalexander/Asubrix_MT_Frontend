@@ -80,7 +80,7 @@ const TopNavigationBar = () => {
   return (
     <>
       <header
-        className={clsx('navbar-light navbar-sticky', {
+        className={clsx('navbar-dark bg-dark-blue navbar-sticky', {
           'navbar-sticky-on': scrollY >= 400,
         })}>
         <nav className="navbar navbar-expand-xl z-index-9">

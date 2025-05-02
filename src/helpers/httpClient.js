@@ -3,7 +3,7 @@ import axios from 'axios';
 function HttpClient() {
   // Create an axios instance with proper configuration
   const instance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     timeout: 15000
     // Remove default Content-Type header
   });

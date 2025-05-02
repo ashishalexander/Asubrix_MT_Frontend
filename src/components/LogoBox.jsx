@@ -1,4 +1,4 @@
-import pymainlogo from '@/assets/images/logo-puthuyugham.png';
+import Royal_Victorian_Logo from '@/assets/images/Royal_Victorian_Logo.png';
 import '@/assets/scss/style.scss'; // Ensure the main SCSS file is imported
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ let logoCache = {
 };
 
 const LogoBox = ({ height, width }) => {
-  const [siteLogo, setSiteLogo] = useState(logoCache.url || pymainlogo);
+  const [siteLogo, setSiteLogo] = useState(logoCache.url || Royal_Victorian_Logo);
   const [siteName, setSiteName] = useState(logoCache.name || '');
   const [isLoading, setIsLoading] = useState(!logoCache.url);
   const hasFetchedRef = useRef(false);

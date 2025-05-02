@@ -1,7 +1,7 @@
 import { footerLinks } from '@/assets/data/footer-items'
 import playStore from '@/assets/images/client/app-store.svg'
 import googlePlay from '@/assets/images/client/google-play.svg'
-import pylogo from '@/assets/images/puthuyougam_logo.png'
+import Royal_victorian_Logo from '@/assets/images/Royal_victorian_Logo.png'
 import '@/assets/scss/style.scss'
 import { currentYear } from '@/context/constants'
 import clsx from 'clsx'
@@ -19,12 +19,12 @@ let settingsCache = null;
 
 const Footer = ({ className }) => {
   const defaultSettings = {
-    site_name: 'Pudhuyugam Academy',
-    site_email: 'official@pudhuyugamacademy.in',
-    site_phone: '9488722512, 6381048227',
-    site_address: '4, Hari Garderns, Ramanuja Nagar, Uppilipayam Post, Coimbatore - 641 015',
-    site_logo: pylogo,
-    copyright_text: `© Pudhuyugam Academy ${currentYear}. All rights reserved`,
+    site_name: 'Royal Vicotrian',
+    site_email: 'info@rvu.am',
+    site_phone: '(+374) 55 42 43 14',
+    site_address: '5 Momik St, Yeghegnadzor 3601, Republic of Armenia',
+    site_logo: Royal_victorian_Logo,
+    copyright_text: `© Royal Victorian ${currentYear}. All rights reserved`,
     facebook_url: 'https://www.facebook.com/people/Pudhuyugamacademy/61553787314656/',
     youtube_url: 'https://www.youtube.com/@PudhuyugamAcademy',
     telegram_url: 'https://t.me/pudhuyugam',
@@ -61,7 +61,7 @@ const Footer = ({ className }) => {
             ...defaultSettings,
             ...processedData,
             // Keep original logo if API returns null
-            site_logo: processedData.site_logo || pylogo
+            site_logo: processedData.site_logo || Royal_victorian_Logo
           };
           
           // Update state and cache
@@ -100,7 +100,7 @@ const Footer = ({ className }) => {
             </Link>
             <p className="my-3">
               {settings.site_description || 
-                "Pudhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations"}
+                "Royal Victorian University in Yeghegnadzor, Armenia offers prestigious education with diverse degree programs and linguistic courses, including German language.dhuyugam Academy embarked on a resolute mission to deliver top-notch education for a spectrum of competitive examinations"}
             </p>
             <ul className="list-inline mb-0 mt-3">
               {settings.facebook_url && (

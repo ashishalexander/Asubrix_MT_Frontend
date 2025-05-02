@@ -1,3 +1,35 @@
 .custom-footer {
-    background-color: #f5f7f9; // Change this to your desired background color
-  }
+  background-color: #0b2154; /* Dark blue background */
+  color: white !important;
+}
+
+/* Ensure all text and links in the footer have good contrast */
+footer a.nav-link,
+footer p,
+footer .nav-item a,
+footer h5,
+footer .list-inline-item a,
+footer .text-body,
+footer .h6.fw-light,
+footer .fw-light {
+  color: white !important;
+}
+/* Style for hover states */
+footer a:hover,
+footer .text-primary-hover:hover,
+footer .nav-link:hover {
+  color: #393c3f !important; /* Light blue color on hover */
+  opacity: 0.9;
+  transition: color 0.3s ease;
+}
+
+/* Make social media icons more visible */
+footer .list-inline-item .btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+footer .fw-light{
+  
+}
+
